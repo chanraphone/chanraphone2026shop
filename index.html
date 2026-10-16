@@ -1,944 +1,1437 @@
 <!DOCTYPE html>
 <html lang="km">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Chanra Phone Store - Tech & Accessories</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts for Khmer & Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Telegram Web App SDK -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'Kantumruy Pro', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              black: '#080808',
-              surface: '#121212',
-              card: '#18181a',
-              border: '#27272a',
-              cyan: '#00f2fe',
-              neon: '#00f0ff',
-              green: '#25D366',
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <style>
-    body {
-      background-color: #080808;
-      color: #f4f4f5;
-      font-family: 'Inter', 'Kantumruy Pro', sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .hide-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    .neon-badge {
-      background-color: #00f2fe;
-      color: #000000;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .neon-badge-green {
-      background-color: #10b981;
-      color: #000000;
-      font-weight: 700;
-    }
-    .neon-badge-sim {
-      background-color: #f59e0b;
-      color: #000000;
-      font-weight: 700;
-    }
-    .neon-badge-fix {
-      background-color: #a855f7;
-      color: #ffffff;
-      font-weight: 700;
-    }
-  </style>
-
-  <!-- Firebase SDKs -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-    import { 
-      getFirestore, 
-      collection, 
-      onSnapshot, 
-      doc, 
-      setDoc, 
-      deleteDoc,
-      getDocs 
-    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-
-    // Firebase configuration ផ្ទាល់ខ្លួនរបស់អ្នក (chanraphone2026shop)
-    const firebaseConfig = {
-      apiKey: "AIzaSyBNRTq3SAZRAB_Q-COFAcFUEOWK-0ZKNh8",
-      authDomain: "chanraphone2026shop.firebaseapp.com",
-      databaseURL: "https://chanraphone2026shop-default-rtdb.firebaseio.com",
-      projectId: "chanraphone2026shop",
-      storageBucket: "chanraphone2026shop.firebasestorage.app",
-      messagingSenderId: "431229921729",
-      appId: "1:431229921729:web:9730a2968374c191416740",
-      measurementId: "G-LR3MF2FJ58"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    window.db = db;
-    window.firestoreTools = { collection, onSnapshot, doc, setDoc, deleteDoc, getDocs };
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tech & Phone Storefront</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Kantumruy Pro for Khmer -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     
-    // បាញ់ Event ប្រាប់ថារួចរាល់
-    window.dispatchEvent(new Event('firebase-ready'));
-  </script>
-</head>
-<body class="bg-[#080808] text-zinc-100 min-h-screen flex flex-col pb-20 select-none">
-
-  <!-- Header Section -->
-  <header class="sticky top-0 z-40 bg-[#080808]/90 backdrop-blur-md border-b border-zinc-800/80 px-4 py-3">
-    <div class="max-w-5xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#00f2fe] to-cyan-500 flex items-center justify-center font-black text-black text-lg shadow-[0_0_15px_rgba(0,242,254,0.3)]">
-          C
-        </div>
-        <div>
-          <h1 class="font-bold text-sm tracking-tight text-white leading-tight">CHANRA PHONE</h1>
-          <p class="text-[10px] text-zinc-400 font-normal">Tech • SIM • Service</p>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <!-- Admin Toggle Shield -->
-        <button id="admin-key-btn" onclick="toggleAdminPrompt()" class="p-2 rounded-full hover:bg-zinc-800 text-zinc-400 hover:text-cyan-400 transition" title="ផ្ទាំង Admin">
-          <i data-lucide="shield" class="w-5 h-5"></i>
-        </button>
-
-        <!-- Cart Button -->
-        <button onclick="toggleCartModal(true)" class="relative p-2 rounded-full hover:bg-zinc-800 text-zinc-200 transition">
-          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-          <span id="cart-count-badge" class="hidden absolute top-1 right-1 w-4 h-4 bg-[#00f2fe] text-black text-[10px] font-bold rounded-full flex items-center justify-center">0</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Admin Bar (បង្ហាញតែពេល Login ជា Admin) -->
-  <div id="admin-banner" class="hidden bg-cyan-950/60 border-b border-cyan-800/60 px-4 py-2">
-    <div class="max-w-5xl mx-auto flex items-center justify-between text-xs">
-      <div class="flex items-center gap-2 text-cyan-300 font-medium">
-        <i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i>
-        <span>ផ្ទាំងគ្រប់គ្រងហាង (Admin Mode)</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <button onclick="openProductModal()" class="bg-[#00f2fe] hover:bg-cyan-400 text-black px-2.5 py-1 rounded font-bold transition flex items-center gap-1">
-          <i data-lucide="plus" class="w-3.5 h-3.5"></i> បន្ថែមទំនិញ
-        </button>
-        <button onclick="logoutAdmin()" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-2 py-1 rounded transition">ចាកចេញ</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Category Filter Tabs -->
-  <nav class="sticky top-[57px] z-30 bg-[#080808]/95 backdrop-blur border-b border-zinc-900 py-2.5 px-4">
-    <div class="max-w-5xl mx-auto flex items-center gap-2 overflow-x-auto hide-scrollbar text-xs font-semibold uppercase tracking-wider">
-      <button onclick="setCategory('ALL')" class="cat-btn active px-3.5 py-1.5 rounded-full transition whitespace-nowrap bg-white text-black font-bold">ALL</button>
-      <button onclick="setCategory('PHONES')" class="cat-btn px-3.5 py-1.5 rounded-full transition whitespace-nowrap bg-zinc-900 text-zinc-400 hover:text-white">PHONES</button>
-      <button onclick="setCategory('CASES')" class="cat-btn px-3.5 py-1.5 rounded-full transition whitespace-nowrap bg-zinc-900 text-zinc-400 hover:text-white">CASES</button>
-      <button onclick="setCategory('POWER')" class="cat-btn px-3.5 py-1.5 rounded-full transition whitespace-nowrap bg-zinc-900 text-zinc-400 hover:text-white">POWER</button>
-      <button onclick="setCategory('AUDIO')" class="cat-btn px-3.5 py-1.5 rounded-full transition whitespace-nowrap bg-zinc-900 text-zinc-400 hover:text-white">AUDIO</button>
-      <button onclick="setCategory('WATCH')" class="cat-btn px-3.5 py-1.5 rounded-full transition whitespace-nowrap bg-zinc-900 text-zinc-400 hover:text-white">WATCH</button>
-      <button onclick="setCategory('SIM')" class="cat-btn px-3.5 py-1.5 rounded-full transition whitespace-nowrap bg-zinc-900 text-zinc-400 hover:text-amber-400 flex items-center gap-1">
-        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> SIM CARDS
-      </button>
-      <button onclick="setCategory('SERVICES')" class="cat-btn px-3.5 py-1.5 rounded-full transition whitespace-nowrap bg-zinc-900 text-zinc-400 hover:text-purple-400 flex items-center gap-1">
-        <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span> សេវ៉ាកម្ម
-      </button>
-    </div>
-  </nav>
-
-  <!-- Product Grid (៣ ជួរលើទូរស័ព្ទ / 3 Columns Grid) -->
-  <main class="max-w-5xl mx-auto w-full px-2 sm:px-4 py-4 flex-1">
-    <div id="loading-spinner" class="py-20 flex flex-col items-center justify-center text-zinc-500 gap-2">
-      <i data-lucide="loader-2" class="w-8 h-8 animate-spin text-[#00f2fe]"></i>
-      <p class="text-xs">កំពុងទាញយកទិន្នន័យពី Cloud Firestore...</p>
-    </div>
-    
-    <div id="product-grid" class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3.5">
-      <!-- Cards នឹងត្រូវទាញចេញពី Firebase មក Render ត្រង់នេះ -->
-    </div>
-  </main>
-
-  <!-- Bottom Quick Cart Float Bar (ទូរស័ព្ទ) -->
-  <div id="quick-cart-bar" class="fixed bottom-4 left-4 right-4 z-30 max-w-md mx-auto hidden">
-    <button onclick="toggleCartModal(true)" class="w-full bg-[#00f2fe] hover:bg-cyan-400 text-black font-bold py-3 px-5 rounded-2xl flex items-center justify-between shadow-[0_10px_25px_rgba(0,242,254,0.3)] transition active:scale-[0.98]">
-      <div class="flex items-center gap-2">
-        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-        <span id="quick-cart-items-text">0 មុខទំនិញ</span>
-      </div>
-      <div class="flex items-center gap-1 font-extrabold text-base">
-        <span id="quick-cart-total-text">$0.00</span>
-        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-      </div>
-    </button>
-  </div>
-
-  <!-- Modal: Detail មើលទំនិញ & Gallery -->
-  <div id="detail-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div class="bg-[#141416] border border-zinc-800 w-full sm:max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[90vh] overflow-y-auto hide-scrollbar flex flex-col">
-      <div class="relative bg-zinc-950 w-full aspect-square flex items-center justify-center overflow-hidden">
-        <img id="detail-main-img" src="" alt="Product Detail" class="w-full h-full object-cover">
-        
-        <!-- Gallery Navigation Arrows -->
-        <button id="detail-prev-img" onclick="changeDetailImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 text-white hover:bg-black/80 hidden">
-          <i data-lucide="chevron-left" class="w-4 h-4"></i>
-        </button>
-        <button id="detail-next-img" onclick="changeDetailImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 text-white hover:bg-black/80 hidden">
-          <i data-lucide="chevron-right" class="w-4 h-4"></i>
-        </button>
-
-        <button onclick="toggleDetailModal(false)" class="absolute top-3 right-3 p-2 rounded-full bg-black/60 text-white hover:bg-zinc-800 transition">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-      <!-- Multiple Thumbnails Strip -->
-      <div id="detail-thumbnails-container" class="flex gap-2 p-3 bg-zinc-900/60 overflow-x-auto hide-scrollbar border-b border-zinc-800/60"></div>
-
-      <div class="p-5 flex flex-col gap-4">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <span id="detail-cat-badge" class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">PHONE</span>
-            <h2 id="detail-title" class="text-lg font-bold text-white mt-1"></h2>
-          </div>
-          <div id="detail-price" class="text-xl font-black text-[#00f2fe]"></div>
-        </div>
-
-        <p id="detail-desc" class="text-xs text-zinc-400 leading-relaxed"></p>
-
-        <!-- Options: Specs/Storage & Colors -->
-        <div id="detail-specs-box">
-          <label id="detail-spec-label" class="text-[11px] font-semibold text-zinc-300 block mb-1.5 uppercase">ជម្រើសទំហំ / ម៉ូដែល</label>
-          <div id="detail-specs-list" class="flex flex-wrap gap-2 text-xs"></div>
-        </div>
-
-        <div id="detail-colors-box">
-          <label class="text-[11px] font-semibold text-zinc-300 block mb-1.5 uppercase">ជម្រើសពណ៌</label>
-          <div id="detail-colors-list" class="flex flex-wrap gap-2"></div>
-        </div>
-
-        <button id="add-to-cart-action-btn" onclick="addToCartFromDetail()" class="w-full mt-2 bg-[#00f2fe] hover:bg-cyan-400 text-black font-extrabold py-3.5 rounded-xl transition flex items-center justify-center gap-2 active:scale-[0.98]">
-          <i data-lucide="plus-circle" class="w-5 h-5"></i> ដាក់ចូលកន្ត្រក (Add to Cart)
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Cart & Checkout -->
-  <div id="cart-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div class="bg-[#141416] border border-zinc-800 w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl max-h-[85vh] flex flex-col">
-      <div class="p-4 border-b border-zinc-800 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i data-lucide="shopping-cart" class="w-5 h-5 text-[#00f2fe]"></i>
-          <h3 class="font-bold text-sm text-white">កន្ត្រកទំនិញ (Your Cart)</h3>
-        </div>
-        <button onclick="toggleCartModal(false)" class="p-1 rounded-full text-zinc-400 hover:text-white">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <div id="cart-items-list" class="p-4 flex-1 overflow-y-auto space-y-3 min-h-[160px]">
-        <!-- Cart Items -->
-      </div>
-
-      <div class="p-4 border-t border-zinc-800 bg-zinc-900/40 flex flex-col gap-3">
-        <div class="flex items-center justify-between text-sm">
-          <span class="text-zinc-400">តម្លៃសរុប (Total)</span>
-          <span id="cart-total-price" class="text-xl font-black text-[#00f2fe]">$0.00</span>
-        </div>
-        <button onclick="checkoutToTelegram()" class="w-full bg-[#00f2fe] hover:bg-cyan-400 text-black font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(0,242,254,0.3)]">
-          <i data-lucide="send" class="w-4 h-4"></i> បញ្ជាទិញតាម Telegram
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Admin Add / Edit Product -->
-  <div id="admin-product-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-[#18181b] border border-zinc-700 w-full max-w-lg rounded-2xl max-h-[92vh] overflow-y-auto p-5 flex flex-col gap-4">
-      <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-        <h3 id="admin-form-title" class="font-bold text-sm text-white">បន្ថែមទំនិញថ្មី</h3>
-        <button onclick="closeProductModal()" class="text-zinc-400 hover:text-white">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <form id="product-form" onsubmit="handleProductSubmit(event)" class="space-y-3 text-xs">
-        <input type="hidden" id="form-product-id">
-
-        <div>
-          <label class="block text-zinc-400 mb-1">ឈ្មោះទំនិញ ឬសេវ៉ាកម្ម *</label>
-          <input type="text" id="form-name" required class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400" placeholder="ឧ. iPhone 16 Pro Max">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-zinc-400 mb-1">ប្រភេទ (Category) *</label>
-            <select id="form-category" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400">
-              <option value="PHONES">PHONES</option>
-              <option value="CASES">CASES</option>
-              <option value="POWER">POWER</option>
-              <option value="AUDIO">AUDIO</option>
-              <option value="WATCH">WATCH</option>
-              <option value="SIM">SIM CARDS</option>
-              <option value="SERVICES">SERVICES (សេវ៉ាកម្ម)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-zinc-400 mb-1">តម្លៃ ($ USD) *</label>
-            <input type="number" step="0.01" id="form-price" required class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-400" placeholder="1199.00">
-          </div>
-        </div>
-
-        <!-- Phone Photo Upload with Multi-select -->
-        <div class="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-zinc-300 font-semibold flex items-center gap-1.5">
-              <i data-lucide="image" class="w-4 h-4 text-cyan-400"></i> រូបភាពទំនិញ (ជ្រើសបានច្រើនសន្លឹក)
-            </span>
-            <label class="cursor-pointer bg-zinc-800 hover:bg-zinc-700 text-cyan-300 px-2.5 py-1 rounded text-[11px] font-medium flex items-center gap-1 transition">
-              <i data-lucide="camera" class="w-3.5 h-3.5"></i> រើសរូបពីទូរស័ព្ទ
-              <input type="file" id="phone-img-input" multiple accept="image/*" class="hidden" onchange="handleMultipleImageUpload(event)">
-            </label>
-          </div>
-
-          <!-- Thumbnails Preview Container -->
-          <div id="admin-thumbnails-preview" class="flex flex-wrap gap-2 pt-1 min-h-[40px]">
-            <span class="text-[10px] text-zinc-500 italic">មិនទាន់មានរូបភាព...</span>
-          </div>
-
-          <div>
-            <label class="block text-[10px] text-zinc-400 mb-1">ឬបិទភ្ជាប់ Image URLs (ខណ្ឌដោយសញ្ញាក្បៀស `,`):</label>
-            <input type="text" id="form-img-urls" class="w-full bg-zinc-950 border border-zinc-800 rounded px-2.5 py-1.5 text-zinc-300 text-[11px]" placeholder="https://..., https://...">
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-zinc-400 mb-1">ជម្រើស Storage / ម៉ូដែល / លេខស៊ីម (ខណ្ឌដោយក្បៀស `,`)</label>
-          <input type="text" id="form-specs" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-white" placeholder="256GB, 512GB, 1TB">
-        </div>
-
-        <div>
-          <label class="block text-zinc-400 mb-1">ជម្រើសពណ៌ (Hex Codes ខណ្ឌដោយក្បៀស `,`)</label>
-          <input type="text" id="form-colors" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-white" placeholder="#1a1a1a, #e2e8f0, #d4af37">
-        </div>
-
-        <div>
-          <label class="block text-zinc-400 mb-1">ការពិពណ៌នា (Description)</label>
-          <textarea id="form-desc" rows="2" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-white" placeholder="លក្ខណៈពិសេសរបស់ទំនិញ..."></textarea>
-        </div>
-
-        <div class="flex justify-end gap-2 pt-2 border-t border-zinc-800">
-          <button type="button" onclick="closeProductModal()" class="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-medium">បោះបង់</button>
-          <button type="submit" id="form-submit-btn" class="px-5 py-2 rounded-lg bg-[#00f2fe] hover:bg-cyan-400 text-black font-bold">រក្សាទុក</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    // Global State
-    let products = [];
-    let currentCategory = 'ALL';
-    let isAdmin = false;
-    let cart = [];
-    let activeDetailProduct = null;
-    let activeImageIndex = 0;
-    let temporaryUploadedImages = [];
-
-    // Telegram Info (អ្នកអាចប្តូរ username របស់អ្នកត្រង់នេះ)
-    const TELEGRAM_USERNAME = "Chanra_Shop"; 
-
-    // Initial Demo Products (បើ Firebase នៅទទេ វានឹង Seed ទិន្នន័យនេះទៅ Firestore)
-    const initialMockProducts = [
-      {
-        id: "prod-1",
-        name: "iPhone 16 Pro Max",
-        category: "PHONES",
-        price: 1199,
-        images: ["https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80"],
-        specs: ["256GB", "512GB", "1TB"],
-        colors: ["#2d2c2a", "#e3e4e5", "#bfa48f"],
-        desc: "បន្ទះឈីប A18 Pro, តួទីតាញ៉ូមស្រាលធន់, Camera Control ថ្មី"
-      },
-      {
-        id: "prod-2",
-        name: "Galaxy S24 Ultra",
-        category: "PHONES",
-        price: 1049,
-        images: ["https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600&auto=format&fit=crop&q=80"],
-        specs: ["256GB", "512GB"],
-        colors: ["#37383a", "#e8e5db", "#555246"],
-        desc: "Galaxy AI ឆ្លាតវៃ, ប៊ិច S-Pen ភ្ជាប់ក្នុងម៉ាស៊ីន, អេក្រង់កោងរាបស្មើ"
-      },
-      {
-        id: "prod-3",
-        name: "MagSafe Matte Case",
-        category: "CASES",
-        price: 18,
-        images: ["https://images.unsplash.com/photo-1601593346740-925612772716?w=600&auto=format&fit=crop&q=80"],
-        specs: ["16 Pro", "16 Pro Max"],
-        colors: ["#1e1e1e", "#3b82f6", "#10b981"],
-        desc: "ស្រោមការពារធន់នឹងការធ្លាក់ កម្លាំងម៉ាញ៉េទិច MagSafe ខ្លាំង"
-      },
-      {
-        id: "prod-4",
-        name: "65W GaN Fast Charger",
-        category: "POWER",
-        price: 29,
-        images: ["https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"],
-        specs: ["2-Port USB-C"],
-        colors: ["#ffffff", "#000000"],
-        desc: "ក្បាលសាកល្បឿនលឿនបច្ចេកវិទ្យា GaN សាកទូរស័ព្ទ និង Laptop បាន"
-      },
-      {
-        id: "prod-5",
-        name: "AirPods Pro 2 USB-C",
-        category: "AUDIO",
-        price: 219,
-        images: ["https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&auto=format&fit=crop&q=80"],
-        specs: ["ANC Active"],
-        colors: ["#ffffff"],
-        desc: "កាត់បន្ថយសំឡេងរំខានបានទ្វេដង សំឡេងកម្រិត Spatial Audio"
-      },
-      {
-        id: "prod-6",
-        name: "Smart VIP 098 888 777",
-        category: "SIM",
-        price: 88,
-        images: ["https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&auto=format&fit=crop&q=80"],
-        specs: ["098 888 777", "096 999 888"],
-        colors: ["#10b981"],
-        desc: "ស៊ីម Smart លេខពិសេស VIP ហុងស៊ុយ ងាយស្រួលចាំ"
-      },
-      {
-        id: "prod-7",
-        name: "ប្តូរអេក្រង់សុទ្ធ Original",
-        category: "SERVICES",
-        price: 65,
-        images: ["https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80"],
-        specs: ["iPhone 13-16", "Samsung S Series"],
-        colors: ["#a855f7"],
-        desc: "សេវាប្តូរអេក្រង់ស្អាតដូចដើម ធានាគុណភាព 100% និងធានារយៈពេល 3 ខែ"
-      }
-    ];
-
-    // Initialize & Firestore Sync
-    window.addEventListener('firebase-ready', () => {
-      initFirestoreListener();
-    });
-
-    function initFirestoreListener() {
-      const { collection, onSnapshot, doc, setDoc, getDocs } = window.firestoreTools;
-      const productsRef = collection(window.db, "products");
-
-      onSnapshot(productsRef, async (snapshot) => {
-        const loaded = [];
-        snapshot.forEach(docSnap => {
-          loaded.push({ id: docSnap.id, ...docSnap.data() });
-        });
-
-        // បើសិន Firestore នៅទទេ សូម Seed Mock Products ចូលជាលើកដំបូង
-        if (loaded.length === 0) {
-          for (let item of initialMockProducts) {
-            await setDoc(doc(window.db, "products", item.id), item);
-          }
-          return;
-        }
-
-        products = loaded;
-        document.getElementById('loading-spinner').classList.add('hidden');
-        renderProductGrid();
-      }, (error) => {
-        console.error("Firestore Listen error:", error);
-      });
-    }
-
-    // Render Grid (3 Columns)
-    function renderProductGrid() {
-      const grid = document.getElementById('product-grid');
-      grid.innerHTML = '';
-
-      const filtered = currentCategory === 'ALL' 
-        ? products 
-        : products.filter(p => p.category === currentCategory);
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-3 text-center py-12 text-zinc-500 text-xs">មិនទាន់មានទំនិញក្នុងប្រភេទនេះទេ</div>`;
-        return;
-      }
-
-      filtered.forEach(p => {
-        const primaryImg = (p.images && p.images.length > 0) ? p.images[0] : 'https://via.placeholder.com/300?text=No+Image';
-        const card = document.createElement('div');
-        card.className = "group relative bg-[#121214] border border-zinc-800/80 rounded-xl overflow-hidden flex flex-col cursor-pointer transition hover:border-zinc-700 active:scale-[0.98]";
-
-        // Card Badges by Category
-        let badgeClass = "neon-badge";
-        if (p.category === 'SIM') badgeClass = "neon-badge-sim";
-        else if (p.category === 'SERVICES') badgeClass = "neon-badge-fix";
-
-        card.innerHTML = `
-          <!-- Image Box -->
-          <div class="relative w-full aspect-square bg-zinc-950 overflow-hidden" onclick="openDetailModal('${p.id}')">
-            <img src="${primaryImg}" alt="${p.name}" class="w-full h-full object-cover transition duration-300 group-hover:scale-105" loading="lazy">
-            <div class="absolute bottom-1.5 left-1.5 ${badgeClass} text-[10px] sm:text-xs px-1.5 py-0.5 rounded shadow-sm">
-              $${p.price}
-            </div>
-            ${p.images && p.images.length > 1 ? `
-              <div class="absolute top-1.5 right-1.5 bg-black/70 backdrop-blur-sm text-[9px] text-zinc-300 px-1 py-0.5 rounded flex items-center gap-0.5">
-                <i data-lucide="layers" class="w-2.5 h-2.5"></i> ${p.images.length}
-              </div>
-            ` : ''}
-          </div>
-
-          <!-- Content Info -->
-          <div class="p-2 flex flex-col justify-between flex-1">
-            <div onclick="openDetailModal('${p.id}')">
-              <h3 class="font-semibold text-[11px] sm:text-xs text-zinc-100 truncate leading-tight">${p.name}</h3>
-              <p class="text-[9px] text-zinc-400 mt-0.5 truncate">${p.desc || p.category}</p>
-            </div>
-
-            <!-- Admin Action Buttons (កែ & លុប) -->
-            ${isAdmin ? `
-              <div class="flex items-center justify-end gap-1.5 mt-2 pt-1.5 border-t border-zinc-800/80">
-                <button onclick="event.stopPropagation(); editProduct('${p.id}')" class="p-1 rounded bg-zinc-800 hover:bg-zinc-700 text-cyan-400 transition" title="កែប្រែ">
-                  <i data-lucide="edit-3" class="w-3 h-3"></i>
-                </button>
-                <button onclick="event.stopPropagation(); deleteProductPrompt('${p.id}')" class="p-1 rounded bg-zinc-800 hover:bg-red-900/60 text-red-400 transition" title="លុប">
-                  <i data-lucide="trash-2" class="w-3 h-3"></i>
-                </button>
-              </div>
-            ` : ''}
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-
-      lucide.createIcons();
-    }
-
-    // Category Tabs
-    function setCategory(cat) {
-      currentCategory = cat;
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.classList.remove('active', 'bg-white', 'text-black', 'font-bold');
-        btn.classList.add('bg-zinc-900', 'text-zinc-400');
-      });
-      event.target.classList.add('active', 'bg-white', 'text-black', 'font-bold');
-      event.target.classList.remove('bg-zinc-900', 'text-zinc-400');
-      renderProductGrid();
-    }
-
-    // Detail Modal & Gallery
-    function openDetailModal(id) {
-      const p = products.find(x => x.id === id);
-      if (!p) return;
-      activeDetailProduct = p;
-      activeImageIndex = 0;
-
-      document.getElementById('detail-title').innerText = p.name;
-      document.getElementById('detail-price').innerText = `$${p.price}`;
-      document.getElementById('detail-desc').innerText = p.desc || '';
-      document.getElementById('detail-cat-badge').innerText = p.category;
-
-      updateDetailGallery();
-
-      // Specs
-      const specsList = document.getElementById('detail-specs-list');
-      specsList.innerHTML = '';
-      if (p.specs && p.specs.length > 0) {
-        document.getElementById('detail-specs-box').classList.remove('hidden');
-        p.specs.forEach((s, idx) => {
-          const btn = document.createElement('button');
-          btn.className = `px-2.5 py-1 rounded-lg border text-xs font-medium transition ${idx === 0 ? 'border-cyan-400 bg-cyan-950/40 text-cyan-300' : 'border-zinc-800 bg-zinc-900 text-zinc-300'}`;
-          btn.innerText = s;
-          btn.onclick = () => {
-            Array.from(specsList.children).forEach(c => c.className = 'px-2.5 py-1 rounded-lg border text-xs font-medium border-zinc-800 bg-zinc-900 text-zinc-300');
-            btn.className = 'px-2.5 py-1 rounded-lg border text-xs font-medium border-cyan-400 bg-cyan-950/40 text-cyan-300';
-            p._selectedSpec = s;
-          };
-          specsList.appendChild(btn);
-        });
-        p._selectedSpec = p.specs[0];
-      } else {
-        document.getElementById('detail-specs-box').classList.add('hidden');
-      }
-
-      // Colors
-      const colorsList = document.getElementById('detail-colors-list');
-      colorsList.innerHTML = '';
-      if (p.colors && p.colors.length > 0) {
-        document.getElementById('detail-colors-box').classList.remove('hidden');
-        p.colors.forEach((c, idx) => {
-          const dot = document.createElement('button');
-          dot.className = `w-6 h-6 rounded-full border-2 transition ${idx === 0 ? 'border-cyan-400 scale-110' : 'border-transparent'}`;
-          dot.style.backgroundColor = c;
-          dot.onclick = () => {
-            Array.from(colorsList.children).forEach(ch => ch.className = 'w-6 h-6 rounded-full border-2 border-transparent');
-            dot.className = 'w-6 h-6 rounded-full border-2 border-cyan-400 scale-110';
-            p._selectedColor = c;
-          };
-          colorsList.appendChild(dot);
-        });
-        p._selectedColor = p.colors[0];
-      } else {
-        document.getElementById('detail-colors-box').classList.add('hidden');
-      }
-
-      toggleDetailModal(true);
-    }
-
-    function updateDetailGallery() {
-      const p = activeDetailProduct;
-      const mainImg = document.getElementById('detail-main-img');
-      const prevBtn = document.getElementById('detail-prev-img');
-      const nextBtn = document.getElementById('detail-next-img');
-      const thumbsContainer = document.getElementById('detail-thumbnails-container');
-
-      const imgs = (p.images && p.images.length > 0) ? p.images : ['https://via.placeholder.com/300?text=No+Image'];
-      mainImg.src = imgs[activeImageIndex];
-
-      if (imgs.length > 1) {
-        prevBtn.classList.remove('hidden');
-        nextBtn.classList.remove('hidden');
-        thumbsContainer.classList.remove('hidden');
-        thumbsContainer.innerHTML = '';
-
-        imgs.forEach((imgSrc, idx) => {
-          const thumb = document.createElement('img');
-          thumb.src = imgSrc;
-          thumb.className = `w-12 h-12 object-cover rounded-lg cursor-pointer border-2 transition ${idx === activeImageIndex ? 'border-cyan-400' : 'border-zinc-800 opacity-60'}`;
-          thumb.onclick = () => {
-            activeImageIndex = idx;
-            updateDetailGallery();
-          };
-          thumbsContainer.appendChild(thumb);
-        });
-      } else {
-        prevBtn.classList.add('hidden');
-        nextBtn.classList.add('hidden');
-        thumbsContainer.classList.add('hidden');
-      }
-    }
-
-    function changeDetailImage(step) {
-      const imgs = activeDetailProduct.images || [];
-      if (imgs.length <= 1) return;
-      activeImageIndex = (activeImageIndex + step + imgs.length) % imgs.length;
-      updateDetailGallery();
-    }
-
-    function toggleDetailModal(show) {
-      document.getElementById('detail-modal').classList.toggle('hidden', !show);
-    }
-
-    // Cart Management
-    function addToCartFromDetail() {
-      if (!activeDetailProduct) return;
-      const item = {
-        ...activeDetailProduct,
-        cartId: Date.now() + Math.random(),
-        selectedSpec: activeDetailProduct._selectedSpec || '',
-        selectedColor: activeDetailProduct._selectedColor || ''
-      };
-      cart.push(item);
-      updateCartUI();
-      toggleDetailModal(false);
-      showToast("បានដាក់ចូលកន្ត្រកជោគជ័យ!");
-    }
-
-    function updateCartUI() {
-      const badge = document.getElementById('cart-count-badge');
-      const quickBar = document.getElementById('quick-cart-bar');
-      const itemsCount = cart.length;
-      const total = cart.reduce((sum, item) => sum + Number(item.price), 0);
-
-      if (itemsCount > 0) {
-        badge.innerText = itemsCount;
-        badge.classList.remove('hidden');
-        quickBar.classList.remove('hidden');
-        document.getElementById('quick-cart-items-text').innerText = `${itemsCount} មុខទំនិញ`;
-        document.getElementById('quick-cart-total-text').innerText = `$${total.toFixed(2)}`;
-      } else {
-        badge.classList.add('hidden');
-        quickBar.classList.add('hidden');
-      }
-
-      document.getElementById('cart-total-price').innerText = `$${total.toFixed(2)}`;
-
-      const list = document.getElementById('cart-items-list');
-      list.innerHTML = '';
-      if (cart.length === 0) {
-        list.innerHTML = `<div class="text-center py-8 text-zinc-500 text-xs">កន្ត្រកទទេ</div>`;
-        return;
-      }
-
-      cart.forEach((it, idx) => {
-        const row = document.createElement('div');
-        row.className = "flex items-center justify-between gap-3 bg-zinc-900/60 p-2.5 rounded-xl border border-zinc-800/80";
-        row.innerHTML = `
-          <div class="flex items-center gap-2.5">
-            <img src="${(it.images && it.images[0]) || ''}" class="w-10 h-10 object-cover rounded-lg">
-            <div>
-              <h4 class="text-xs font-bold text-white">${it.name}</h4>
-              <p class="text-[10px] text-zinc-400">${it.selectedSpec} ${it.selectedColor ? '• ពណ៌' : ''}</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="text-xs font-bold text-[#00f2fe]">$${it.price}</span>
-            <button onclick="removeFromCart(${idx})" class="text-zinc-500 hover:text-red-400 p-1">
-              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-            </button>
-          </div>
-        `;
-        list.appendChild(row);
-      });
-      lucide.createIcons();
-    }
-
-    function removeFromCart(idx) {
-      cart.splice(idx, 1);
-      updateCartUI();
-    }
-
-    function toggleCartModal(show) {
-      document.getElementById('cart-modal').classList.toggle('hidden', !show);
-    }
-
-    function checkoutToTelegram() {
-      if (cart.length === 0) return;
-      let text = "👋 សួស្តីបង! ខ្ញុំចង់កុម្ម៉ង់ទិញទំនិញពីគេហទំព័រ៖\n\n";
-      let total = 0;
-
-      cart.forEach((it, i) => {
-        text += `${i + 1}. ${it.name}\n`;
-        if (it.selectedSpec) text += `   • ជម្រើស: ${it.selectedSpec}\n`;
-        text += `   • តម្លៃ: $${it.price}\n\n`;
-        total += Number(it.price);
-      });
-
-      text += `💰 តម្លៃសរុប: $${total.toFixed(2)}\n\nសូមជួយពិនិត្យអីវ៉ាន់ និងរៀបចំឱ្យខ្ញុំផង សូមអរគុណ!`;
-
-      const tgUrl = `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(text)}`;
-      window.open(tgUrl, '_blank');
-    }
-
-    // Admin Access Management
-    function toggleAdminPrompt() {
-      if (isAdmin) {
-        logoutAdmin();
-        return;
-      }
-      const pin = prompt("សូមបញ្ចូលលេខកូដសម្ងាត់ Admin (Default: 8888):");
-      if (pin === "8888") {
-        isAdmin = true;
-        document.getElementById('admin-banner').classList.remove('hidden');
-        renderProductGrid();
-        showToast("បានចូល Admin Mode ជោគជ័យ!");
-      } else if (pin !== null) {
-        alert("លេខកូដមិនត្រឹមត្រូវទេ!");
-      }
-    }
-
-    function logoutAdmin() {
-      isAdmin = false;
-      document.getElementById('admin-banner').classList.add('hidden');
-      renderProductGrid();
-      showToast("បានចាកចេញពី Admin");
-    }
-
-    // Admin Image Upload with Compression
-    function handleMultipleImageUpload(event) {
-      const files = Array.from(event.target.files);
-      if (!files.length) return;
-
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.src = e.target.result;
-          img.onload = () => {
-            // Resize and Compress Image
-            const canvas = document.createElement('canvas');
-            const MAX_WIDTH = 800;
-            let width = img.width;
-            let height = img.height;
-
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-
-            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
-            temporaryUploadedImages.push(compressedBase64);
-            renderAdminThumbnails();
-          };
+    <!-- Firebase SDK ភ្ជាប់ជាមួយ Project chanraphone2026shop -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBNRTq3SAZRAB_Q-COFAcFUEOWK-0ZKNh8",
+            authDomain: "chanraphone2026shop.firebaseapp.com",
+            databaseURL: "https://chanraphone2026shop-default-rtdb.firebaseio.com",
+            projectId: "chanraphone2026shop",
+            storageBucket: "chanraphone2026shop.firebasestorage.app",
+            messagingSenderId: "431229921729",
+            appId: "1:431229921729:web:9730a2968374c191416740",
+            measurementId: "G-LR3MF2FJ58"
         };
-        reader.readAsDataURL(file);
-      });
-    }
 
-    function renderAdminThumbnails() {
-      const container = document.getElementById('admin-thumbnails-preview');
-      container.innerHTML = '';
-      if (temporaryUploadedImages.length === 0) {
-        container.innerHTML = '<span class="text-[10px] text-zinc-500 italic">មិនទាន់មានរូបភាព...</span>';
-        return;
-      }
+        try {
+            window.fbApp = initializeApp(firebaseConfig);
+            window.fbDb = getFirestore(window.fbApp);
 
-      temporaryUploadedImages.forEach((src, idx) => {
-        const wrap = document.createElement('div');
-        wrap.className = "relative w-12 h-12 rounded-lg overflow-hidden border border-zinc-700";
-        wrap.innerHTML = `
-          <img src="${src}" class="w-full h-full object-cover">
-          <button type="button" onclick="removeTempImage(${idx})" class="absolute top-0.5 right-0.5 bg-black/80 text-white rounded-full p-0.5">
-            <i data-lucide="x" class="w-2.5 h-2.5"></i>
-          </button>
-        `;
-        container.appendChild(wrap);
-      });
-      lucide.createIcons();
-    }
+            window.dbDoc = doc;
+            window.dbSetDoc = setDoc;
+            window.dbDeleteDoc = deleteDoc;
+            window.dbCollection = collection;
+            window.dbOnSnapshot = onSnapshot;
+            window.cloudInitialized = true;
 
-    function removeTempImage(idx) {
-      temporaryUploadedImages.splice(idx, 1);
-      renderAdminThumbnails();
-    }
+            console.log("Chanra Phone Cloud Database connected successfully!");
+        } catch (err) {
+            console.warn("Cloud connection notice:", err.message);
+        }
 
-    // Admin CRUD Operations (Direct Firestore)
-    function openProductModal(item = null) {
-      const form = document.getElementById('product-form');
-      form.reset();
-      temporaryUploadedImages = [];
+        if (typeof window.initCloudSync === 'function') {
+            window.initCloudSync();
+        }
+    </script>
 
-      if (item) {
-        document.getElementById('admin-form-title').innerText = "កែប្រែព័ត៌មានទំនិញ";
-        document.getElementById('form-product-id').value = item.id;
-        document.getElementById('form-name').value = item.name;
-        document.getElementById('form-category').value = item.category;
-        document.getElementById('form-price').value = item.price;
-        document.getElementById('form-specs').value = (item.specs || []).join(', ');
-        document.getElementById('form-colors').value = (item.colors || []).join(', ');
-        document.getElementById('form-desc').value = item.desc || '';
-        document.getElementById('form-img-urls').value = (item.images || []).join(', ');
-        temporaryUploadedImages = [...(item.images || [])];
-      } else {
-        document.getElementById('admin-form-title').innerText = "បន្ថែមទំនិញថ្មី";
-        document.getElementById('form-product-id').value = '';
-      }
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Kantumruy Pro', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            700: '#1c1c1e',
+                            600: '#2c2c2e',
+                        },
+                        tag: {
+                            cyan: '#00d2ff',
+                            lime: '#22c55e',
+                            amber: '#f59e0b',
+                            purple: '#a855f7',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            height: 4px;
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0f11;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 9999px;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .touch-action-manipulation {
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-sans antialiased selection:bg-cyan-500 selection:text-black min-h-screen flex flex-col justify-between">
 
-      renderAdminThumbnails();
-      document.getElementById('admin-product-modal').classList.remove('hidden');
-    }
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-zinc-800">
+        <div class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button class="w-9 h-9 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white transition">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
+                <div class="flex items-center gap-2">
+                    <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></div>
+                    <span class="text-sm font-semibold uppercase tracking-widest text-zinc-200">CHANRA • TECH</span>
+                </div>
+            </div>
 
-    function closeProductModal() {
-      document.getElementById('admin-product-modal').classList.add('hidden');
-    }
+            <!-- Search, Cart & Admin -->
+            <div class="flex items-center gap-2">
+                <button id="searchBtn" class="p-2 text-zinc-400 hover:text-white rounded-full hover:bg-zinc-900 transition" title="ស្វែងរក">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <button id="cartBtn" class="relative p-2 text-zinc-300 hover:text-white rounded-full hover:bg-zinc-900 transition" title="កន្ត្រកទំនិញ">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-cyan-400 text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <!-- Admin Mode Toggle Button -->
+                <button id="adminToggleBtn" onclick="openAdminAuth()" class="p-2 text-zinc-400 hover:text-cyan-400 rounded-full hover:bg-zinc-900 transition border border-zinc-800" title="ផ្ទាំងគ្រប់គ្រង Admin">
+                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
 
-    function editProduct(id) {
-      const p = products.find(x => x.id === id);
-      if (p) openProductModal(p);
-    }
+        <!-- Admin Banner Notification (បង្ហាញតែពេលបើក Admin Mode) -->
+        <div id="adminBanner" class="hidden bg-gradient-to-r from-amber-500/20 to-cyan-500/20 border-y border-amber-500/30 px-4 py-2">
+            <div class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl flex items-center justify-between text-xs">
+                <div class="flex items-center gap-2 text-amber-300 font-semibold">
+                    <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                    <span>ADMIN MODE កំពុងបើក — រាល់ការកែប្រែរក្សាទុកលើ Firestore ស្វ័យប្រវត្តិ!</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="openProductEditModal(null)" class="bg-cyan-400 hover:bg-cyan-300 text-black font-bold px-3 py-1 rounded text-[11px] flex items-center gap-1 shadow">
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> បន្ថែមទំនិញ/សេវាថ្មី
+                    </button>
+                    <button onclick="exitAdminMode()" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-2 py-1 rounded text-[11px]">
+                        ចាកចេញ
+                    </button>
+                </div>
+            </div>
+        </div>
 
-    async function handleProductSubmit(e) {
-      e.preventDefault();
-      const id = document.getElementById('form-product-id').value || `prod-${Date.now()}`;
-      const name = document.getElementById('form-name').value;
-      const category = document.getElementById('form-category').value;
-      const price = parseFloat(document.getElementById('form-price').value);
-      const desc = document.getElementById('form-desc').value;
+        <!-- Category Tabs -->
+        <div class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl px-3 pb-3 overflow-x-auto hide-scrollbar">
+            <nav class="flex items-center gap-1.5 border border-zinc-800 p-1 bg-zinc-950 rounded-lg w-max sm:w-full">
+                <button onclick="setCategory('ALL')" class="category-btn active px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all bg-white text-black shadow">
+                    ALL
+                </button>
+                <button onclick="setCategory('PHONES')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900">
+                    PHONES
+                </button>
+                <button onclick="setCategory('SIM')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> SIM CARDS
+                </button>
+                <button onclick="setCategory('SERVICES')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span> សេវ៉ាកម្ម
+                </button>
+                <button onclick="setCategory('CASES')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900">
+                    CASES
+                </button>
+                <button onclick="setCategory('CHARGERS')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900">
+                    POWER
+                </button>
+                <button onclick="setCategory('AUDIO')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900">
+                    AUDIO
+                </button>
+                <button onclick="setCategory('WATCH')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900">
+                    WATCH
+                </button>
+            </nav>
+        </div>
+    </header>
 
-      // Extract URLs from text input
-      const urlsInput = document.getElementById('form-img-urls').value.trim();
-      const additionalUrls = urlsInput ? urlsInput.split(',').map(u => u.trim()).filter(Boolean) : [];
-      
-      const allImages = [...temporaryUploadedImages, ...additionalUrls];
-      const finalImages = allImages.length > 0 ? allImages : ["https://via.placeholder.com/300?text=Phone+Store"];
+    <!-- Main Content Container -->
+    <main class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl px-3 py-4 flex-grow w-full">
+        <!-- Search bar popup when active -->
+        <div id="searchContainer" class="hidden mb-4">
+            <div class="relative">
+                <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500"></i>
+                <input type="text" id="searchInput" placeholder="ស្វែងរកទូរស័ព្ទ ស៊ីមកាត ឬសេវ៉ាកម្ម..." 
+                       class="w-full bg-zinc-900 border border-zinc-700 pl-10 pr-4 py-2.5 rounded-lg text-sm focus:outline-none focus:border-cyan-400 text-white placeholder-zinc-500 transition">
+            </div>
+        </div>
 
-      const specsRaw = document.getElementById('form-specs').value.trim();
-      const specs = specsRaw ? specsRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
+        <!-- Products Grid (3 Columns on Mobile, 4 on Tablet, 5 on Desktop) -->
+        <div id="productsGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-3.5">
+            <!-- Render ដោយ JavaScript -->
+        </div>
 
-      const colorsRaw = document.getElementById('form-colors').value.trim();
-      const colors = colorsRaw ? colorsRaw.split(',').map(c => c.trim()).filter(Boolean) : [];
+        <!-- Empty state placeholder -->
+        <div id="emptyState" class="hidden py-20 text-center">
+            <i data-lucide="smartphone" class="w-12 h-12 text-zinc-600 mx-auto mb-3"></i>
+            <p class="text-zinc-400 text-sm">មិនមានទំនិញ ឬសេវ៉ាកម្មដែលត្រូវគ្នានឹងការស្វែងរកទេ</p>
+        </div>
+    </main>
 
-      const payload = {
-        name,
-        category,
-        price,
-        desc,
-        images: finalImages,
-        specs,
-        colors
-      };
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition-opacity">
+        <div class="bg-zinc-900 border-t sm:border border-zinc-800 w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl max-h-[90vh] overflow-y-auto flex flex-col transform transition-transform">
+            <!-- Modal Header -->
+            <div class="p-4 border-b border-zinc-800 flex items-center justify-between sticky top-0 bg-zinc-900/95 backdrop-blur z-10">
+                <span class="text-xs font-mono tracking-wider text-cyan-400 uppercase" id="modalCategory">PHONES</span>
+                <button onclick="closeProductModal()" class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
 
-      try {
-        const { doc, setDoc } = window.firestoreTools;
-        await setDoc(doc(window.db, "products", id), payload);
-        closeProductModal();
-        showToast("រក្សាទុកទៅកាន់ Firestore ជោគជ័យ!");
-      } catch (err) {
-        console.error("Save error:", err);
-        alert("មានបញ្ហាក្នុងការរក្សាទុក: " + err.message);
-      }
-    }
+            <!-- Modal Content -->
+            <div class="p-5 space-y-4">
+                <div class="relative bg-zinc-800/80 rounded-xl overflow-hidden aspect-square flex items-center justify-center">
+                    <img id="modalImage" src="" alt="Product" class="w-full h-full object-contain p-6 transition-all duration-300">
+                    
+                    <!-- Image Navigation Arrows for Multi-images -->
+                    <button id="modalPrevImgBtn" onclick="navigateModalImage(-1)" class="hidden absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-sm transition">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    </button>
+                    <button id="modalNextImgBtn" onclick="navigateModalImage(1)" class="hidden absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-sm transition">
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                    
+                    <div id="modalBadge" class="absolute bottom-3 left-3 bg-[#00d2ff] text-black font-extrabold px-3 py-1 text-sm tracking-tight rounded-sm">
+                        $00.00
+                    </div>
+                </div>
 
-    async function deleteProductPrompt(id) {
-      if (!confirm("តើអ្នកពិតជាចង់លុបទំនិញនេះចេញពី Database មែនទេ?")) return;
-      try {
-        const { doc, deleteDoc } = window.firestoreTools;
-        await deleteDoc(doc(window.db, "products", id));
-        showToast("បានលុបទំនិញជោគជ័យ!");
-      } catch (err) {
-        console.error("Delete error:", err);
-        alert("លុបមិនបាន: " + err.message);
-      }
-    }
+                <!-- Multiple Thumbnails Gallery Bar -->
+                <div id="modalThumbnailsBar" class="hidden flex gap-2 overflow-x-auto pb-1 hide-scrollbar"></div>
 
-    // Toast Notification
-    function showToast(msg) {
-      const toast = document.createElement('div');
-      toast.className = "fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-cyan-950 border border-cyan-400 text-cyan-200 text-xs px-4 py-2 rounded-xl shadow-lg transition duration-300";
-      toast.innerText = msg;
-      document.body.appendChild(toast);
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-      }, 2500);
-    }
-  </script>
+                <div>
+                    <h2 id="modalTitle" class="text-xl font-bold tracking-tight text-white mb-1">Product Title</h2>
+                    <p id="modalDescription" class="text-xs text-zinc-400 leading-relaxed">
+                        ទំនិញសុទ្ធ 100% ថ្មីក្នុងប្រអប់ មានការធានាផ្លូវការ ផ្ដល់នូវបទពិសោធន៍ប្រើប្រាស់ដ៏ល្អឥតខ្ចោះ។
+                    </p>
+                </div>
+
+                <!-- Color selector -->
+                <div id="modalColorSection">
+                    <label class="block text-xs font-medium text-zinc-400 uppercase tracking-wider mb-2">ជម្រើសពណ៌ (Colors)</label>
+                    <div id="modalColors" class="flex gap-2.5"></div>
+                </div>
+
+                <!-- Storage / Specs / Service Type Options -->
+                <div>
+                    <label id="variantLabel" class="block text-xs font-medium text-zinc-400 uppercase tracking-wider mb-2">ទំហំផ្ទុក / ម៉ូដែល</label>
+                    <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="specOptions"></div>
+                </div>
+
+                <!-- Add to Bag CTA -->
+                <button id="modalAddToCartBtn" class="w-full mt-4 py-3.5 bg-white hover:bg-zinc-200 text-black font-bold uppercase tracking-wider text-xs rounded-xl flex items-center justify-center gap-2 transition active:scale-95">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span id="modalAddBtnText">បញ្ចូលទៅកន្ត្រក (Add to Cart)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Slide-over Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden justify-end transition-opacity">
+        <div class="w-full sm:max-w-md bg-zinc-900 border-l border-zinc-800 h-full flex flex-col p-4 shadow-2xl">
+            <!-- Header -->
+            <div class="flex items-center justify-between pb-4 border-b border-zinc-800">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-cyan-400"></i>
+                    <h3 class="font-bold tracking-tight text-white">កន្ត្រកទំនិញ (Your Cart)</h3>
+                </div>
+                <button onclick="toggleCart(false)" class="p-1 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-800">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div id="cartItemsList" class="flex-grow overflow-y-auto py-4 space-y-3"></div>
+
+            <!-- Footer & Checkout -->
+            <div class="border-t border-zinc-800 pt-4 space-y-3">
+                <div class="flex justify-between text-sm">
+                    <span class="text-zinc-400">សរុប (Subtotal):</span>
+                    <span id="cartTotal" class="font-bold text-white text-base">$0.00</span>
+                </div>
+                <p class="text-[11px] text-zinc-500">គាំទ្រការទូទាត់តាម ABA KHQR ឬកម្ម៉ង់តាម Telegram ដឹកជញ្ជូនរហ័ស 25 ខេត្ត/ក្រុង។</p>
+                
+                <button onclick="checkoutToTelegram()" class="w-full py-3.5 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-black font-bold text-xs uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/10 active:scale-95 transition">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                    <span>កម្ម៉ង់តាម TELEGRAM (ORDER NOW)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-zinc-800 border border-zinc-700 text-white px-4 py-2.5 rounded-full text-xs font-semibold shadow-2xl flex items-center gap-2 pointer-events-none opacity-0 transition-opacity duration-300">
+        <i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400"></i>
+        <span id="toastMsg">បានបន្ថែមទៅក្នុងកន្ត្រកដោយជោគជ័យ</span>
+    </div>
+
+    <!-- Admin Authentication Modal -->
+    <div id="adminAuthModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-zinc-800 w-full max-w-xs rounded-2xl p-5 text-center shadow-2xl">
+            <div class="w-12 h-12 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 flex items-center justify-center mx-auto mb-3">
+                <i data-lucide="lock" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-white text-base mb-1">ចូលផ្ទាំងគ្រប់គ្រង (Admin)</h3>
+            <p class="text-xs text-zinc-400 mb-4">បញ្ចូលលេខកូដសម្ងាត់ដើម្បីកែប្រែទំនិញ (កូដលំនាំដើម: <strong class="text-cyan-400 font-mono">8888</strong>)</p>
+            
+            <input type="password" id="adminPinInput" placeholder="បញ្ចូលលេខកូដ PIN" maxlength="6"
+                   class="w-full bg-zinc-950 border border-zinc-700 text-center text-lg tracking-widest text-white py-2 rounded-xl mb-3 focus:outline-none focus:border-cyan-400 font-mono">
+            
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="closeAdminAuth()" class="py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold rounded-xl">
+                    បោះបង់
+                </button>
+                <button onclick="verifyAdminPin()" class="py-2.5 bg-cyan-400 hover:bg-cyan-300 text-black text-xs font-bold rounded-xl shadow-lg shadow-cyan-400/20">
+                    ផ្ទៀងផ្ទាត់
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Add/Edit Product Modal -->
+    <div id="adminProductModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-zinc-900 border border-zinc-800 w-full max-w-lg rounded-2xl p-5 my-auto max-h-[95vh] overflow-y-auto shadow-2xl text-left">
+            <div class="flex items-center justify-between pb-3 border-b border-zinc-800 mb-4">
+                <h3 class="font-bold text-white text-sm sm:text-base flex items-center gap-2" id="adminModalTitle">
+                    <i data-lucide="edit-3" class="w-4 h-4 text-cyan-400"></i> បន្ថែមទំនិញ/សេវ៉ាកម្មថ្មី
+                </h3>
+                <button onclick="closeProductEditModal()" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 hover:text-white flex items-center justify-center">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <form id="adminProductForm" onsubmit="saveProduct(event)" class="space-y-3.5">
+                <input type="hidden" id="editProductId">
+
+                <div>
+                    <label class="block text-xs font-medium text-zinc-300 mb-1">ឈ្មោះទំនិញ ឬសេវ៉ាកម្ម (Name) *</label>
+                    <input type="text" id="formProdName" required placeholder="ឧ. សេវាប្តូរអេក្រង់ iPhone / ដោះកូដ iCloud" 
+                           class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-zinc-300 mb-1">ប្រភេទ (Category) *</label>
+                        <select id="formProdCategory" required class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+                            <option value="PHONES">PHONES (ទូរស័ព្ទ)</option>
+                            <option value="SERVICES">SERVICES (សេវ៉ាកម្មជួសជុល/ដោះកូដ)</option>
+                            <option value="SIM">SIM CARDS (Smart / Cellcard / Metfone)</option>
+                            <option value="CASES">CASES (ស្រោម)</option>
+                            <option value="CHARGERS">POWER (ឆ្នាំងសាក/ខ្សែ)</option>
+                            <option value="AUDIO">AUDIO (កាស)</option>
+                            <option value="WATCH">WATCH (នាឡិកា)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-zinc-300 mb-1">តម្លៃគិតជាដុល្លារ ($) *</label>
+                        <input type="number" step="0.01" min="0" id="formProdPrice" required placeholder="25.00" 
+                               class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-zinc-300 mb-1">ជម្រើសទំហំ/ម៉ូដែល/ប្រភេទសេវា (ចែកដោយក្បៀស `,`) *</label>
+                    <input type="text" id="formProdSpecs" required placeholder="ឧ. iPhone 13, 14 Pro, 15 Pro Max ឬ Original / Grade A" 
+                           class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-zinc-300 mb-1">កូដពណ៌ជា HEX (ចែកដោយសញ្ញាក្បៀស `,` - ទុកទទេបាន)</label>
+                    <input type="text" id="formProdColors" placeholder="#000000, #ffffff" 
+                           class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+                </div>
+
+                <div class="border border-zinc-800 rounded-xl p-3 bg-zinc-950/60">
+                    <label class="block text-xs font-semibold text-cyan-400 mb-1 flex items-center justify-between">
+                        <span class="flex items-center gap-1.5">
+                            <i data-lucide="images" class="w-4 h-4"></i> រូបភាព (អាចជ្រើសរើសបានច្រើនសន្លឹក)
+                        </span>
+                        <span id="uploadedImagesCount" class="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-300">0 រូប</span>
+                    </label>
+                    <p class="text-[11px] text-zinc-400 mb-2.5 leading-relaxed">
+                        អ្នកអាចជ្រើសរើសរូបច្រើនសន្លឹកពី <strong class="text-zinc-200">Gallery ទូរស័ព្ទ</strong> ក្នុងពេលតែមួយ (ប្រព័ន្ធបង្រួមកម្រិតច្បាស់ស្វ័យប្រវត្តិ)៖
+                    </p>
+
+                    <div class="flex items-center gap-2">
+                        <label class="flex items-center justify-center gap-1.5 px-3 py-2 bg-cyan-500/10 hover:bg-cyan-500/20 active:bg-cyan-500/30 border border-cyan-500/40 rounded-xl cursor-pointer text-xs font-semibold text-cyan-300 transition flex-shrink-0">
+                            <i data-lucide="image-plus" class="w-4 h-4 text-cyan-400"></i>
+                            <span>រើសរូបភាពច្រើនសន្លឹក</span>
+                            <input type="file" id="phoneImageInput" accept="image/*" multiple class="hidden" onchange="handleMultipleImageUpload(event)">
+                        </label>
+                        <span class="text-xs text-zinc-500">ឬ Link:</span>
+                        <input type="text" id="formProdImage" placeholder="URL រូបភាព (ចែកដោយក្បៀស `,`)" 
+                               class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" oninput="handleUrlImagesInput(this.value)">
+                    </div>
+
+                    <!-- Multi-Image Preview Container -->
+                    <div id="multiImagesPreviewList" class="mt-3 grid grid-cols-4 sm:grid-cols-5 gap-2 hidden max-h-36 overflow-y-auto p-1 bg-zinc-900/80 rounded-xl border border-zinc-800"></div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-zinc-300 mb-1">ការពិពណ៌នា (Description)</label>
+                    <textarea id="formProdDesc" rows="2" placeholder="ព័ត៌មានលម្អិតអំពីសេវ៉ាកម្ម ការធានា រយៈពេលជួសជុល..." 
+                              class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400"></textarea>
+                </div>
+
+                <div class="pt-2 flex items-center justify-end gap-2 border-t border-zinc-800">
+                    <button type="button" onclick="closeProductEditModal()" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold rounded-lg">
+                        បោះបង់
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-black text-xs font-bold rounded-lg shadow-md">
+                        រក្សាទុកទិន្នន័យ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div id="confirmDeleteModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-zinc-800 w-full max-w-xs rounded-2xl p-5 text-center shadow-2xl">
+            <div class="w-12 h-12 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center mx-auto mb-3">
+                <i data-lucide="trash-2" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-bold text-white text-base mb-1">តើអ្នកពិតជាចង់លុបទំនិញ/សេវ៉ាកម្មនេះ?</h3>
+            <p class="text-xs text-zinc-400 mb-4" id="deleteTargetName">ទិន្នន័យនឹងត្រូវដកចេញពីបញ្ជីភ្លាមៗ។</p>
+            
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="closeDeleteModal()" class="py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold rounded-xl">
+                    មិនលុប
+                </button>
+                <button onclick="executeDeleteProduct()" class="py-2.5 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-red-500/20">
+                    យល់ព្រមលុប
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const initialProductsData = [
+            {
+                id: 1,
+                name: "iPhone 16 Pro Max",
+                category: "PHONES",
+                price: 1199.00,
+                colorsCount: 4,
+                colors: ["#8E8982", "#2B2A2D", "#F0EFEB", "#6E685F"],
+                tagColor: "bg-[#00d2ff]",
+                tagTextColor: "text-black",
+                specs: ["256GB", "512GB", "1TB"],
+                description: "បន្ទះឈីប A18 Pro ថ្មី ស៊ុមទីតានីញ៉ូមស្រាលរឹងមាំ និងកាមេរ៉ា 48MP Fusion ដ៏អស្ចារ្យ។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='110' y='40' width='180' height='320' rx='36' fill='%232b2a2e' stroke='%23444' stroke-width='3'/><rect x='118' y='48' width='164' height='304' rx='30' fill='%230f0f11'/><rect x='165' y='58' width='70' height='16' rx='8' fill='%23000'/><rect x='125' y='55' width='65' height='75' rx='18' fill='%23222' stroke='%23333'/><circle cx='142' cy='72' r='10' fill='%23111' stroke='%23555' stroke-width='2'/><circle cx='142' cy='112' r='10' fill='%23111' stroke='%23555' stroke-width='2'/><circle cx='172' cy='92' r='10' fill='%23111' stroke='%23555' stroke-width='2'/></svg>",
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23121214'/><rect x='115' y='45' width='170' height='310' rx='32' fill='%231b1b1e' stroke='%23333' stroke-width='2'/><circle cx='200' cy='200' r='48' fill='none' stroke='%2300d2ff' stroke-width='3'/><text x='200' y='206' font-size='14' font-family='sans-serif' fill='%2300d2ff' text-anchor='middle'>A18 PRO</text></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='110' y='40' width='180' height='320' rx='36' fill='%232b2a2e' stroke='%23444' stroke-width='3'/><rect x='118' y='48' width='164' height='304' rx='30' fill='%230f0f11'/><rect x='165' y='58' width='70' height='16' rx='8' fill='%23000'/><rect x='125' y='55' width='65' height='75' rx='18' fill='%23222' stroke='%23333'/><circle cx='142' cy='72' r='10' fill='%23111' stroke='%23555' stroke-width='2'/><circle cx='142' cy='112' r='10' fill='%23111' stroke='%23555' stroke-width='2'/><circle cx='172' cy='92' r='10' fill='%23111' stroke='%23555' stroke-width='2'/></svg>"
+            },
+            {
+                id: 201,
+                name: "សេវាប្តូរអេក្រង់សុទ្ធ (Screen Replacement)",
+                category: "SERVICES",
+                price: 45.00,
+                colorsCount: 1,
+                colors: ["#a855f7"],
+                tagColor: "bg-[#a855f7]",
+                tagTextColor: "text-white",
+                specs: ["iPhone 13-14 Series", "iPhone 15 Series", "iPhone 16 Series", "Samsung S Series"],
+                description: "ប្តូរអេក្រង់ហ្ស៊ីនគុណភាពខ្ពស់ ពណ៌ច្បាស់ 120Hz រលូន មានការធានាលើ Touchscreen និងបង្ហាញ TrueTone ត្រឹមត្រូវ។ ប្រើពេលត្រឹម ៣០ នាទី។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%231a0e28'/><rect x='110' y='50' width='180' height='300' rx='28' fill='%2326163b' stroke='%23a855f7' stroke-width='3'/><rect x='125' y='65' width='150' height='270' rx='18' fill='%230e0617'/><circle cx='200' cy='180' r='38' fill='none' stroke='%23a855f7' stroke-width='3'/><path d='M185 180 L195 190 L215 170' stroke='%23a855f7' stroke-width='3' fill='none' stroke-linecap='round'/><text x='200' y='250' font-size='15' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>SCREEN FIX</text></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%231a0e28'/><rect x='110' y='50' width='180' height='300' rx='28' fill='%2326163b' stroke='%23a855f7' stroke-width='3'/><rect x='125' y='65' width='150' height='270' rx='18' fill='%230e0617'/><circle cx='200' cy='180' r='38' fill='none' stroke='%23a855f7' stroke-width='3'/><path d='M185 180 L195 190 L215 170' stroke='%23a855f7' stroke-width='3' fill='none' stroke-linecap='round'/><text x='200' y='250' font-size='15' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>SCREEN FIX</text></svg>"
+            },
+            {
+                id: 202,
+                name: "សេវាប្តូរថ្មទូរស័ព្ទសុខភាព 100% (Battery)",
+                category: "SERVICES",
+                price: 25.00,
+                colorsCount: 1,
+                colors: ["#22c55e"],
+                tagColor: "bg-[#22c55e]",
+                tagTextColor: "text-black",
+                specs: ["iPhone 11 - 12", "iPhone 13 - 14", "iPhone 15 Series", "Android Battery"],
+                description: "ប្តូរគ្រាប់ថ្មថ្មីកម្រិតសុខភាព 100% កាន់ថ្មបានយូរ មិនឡើងកម្តៅ មានការធានាជូន ៦ ខែ ពេញចិត្តសេវាកម្ម។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230d2012'/><rect x='130' y='90' width='140' height='220' rx='18' fill='%2316381e' stroke='%2322c55e' stroke-width='3'/><rect x='170' y='72' width='60' height='18' rx='6' fill='%2322c55e'/><path d='M205 130 L180 195 L202 195 L192 260 L225 185 L202 185 Z' fill='%2322c55e'/><text x='200' y='290' font-size='14' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>100% HEALTH</text></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230d2012'/><rect x='130' y='90' width='140' height='220' rx='18' fill='%2316381e' stroke='%2322c55e' stroke-width='3'/><rect x='170' y='72' width='60' height='18' rx='6' fill='%2322c55e'/><path d='M205 130 L180 195 L202 195 L192 260 L225 185 L202 185 Z' fill='%2322c55e'/><text x='200' y='290' font-size='14' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>100% HEALTH</text></svg>"
+            },
+            {
+                id: 203,
+                name: "សេវាដោះកូដ ដោះសោរ & កម្មវិធី (Software / Unlock)",
+                category: "SERVICES",
+                price: 15.00,
+                colorsCount: 1,
+                colors: ["#3b82f6"],
+                tagColor: "bg-[#3b82f6]",
+                tagTextColor: "text-white",
+                specs: ["Passcode Unlock", "Bypass iCloud", "Flash ROM / Update", "FRP Lock"],
+                description: "ជួសជុលបញ្ហាជាប់កូដអេក្រង់ ដោះសោរប្រព័ន្ធ ជួសជុលម៉ាស៊ីន Restart ឬជាប់ Logo Apple/Android ដោយសុវត្ថិភាព។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230a1628'/><circle cx='200' cy='180' r='60' fill='%23132644' stroke='%233b82f6' stroke-width='3'/><rect x='175' y='180' width='50' height='45' rx='8' fill='%233b82f6'/><path d='M183 180 V155 A17 17 0 0 1 217 155 V180' fill='none' stroke='%233b82f6' stroke-width='6' stroke-linecap='round'/><circle cx='200' cy='200' r='4' fill='%230a1628'/><text x='200' y='275' font-size='15' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>UNLOCK & FIX</text></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230a1628'/><circle cx='200' cy='180' r='60' fill='%23132644' stroke='%233b82f6' stroke-width='3'/><rect x='175' y='180' width='50' height='45' rx='8' fill='%233b82f6'/><path d='M183 180 V155 A17 17 0 0 1 217 155 V180' fill='none' stroke='%233b82f6' stroke-width='6' stroke-linecap='round'/><circle cx='200' cy='200' r='4' fill='%230a1628'/><text x='200' y='275' font-size='15' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>UNLOCK & FIX</text></svg>"
+            },
+            {
+                id: 101,
+                name: "ស៊ីម Smart លេខពិសេស (VIP Number)",
+                category: "SIM",
+                price: 25.00,
+                colorsCount: 1,
+                colors: ["#00a651"],
+                tagColor: "bg-[#00a651]",
+                tagTextColor: "text-white",
+                specs: ["098 888 776", "096 555 123", "010 777 990"],
+                description: "ស៊ីម Smart 4G/5G លេខស្អាត ងាយស្រួលចាំ ភ្ជាប់ជាមួយគម្រោង Smart ThomMorng រួចជាស្រេច។ ផ្ទេរឈ្មោះស្របច្បាប់ជូនភ្លាមៗ។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230a1f11'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%2300a651' stroke='%2300d668' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='250' y='178' font-size='26' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>Smart</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>098 • 888 • 776</text></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230a1f11'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%2300a651' stroke='%2300d668' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='250' y='178' font-size='26' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>Smart</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>098 • 888 • 776</text></svg>"
+            },
+            {
+                id: 102,
+                name: "ស៊ីម Cellcard លេខហុងស៊ុយ (Gold & VIP)",
+                category: "SIM",
+                price: 35.00,
+                colorsCount: 1,
+                colors: ["#f37021"],
+                tagColor: "bg-[#f37021]",
+                tagTextColor: "text-white",
+                specs: ["012 999 554", "077 666 883", "089 778 899"],
+                description: "ស៊ីម Cellcard លេខហុងស៊ុយ រកស៊ីមានបាន គាំទ្រសេវា 5G ល្បឿនលឿនទូទាំងប្រទេស។ អាចចុះឈ្មោះអត្តសញ្ញាណប័ណ្ណផ្លូវការជូនបាន។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%232b1304'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%23f37021' stroke='%23ff924d' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='245' y='178' font-size='24' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>cellcard</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>012 • 999 • 554</text></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%232b1304'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%23f37021' stroke='%23ff924d' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='245' y='178' font-size='24' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>cellcard</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>012 • 999 • 554</text></svg>"
+            },
+            {
+                id: 103,
+                name: "ស៊ីម Metfone អ៊ីនធឺណិតមិនកំណត់ (Unlimited Data)",
+                category: "SIM",
+                price: 15.00,
+                colorsCount: 1,
+                colors: ["#d8232a"],
+                tagColor: "bg-[#d8232a]",
+                tagTextColor: "text-white",
+                specs: ["097 555 889", "088 333 771", "071 999 120"],
+                description: "ស៊ីម Metfone សេវាគ្របដណ្តប់ខ្លាំងគ្រប់ស្រុកភូមិ គាំទ្រគម្រោង Data មិនកំណត់សម្រាប់លេង Facebook, YouTube, TikTok។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23240608'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%23d8232a' stroke='%23ff545b' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='245' y='178' font-size='24' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>metfone</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>097 • 555 • 889</text></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23240608'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%23d8232a' stroke='%23ff545b' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='245' y='178' font-size='24' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>metfone</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>097 • 555 • 889</text></svg>"
+            },
+            {
+                id: 2,
+                name: "Galaxy S24 Ultra",
+                category: "PHONES",
+                price: 1049.00,
+                colorsCount: 4,
+                colors: ["#3F4045", "#EBE7DF", "#4C463F", "#5F5D77"],
+                tagColor: "bg-[#00d2ff]",
+                tagTextColor: "text-black",
+                specs: ["256GB", "512GB", "1TB"],
+                description: "បច្ចេកវិទ្យា Galaxy AI ឆ្លាតវៃ អេក្រង់រាបស្មើរកម្រិត 120Hz និងប៊ិច S-Pen ភ្ជាប់ក្នុងម៉ាស៊ីន។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='112' y='42' width='176' height='316' rx='12' fill='%2337373c' stroke='%234d4d55' stroke-width='3'/><rect x='118' y='48' width='164' height='304' rx='8' fill='%230f0f12'/><circle cx='200' cy='62' r='4' fill='%23000'/><circle cx='138' cy='82' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='138' cy='116' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='138' cy='150' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='164' cy='99' r='7' fill='%23222' stroke='%23666' stroke-width='2'/></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='112' y='42' width='176' height='316' rx='12' fill='%2337373c' stroke='%234d4d55' stroke-width='3'/><rect x='118' y='48' width='164' height='304' rx='8' fill='%230f0f12'/><circle cx='200' cy='62' r='4' fill='%23000'/><circle cx='138' cy='82' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='138' cy='116' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='138' cy='150' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='164' cy='99' r='7' fill='%23222' stroke='%23666' stroke-width='2'/></svg>"
+            },
+            {
+                id: 3,
+                name: "AirPods Pro 2 (USB-C)",
+                category: "AUDIO",
+                price: 219.00,
+                colorsCount: 1,
+                colors: ["#FFFFFF"],
+                tagColor: "bg-[#22c55e]",
+                tagTextColor: "text-black",
+                specs: ["USB-C", "MagSafe"],
+                description: "កាត់បន្ថយសំឡេងរំខានសកម្ម (ANC) ខ្លាំងទ្វេដង និងសំឡេង Spatial Audio 3D។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='130' y='120' width='140' height='160' rx='42' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='2'/><line x1='130' y1='170' x2='270' y2='170' stroke='%23ccc' stroke-width='2'/><circle cx='200' cy='205' r='3.5' fill='%2322c55e'/><rect x='182' y='275' width='36' height='5' rx='2.5' fill='%23ccc'/></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='130' y='120' width='140' height='160' rx='42' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='2'/><line x1='130' y1='170' x2='270' y2='170' stroke='%23ccc' stroke-width='2'/><circle cx='200' cy='205' r='3.5' fill='%2322c55e'/><rect x='182' y='275' width='36' height='5' rx='2.5' fill='%23ccc'/></svg>"
+            },
+            {
+                id: 4,
+                name: "MagSafe Silicone Case",
+                category: "CASES",
+                price: 25.00,
+                colorsCount: 5,
+                colors: ["#232b2b", "#3d5a80", "#ee6c4d", "#2a9d8f", "#e9d8a6"],
+                tagColor: "bg-[#00d2ff]",
+                tagTextColor: "text-black",
+                specs: ["16 Pro", "16 Pro Max", "15 Pro Max"],
+                description: "ស្រោមទូរស័ព្ទស៊ីលីកូនទន់ស្រួលកាន់ ការពារជ្រាបទឹក និងគាំទ្រការសាកឥតខ្សែ MagSafe។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='115' y='50' width='170' height='300' rx='32' fill='%232e3842' stroke='%23485766' stroke-width='3'/><rect x='125' y='65' width='55' height='65' rx='14' fill='%231e242a'/><circle cx='200' cy='200' r='42' fill='none' stroke='%23485766' stroke-dasharray='4,4' stroke-width='4'/></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='115' y='50' width='170' height='300' rx='32' fill='%232e3842' stroke='%23485766' stroke-width='3'/><rect x='125' y='65' width='55' height='65' rx='14' fill='%231e242a'/><circle cx='200' cy='200' r='42' fill='none' stroke='%23485766' stroke-dasharray='4,4' stroke-width='4'/></svg>"
+            },
+            {
+                id: 5,
+                name: "65W GaN Fast Charger",
+                category: "CHARGERS",
+                price: 29.00,
+                colorsCount: 2,
+                colors: ["#1c1c1e", "#f5f5f7"],
+                tagColor: "bg-[#22c55e]",
+                tagTextColor: "text-black",
+                specs: ["3-Port", "2-Port"],
+                description: "បច្ចេកវិទ្យា GaN សាកថ្មលឿនខ្លាំង ទំហំតូចងាយស្រួលដាក់តាមខ្លួន សាកបានទាំងទូរស័ព្ទ និង Laptop។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='130' y='110' width='140' height='180' rx='16' fill='%2327272a' stroke='%233f3f46' stroke-width='2'/><rect x='165' y='145' width='70' height='12' rx='4' fill='%2300d2ff'/><rect x='165' y='175' width='70' height='12' rx='4' fill='%2300d2ff'/><rect x='165' y='210' width='70' height='22' rx='4' fill='%2352525b'/><text x='200' y='265' font-size='16' font-family='sans-serif' fill='%23a1a1aa' text-anchor='middle' font-weight='bold'>65W GaN</text></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='130' y='110' width='140' height='180' rx='16' fill='%2327272a' stroke='%233f3f46' stroke-width='2'/><rect x='165' y='145' width='70' height='12' rx='4' fill='%2300d2ff'/><rect x='165' y='175' width='70' height='12' rx='4' fill='%2300d2ff'/><rect x='165' y='210' width='70' height='22' rx='4' fill='%2352525b'/><text x='200' y='265' font-size='16' font-family='sans-serif' fill='%23a1a1aa' text-anchor='middle' font-weight='bold'>65W GaN</text></svg>"
+            },
+            {
+                id: 6,
+                name: "Apple Watch Ultra 2",
+                category: "WATCH",
+                price: 789.00,
+                colorsCount: 2,
+                colors: ["#D4D1CC", "#2C2B29"],
+                tagColor: "bg-[#f59e0b]",
+                tagTextColor: "text-black",
+                specs: ["49mm GPS + Cell"],
+                description: "តួខ្លួន Titanium ដ៏រឹងមាំ អេក្រង់ភ្លឺរហូតដល់ 3000 nits និងថ្មប្រើបានយូរដល់ 72 ម៉ោង។",
+                images: [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='170' y='30' width='60' height='340' rx='10' fill='%23e07a5f'/><rect x='125' y='100' width='150' height='180' rx='34' fill='%23c2beb6' stroke='%23dedad2' stroke-width='4'/><rect x='135' y='110' width='130' height='160' rx='26' fill='%23000'/><rect x='275' y='140' width='10' height='45' rx='4' fill='%23ff5722'/><text x='200' y='198' font-size='32' font-family='sans-serif' fill='%2300d2ff' text-anchor='middle' font-weight='bold'>09:41</text></svg>"
+                ],
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='170' y='30' width='60' height='340' rx='10' fill='%23e07a5f'/><rect x='125' y='100' width='150' height='180' rx='34' fill='%23c2beb6' stroke='%23dedad2' stroke-width='4'/><rect x='135' y='110' width='130' height='160' rx='26' fill='%23000'/><rect x='275' y='140' width='10' height='45' rx='4' fill='%23ff5722'/><text x='200' y='198' font-size='32' font-family='sans-serif' fill='%2300d2ff' text-anchor='middle' font-weight='bold'>09:41</text></svg>"
+            }
+        ];
+
+        // Active state
+        let productsData = [...initialProductsData];
+        let currentCategory = 'ALL';
+        let searchQuery = '';
+        let cart = [];
+        let selectedProductForModal = null;
+        let selectedColor = null;
+        let selectedSpec = '';
+        let currentModalImageIndex = 0;
+        
+        // Admin state
+        let isAdminLoggedIn = false;
+        let productToDeleteId = null;
+        let currentAdminImagesList = [];
+
+        function handleMultipleImageUpload(event) {
+            const files = Array.from(event.target.files);
+            if (!files || files.length === 0) return;
+
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 600;
+                        const MAX_HEIGHT = 600;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.80);
+                        currentAdminImagesList.push(compressedDataUrl);
+                        renderAdminImagesPreview();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            event.target.value = '';
+        }
+
+        function handleUrlImagesInput(val) {
+            if (!val.trim()) return;
+            const urls = val.split(',').map(u => u.trim()).filter(Boolean);
+            urls.forEach(u => {
+                if (!currentAdminImagesList.includes(u)) {
+                    currentAdminImagesList.push(u);
+                }
+            });
+            renderAdminImagesPreview();
+        }
+
+        function removeAdminImage(index) {
+            currentAdminImagesList.splice(index, 1);
+            renderAdminImagesPreview();
+        }
+
+        function renderAdminImagesPreview() {
+            const container = document.getElementById('multiImagesPreviewList');
+            const countLabel = document.getElementById('uploadedImagesCount');
+            countLabel.innerText = `${currentAdminImagesList.length} រូប`;
+
+            if (currentAdminImagesList.length === 0) {
+                container.classList.add('hidden');
+                container.innerHTML = '';
+                return;
+            }
+
+            container.classList.remove('hidden');
+            container.innerHTML = '';
+
+            currentAdminImagesList.forEach((imgSrc, idx) => {
+                const item = document.createElement('div');
+                item.className = "relative group rounded-lg overflow-hidden border border-zinc-700 bg-zinc-950 aspect-square flex items-center justify-center";
+                item.innerHTML = `
+                    <img src="${imgSrc}" class="w-full h-full object-cover">
+                    <button type="button" onclick="removeAdminImage(${idx})" class="absolute top-1 right-1 bg-red-600/90 text-white p-1 rounded-full text-[10px] opacity-90 hover:opacity-100 transition shadow">
+                        <i data-lucide="x" class="w-3 h-3"></i>
+                    </button>
+                    ${idx === 0 ? '<span class="absolute bottom-0 inset-x-0 bg-cyan-500/90 text-black text-[8px] font-bold text-center py-0.5">រូបគោល</span>' : ''}
+                `;
+                container.appendChild(item);
+            });
+
+            lucide.createIcons();
+        }
+
+        function clearSelectedImages() {
+            currentAdminImagesList = [];
+            document.getElementById('phoneImageInput').value = '';
+            document.getElementById('formProdImage').value = '';
+            renderAdminImagesPreview();
+        }
+
+        // Firestore Realtime Synchronization
+        window.initCloudSync = function() {
+            if (!window.cloudInitialized || !window.fbDb) return;
+            const productsCollection = window.dbCollection(window.fbDb, 'products');
+
+            window.dbOnSnapshot(productsCollection, (snapshot) => {
+                if (!snapshot.empty) {
+                    const cloudList = [];
+                    snapshot.forEach(docSnap => {
+                        const data = docSnap.data();
+                        const finalImages = data.images && data.images.length > 0 ? data.images : (data.image ? [data.image] : []);
+                        cloudList.push({
+                            ...data,
+                            id: data.id || docSnap.id,
+                            images: finalImages,
+                            image: finalImages[0] || data.image
+                        });
+                    });
+                    cloudList.sort((a, b) => Number(b.id) - Number(a.id));
+                    productsData = cloudList;
+                    renderProducts();
+                } else {
+                    seedInitialDataToCloud();
+                }
+            }, (error) => {
+                console.error("Cloud sync notice:", error);
+            });
+        };
+
+        async function seedInitialDataToCloud() {
+            if (!window.cloudInitialized || !window.fbDb) return;
+            try {
+                for (const item of initialProductsData) {
+                    const docRef = window.dbDoc(window.fbDb, 'products', String(item.id));
+                    await window.dbSetDoc(docRef, item);
+                }
+            } catch (e) {
+                console.warn("Seeding cloud notice:", e);
+            }
+        }
+
+        async function syncProductToCloud(product) {
+            if (!window.cloudInitialized || !window.fbDb) return;
+            try {
+                const docRef = window.dbDoc(window.fbDb, 'products', String(product.id));
+                await window.dbSetDoc(docRef, product);
+            } catch (err) {
+                console.error("Error saving to cloud:", err);
+            }
+        }
+
+        async function removeProductFromCloud(productId) {
+            if (!window.cloudInitialized || !window.fbDb) return;
+            try {
+                const docRef = window.dbDoc(window.fbDb, 'products', String(productId));
+                await window.dbDeleteDoc(docRef);
+            } catch (err) {
+                console.error("Error deleting from cloud:", err);
+            }
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const emptyState = document.getElementById('emptyState');
+            grid.innerHTML = '';
+
+            const filtered = productsData.filter(item => {
+                const matchesCat = currentCategory === 'ALL' || item.category === currentCategory;
+                const matchesQuery = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                     item.category.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCat && matchesQuery;
+            });
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            filtered.forEach(product => {
+                const card = document.createElement('div');
+                card.className = "group relative flex flex-col cursor-pointer transition-transform duration-200";
+
+                const mainImage = (product.images && product.images.length > 0) ? product.images[0] : (product.image || '');
+                const imagesCount = product.images ? product.images.length : 1;
+
+                let adminActionButtons = '';
+                if (isAdminLoggedIn) {
+                    adminActionButtons = `
+                        <div class="absolute top-1.5 right-1.5 z-20 flex gap-1 bg-black/85 backdrop-blur-md p-0.5 rounded border border-zinc-700 shadow-xl" onclick="event.stopPropagation()">
+                            <button onclick="openProductEditModal(${product.id})" class="p-1 bg-zinc-800 hover:bg-cyan-500 hover:text-black rounded text-zinc-300 transition" title="កែប្រែ">
+                                <i data-lucide="edit-2" class="w-3 h-3"></i>
+                            </button>
+                            <button onclick="promptDeleteProduct(${product.id})" class="p-1 bg-zinc-800 hover:bg-red-500 hover:text-white rounded text-zinc-300 transition" title="លុប">
+                                <i data-lucide="trash" class="w-3 h-3"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+
+                let typeBadge = '';
+                if (product.category === 'SIM') {
+                    typeBadge = `<span class="absolute top-1.5 left-1.5 bg-emerald-500/90 text-white text-[8px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">SIM</span>`;
+                } else if (product.category === 'SERVICES') {
+                    typeBadge = `<span class="absolute top-1.5 left-1.5 bg-purple-500/90 text-white text-[8px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">FIX</span>`;
+                }
+
+                let multiImgBadge = '';
+                if (imagesCount > 1) {
+                    const leftOffset = (product.category === 'SIM' || product.category === 'SERVICES') ? 'left-11' : 'left-1.5';
+                    multiImgBadge = `
+                        <div class="absolute top-1.5 ${leftOffset} bg-black/70 backdrop-blur-md text-zinc-300 text-[9px] px-1 py-0.5 rounded flex items-center gap-0.5 border border-zinc-700/60">
+                            <i data-lucide="images" class="w-2.5 h-2.5 text-cyan-400"></i> ${imagesCount}
+                        </div>
+                    `;
+                }
+
+                let subText = '';
+                if (product.category === 'SIM') {
+                    subText = 'SIM • SPECIAL';
+                } else if (product.category === 'SERVICES') {
+                    subText = 'SERVICE • សេវា';
+                } else {
+                    subText = `${(product.colors ? product.colors.length : 1)} COLOURS`;
+                }
+
+                card.innerHTML = `
+                    <div class="relative w-full aspect-square bg-[#151518] border border-zinc-800/80 rounded-none overflow-hidden flex items-center justify-center" onclick="openProductModal(${product.id})">
+                        <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/18181b/ffffff?text=Product'">
+                        ${typeBadge}
+                        ${multiImgBadge}
+                        <div class="absolute bottom-1.5 left-1.5 ${product.tagColor || 'bg-[#00d2ff]'} ${product.tagTextColor || 'text-black'} font-extrabold text-[10px] sm:text-xs px-1.5 py-0.5 tracking-tight rounded-sm shadow-md">
+                            $${parseFloat(product.price).toFixed(2)}
+                        </div>
+                        ${adminActionButtons}
+                    </div>
+                    <div class="pt-1.5 px-0.5" onclick="openProductModal(${product.id})">
+                        <h3 class="text-white text-[11px] sm:text-xs font-semibold tracking-tight truncate leading-tight">${product.name}</h3>
+                        <p class="text-zinc-500 text-[9px] sm:text-[10px] uppercase font-medium tracking-wider mt-0.5 truncate">${subText}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+
+        /* --- ADMIN FUNCTIONALITIES --- */
+        function openAdminAuth() {
+            if (isAdminLoggedIn) {
+                showToast("លោកអ្នកកំពុងស្ថិតក្នុង Admin Mode រួចហើយ!");
+                return;
+            }
+            document.getElementById('adminPinInput').value = '';
+            document.getElementById('adminAuthModal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('adminPinInput').focus(), 100);
+        }
+
+        function closeAdminAuth() {
+            document.getElementById('adminAuthModal').classList.add('hidden');
+        }
+
+        function verifyAdminPin() {
+            const pin = document.getElementById('adminPinInput').value.trim();
+            if (pin === '8888') {
+                isAdminLoggedIn = true;
+                closeAdminAuth();
+                document.getElementById('adminBanner').classList.remove('hidden');
+                document.getElementById('adminToggleBtn').classList.add('text-cyan-400', 'border-cyan-400');
+                showToast("ចូល Admin Mode ជោគជ័យ! លោកអ្នកអាចកែ ឬបន្ថែមទំនិញបាន។");
+                renderProducts();
+            } else {
+                showToast("លេខកូដមិនត្រឹមត្រូវទេ! (Default: 8888)");
+            }
+        }
+
+        function exitAdminMode() {
+            isAdminLoggedIn = false;
+            document.getElementById('adminBanner').classList.add('hidden');
+            document.getElementById('adminToggleBtn').classList.remove('text-cyan-400', 'border-cyan-400');
+            showToast("បានចាកចេញពី Admin Mode");
+            renderProducts();
+        }
+
+        function openProductEditModal(productId = null) {
+            const form = document.getElementById('adminProductForm');
+            form.reset();
+            clearSelectedImages();
+            const modalTitle = document.getElementById('adminModalTitle');
+
+            if (productId) {
+                const prod = productsData.find(p => p.id === productId);
+                if (!prod) return;
+
+                modalTitle.innerHTML = `<i data-lucide="edit-3" class="w-4 h-4 text-cyan-400"></i> កែប្រែទំនិញ/សេវា #${prod.id}`;
+                document.getElementById('editProductId').value = prod.id;
+                document.getElementById('formProdName').value = prod.name;
+                document.getElementById('formProdCategory').value = prod.category;
+                document.getElementById('formProdPrice').value = prod.price;
+                document.getElementById('formProdSpecs').value = prod.specs ? prod.specs.join(', ') : 'Standard';
+                document.getElementById('formProdColors').value = prod.colors ? prod.colors.join(', ') : '#000000';
+                
+                if (prod.images && prod.images.length > 0) {
+                    currentAdminImagesList = [...prod.images];
+                } else if (prod.image) {
+                    currentAdminImagesList = [prod.image];
+                }
+                renderAdminImagesPreview();
+
+                document.getElementById('formProdDesc').value = prod.description || '';
+            } else {
+                modalTitle.innerHTML = `<i data-lucide="plus-circle" class="w-4 h-4 text-cyan-400"></i> បន្ថែមទំនិញ/សេវ៉ាកម្មថ្មី`;
+                document.getElementById('editProductId').value = '';
+                document.getElementById('formProdCategory').value = currentCategory === 'ALL' ? 'SERVICES' : currentCategory;
+                document.getElementById('formProdSpecs').value = 'iPhone 13, 14, 15 Pro, Samsung S Series';
+                document.getElementById('formProdColors').value = '#a855f7, #00d2ff';
+                document.getElementById('formProdDesc').value = 'សេវាកម្មរហ័សទាន់ចិត្ត ជួសជុលដោយជាងជំនាញ និងមានការធានាត្រឹមត្រូវ។';
+            }
+
+            document.getElementById('adminProductModal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeProductEditModal() {
+            clearSelectedImages();
+            document.getElementById('adminProductModal').classList.add('hidden');
+        }
+
+        async function saveProduct(e) {
+            e.preventDefault();
+
+            const editId = document.getElementById('editProductId').value;
+            const name = document.getElementById('formProdName').value.trim();
+            const category = document.getElementById('formProdCategory').value;
+            const price = parseFloat(document.getElementById('formProdPrice').value) || 0;
+            const desc = document.getElementById('formProdDesc').value.trim();
+            
+            const rawSpecs = document.getElementById('formProdSpecs').value.trim();
+            const specs = rawSpecs ? rawSpecs.split(',').map(s => s.trim()).filter(Boolean) : ['Standard'];
+
+            const rawColors = document.getElementById('formProdColors').value.trim();
+            const colors = rawColors ? rawColors.split(',').map(c => c.trim()).filter(Boolean) : ['#222222'];
+
+            let imagesToSave = [...currentAdminImagesList];
+            if (imagesToSave.length === 0) {
+                if (category === 'SIM') {
+                    imagesToSave = [`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='80' y='110' width='240' height='170' rx='18' fill='%2300d2ff' stroke='%23333' stroke-width='2'/><rect x='110' y='150' width='40' height='32' rx='6' fill='%23f1c40f'/><text x='240' y='180' font-size='22' font-family='sans-serif' fill='%23000' font-weight='bold' text-anchor='middle'>SIM CARD</text><text x='200' y='250' font-size='14' font-family='sans-serif' fill='%23000' text-anchor='middle' font-weight='bold'>${encodeURIComponent(name.slice(0, 16))}</text></svg>`];
+                } else if (category === 'SERVICES') {
+                    imagesToSave = [`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23160b24'/><circle cx='200' cy='180' r='65' fill='%2328133f' stroke='%23a855f7' stroke-width='3'/><path d='M180 200 L220 160 M220 200 L180 160' stroke='%23a855f7' stroke-width='4' stroke-linecap='round'/><text x='200' y='280' font-size='16' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>${encodeURIComponent(name.slice(0, 15))}</text></svg>`];
+                } else {
+                    imagesToSave = [`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='110' y='50' width='180' height='300' rx='28' fill='%2328282b' stroke='%233f3f46' stroke-width='3'/><rect x='120' y='60' width='160' height='280' rx='20' fill='%23101014'/><circle cx='200' cy='80' r='6' fill='%2300d2ff'/><text x='200' y='210' font-size='18' font-family='sans-serif' fill='%23fff' text-anchor='middle' font-weight='bold'>${encodeURIComponent(name.slice(0, 14))}</text></svg>`];
+                }
+            }
+
+            let tagColor = "bg-[#00d2ff]";
+            let tagTextColor = "text-black";
+            if (category === 'SIM') {
+                if (name.toLowerCase().includes('cellcard')) {
+                    tagColor = "bg-[#f37021]";
+                    tagTextColor = "text-white";
+                } else if (name.toLowerCase().includes('metfone')) {
+                    tagColor = "bg-[#d8232a]";
+                    tagTextColor = "text-white";
+                } else {
+                    tagColor = "bg-[#00a651]";
+                    tagTextColor = "text-white";
+                }
+            } else if (category === 'SERVICES') {
+                tagColor = "bg-[#a855f7]";
+                tagTextColor = "text-white";
+            }
+
+            let savedProduct = null;
+
+            if (editId) {
+                const index = productsData.findIndex(p => String(p.id) === String(editId));
+                if (index !== -1) {
+                    savedProduct = {
+                        ...productsData[index],
+                        id: parseInt(editId),
+                        name,
+                        category,
+                        price,
+                        specs,
+                        colors,
+                        colorsCount: colors.length,
+                        description: desc,
+                        images: imagesToSave,
+                        image: imagesToSave[0],
+                        tagColor,
+                        tagTextColor
+                    };
+                    productsData[index] = savedProduct;
+                    showToast(`បានកែប្រែ "${name}" ជោគជ័យ!`);
+                }
+            } else {
+                const newId = productsData.length > 0 ? Math.max(...productsData.map(p => Number(p.id) || 0)) + 1 : 1;
+                savedProduct = {
+                    id: newId,
+                    name,
+                    category,
+                    price,
+                    colorsCount: colors.length,
+                    colors,
+                    tagColor,
+                    tagTextColor,
+                    specs,
+                    description: desc,
+                    images: imagesToSave,
+                    image: imagesToSave[0]
+                };
+                productsData.unshift(savedProduct);
+                showToast(`បានបញ្ចូល "${name}" ទៅក្នុង Cloud ជោគជ័យ!`);
+            }
+
+            if (savedProduct) {
+                await syncProductToCloud(savedProduct);
+            }
+
+            closeProductEditModal();
+            renderProducts();
+        }
+
+        function promptDeleteProduct(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+            productToDeleteId = productId;
+            document.getElementById('deleteTargetName').innerText = `តើអ្នកចង់លុប "${product.name}" ($${product.price}) មែនទេ?`;
+            document.getElementById('confirmDeleteModal').classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            productToDeleteId = null;
+            document.getElementById('confirmDeleteModal').classList.add('hidden');
+        }
+
+        async function executeDeleteProduct() {
+            if (!productToDeleteId) return;
+            const targetProd = productsData.find(p => p.id === productToDeleteId);
+            const targetName = targetProd ? targetProd.name : "ទំនិញ";
+            
+            await removeProductFromCloud(productToDeleteId);
+
+            productsData = productsData.filter(p => p.id !== productToDeleteId);
+            closeDeleteModal();
+            renderProducts();
+            showToast(`បានលុប "${targetName}" ចេញពី Cloud និងបញ្ជីហាង!`);
+        }
+
+        function setCategory(category) {
+            currentCategory = category;
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                const label = btn.innerText.trim();
+                const isActive = (category === 'CHARGERS' && label === 'POWER') || 
+                                 (category === 'SIM' && label.includes('SIM')) || 
+                                 (category === 'SERVICES' && label.includes('សេវ៉ាកម្ម')) || 
+                                 label === category;
+                if (isActive) {
+                    btn.className = "category-btn active px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all bg-white text-black shadow";
+                } else {
+                    btn.className = "category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900";
+                }
+            });
+            renderProducts();
+        }
+
+        const searchBtn = document.getElementById('searchBtn');
+        const searchContainer = document.getElementById('searchContainer');
+        const searchInput = document.getElementById('searchInput');
+
+        searchBtn.addEventListener('click', () => {
+            searchContainer.classList.toggle('hidden');
+            if (!searchContainer.classList.contains('hidden')) {
+                searchInput.focus();
+            } else {
+                searchInput.value = '';
+                searchQuery = '';
+                renderProducts();
+            }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim();
+            renderProducts();
+        });
+
+        function openProductModal(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            selectedProductForModal = product;
+            selectedColor = product.colors ? product.colors[0] : '#ffffff';
+            selectedSpec = product.specs ? product.specs[0] : 'Standard';
+            currentModalImageIndex = 0;
+
+            let catTitle = product.category;
+            if (product.category === 'SIM') catTitle = 'SIM CARD (SMART / CELLCARD / METFONE)';
+            if (product.category === 'SERVICES') catTitle = 'SERVICES • សេវ៉ាកម្មជួសជុល & ដោះកូដ';
+            document.getElementById('modalCategory').innerText = catTitle;
+
+            document.getElementById('modalTitle').innerText = product.name;
+            document.getElementById('modalDescription').innerText = product.description;
+            
+            const badge = document.getElementById('modalBadge');
+            badge.innerText = `$${parseFloat(product.price).toFixed(2)}`;
+            badge.className = `absolute bottom-3 left-3 ${product.tagColor || 'bg-[#00d2ff]'} ${product.tagTextColor || 'text-black'} font-extrabold px-3 py-1 text-sm tracking-tight rounded-sm`;
+
+            const variantLabel = document.getElementById('variantLabel');
+            const colorSection = document.getElementById('modalColorSection');
+            const addBtnText = document.getElementById('modalAddBtnText');
+
+            if (product.category === 'SIM') {
+                variantLabel.innerText = "ជ្រើសរើសលេខទូរស័ព្ទ (Phone Number Options)";
+                colorSection.classList.add('hidden');
+                addBtnText.innerText = "ទិញស៊ីមនេះ (Order SIM)";
+            } else if (product.category === 'SERVICES') {
+                variantLabel.innerText = "ជ្រើសរើសម៉ូដែល / ប្រភេទសេវា (Select Model / Type)";
+                colorSection.classList.add('hidden');
+                addBtnText.innerText = "កក់សេវាកម្មនេះ (Book Service)";
+            } else {
+                variantLabel.innerText = "ទំហំផ្ទុក / ម៉ូដែល (Storage / Model)";
+                colorSection.classList.remove('hidden');
+                addBtnText.innerText = "បញ្ចូលទៅកន្ត្រក (Add to Cart)";
+            }
+
+            const allImages = (product.images && product.images.length > 0) ? product.images : [product.image];
+            setupModalGallery(allImages);
+
+            const colorsContainer = document.getElementById('modalColors');
+            colorsContainer.innerHTML = '';
+            (product.colors || ['#ffffff']).forEach((color, idx) => {
+                const colorBtn = document.createElement('button');
+                colorBtn.className = `w-7 h-7 rounded-full border-2 transition-transform ${idx === 0 ? 'border-cyan-400 scale-110' : 'border-zinc-700'}`;
+                colorBtn.style.backgroundColor = color;
+                colorBtn.onclick = () => {
+                    document.querySelectorAll('#modalColors button').forEach(b => {
+                        b.classList.remove('border-cyan-400', 'scale-110');
+                        b.classList.add('border-zinc-700');
+                    });
+                    colorBtn.classList.remove('border-zinc-700');
+                    colorBtn.classList.add('border-cyan-400', 'scale-110');
+                    selectedColor = color;
+                };
+                colorsContainer.appendChild(colorBtn);
+            });
+
+            const specOptionsContainer = document.getElementById('specOptions');
+            specOptionsContainer.innerHTML = '';
+            if (product.specs && product.specs.length > 0) {
+                product.specs.forEach((spec, idx) => {
+                    const btn = document.createElement('button');
+                    btn.innerText = spec;
+                    btn.className = idx === 0 
+                        ? "spec-btn py-2 text-xs font-semibold rounded border border-cyan-400 bg-cyan-400/10 text-cyan-400 truncate px-2"
+                        : "spec-btn py-2 text-xs font-semibold rounded border border-zinc-700 bg-zinc-800/60 hover:border-white text-zinc-200 truncate px-2";
+                    btn.onclick = () => {
+                        document.querySelectorAll('.spec-btn').forEach(b => {
+                            b.className = "spec-btn py-2 text-xs font-semibold rounded border border-zinc-700 bg-zinc-800/60 hover:border-white text-zinc-200 truncate px-2";
+                        });
+                        btn.className = "spec-btn py-2 text-xs font-semibold rounded border border-cyan-400 bg-cyan-400/10 text-cyan-400 truncate px-2";
+                        selectedSpec = spec;
+                    };
+                    specOptionsContainer.appendChild(btn);
+                });
+            }
+
+            document.getElementById('productModal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function setupModalGallery(images) {
+            const modalImg = document.getElementById('modalImage');
+            const prevBtn = document.getElementById('modalPrevImgBtn');
+            const nextBtn = document.getElementById('modalNextImgBtn');
+            const thumbnailsBar = document.getElementById('modalThumbnailsBar');
+
+            modalImg.src = images[0];
+
+            if (images.length > 1) {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+                thumbnailsBar.classList.remove('hidden');
+                thumbnailsBar.innerHTML = '';
+
+                images.forEach((imgUrl, i) => {
+                    const thumb = document.createElement('button');
+                    thumb.className = `w-12 h-12 rounded-lg border-2 overflow-hidden flex-shrink-0 transition-transform ${i === 0 ? 'border-cyan-400 scale-105' : 'border-zinc-800 opacity-60 hover:opacity-100'}`;
+                    thumb.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-cover">`;
+                    thumb.onclick = () => {
+                        currentModalImageIndex = i;
+                        updateModalImage(images);
+                    };
+                    thumbnailsBar.appendChild(thumb);
+                });
+            } else {
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                thumbnailsBar.classList.add('hidden');
+            }
+        }
+
+        function navigateModalImage(direction) {
+            if (!selectedProductForModal) return;
+            const images = (selectedProductForModal.images && selectedProductForModal.images.length > 0) 
+                ? selectedProductForModal.images 
+                : [selectedProductForModal.image];
+            
+            currentModalImageIndex = (currentModalImageIndex + direction + images.length) % images.length;
+            updateModalImage(images);
+        }
+
+        function updateModalImage(images) {
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = images[currentModalImageIndex];
+
+            const thumbs = document.querySelectorAll('#modalThumbnailsBar button');
+            thumbs.forEach((t, i) => {
+                if (i === currentModalImageIndex) {
+                    t.className = "w-12 h-12 rounded-lg border-2 border-cyan-400 scale-105 overflow-hidden flex-shrink-0 transition-transform";
+                } else {
+                    t.className = "w-12 h-12 rounded-lg border-2 border-zinc-800 opacity-60 hover:opacity-100 overflow-hidden flex-shrink-0 transition-transform";
+                }
+            });
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        document.getElementById('modalAddToCartBtn').addEventListener('click', () => {
+            if (!selectedProductForModal) return;
+
+            const existingItem = cart.find(item => 
+                item.id === selectedProductForModal.id && 
+                item.spec === selectedSpec && 
+                item.color === selectedColor
+            );
+
+            const displayImage = (selectedProductForModal.images && selectedProductForModal.images.length > 0) 
+                ? selectedProductForModal.images[0] 
+                : selectedProductForModal.image;
+
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({
+                    id: selectedProductForModal.id,
+                    name: selectedProductForModal.name,
+                    category: selectedProductForModal.category,
+                    price: selectedProductForModal.price,
+                    image: displayImage,
+                    spec: selectedSpec,
+                    color: selectedColor,
+                    qty: 1
+                });
+            }
+
+            closeProductModal();
+            updateCartUI();
+            
+            const msgLabel = selectedProductForModal.category === 'SERVICES' ? 'បានកក់សេវាកម្ម' : 'បានបញ្ចូលទៅក្នុងកន្ត្រក';
+            showToast(`${msgLabel} ${selectedProductForModal.name} (${selectedSpec})!`);
+        });
+
+        function updateCartUI() {
+            const countEl = document.getElementById('cartCount');
+            const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
+            countEl.innerText = totalCount;
+
+            const itemsContainer = document.getElementById('cartItemsList');
+            itemsContainer.innerHTML = '';
+
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-zinc-500">
+                        <i data-lucide="shopping-cart" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+                        <p class="text-xs">កន្ត្រកទំនិញរបស់អ្នកទទេ</p>
+                    </div>
+                `;
+            } else {
+                cart.forEach((item, index) => {
+                    subtotal += item.price * item.qty;
+                    const itemRow = document.createElement('div');
+                    itemRow.className = "flex items-center gap-3 bg-zinc-950 p-2.5 rounded-xl border border-zinc-800";
+                    
+                    let typeTitle = 'ជម្រើស:';
+                    if (item.category === 'SIM') typeTitle = 'លេខ:';
+                    if (item.category === 'SERVICES') typeTitle = 'សេវា/ម៉ូដែល:';
+
+                    const showColorDot = (item.category !== 'SIM' && item.category !== 'SERVICES');
+
+                    itemRow.innerHTML = `
+                        <img src="${item.image}" class="w-14 h-14 object-contain rounded-lg bg-zinc-800/80 p-1 flex-shrink-0" alt="${item.name}">
+                        <div class="flex-grow min-w-0">
+                            <h4 class="text-xs font-semibold text-white truncate">${item.name}</h4>
+                            <div class="flex items-center gap-2 mt-0.5">
+                                <span class="text-[10px] text-zinc-400">${typeTitle} <strong class="text-zinc-200">${item.spec}</strong></span>
+                                ${showColorDot ? `<span class="w-2.5 h-2.5 rounded-full inline-block border border-zinc-700" style="background-color: ${item.color};"></span>` : ''}
+                            </div>
+                            <span class="text-xs font-bold text-cyan-400 mt-1 block">$${(item.price * item.qty).toFixed(2)}</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="changeQty(${index}, -1)" class="w-6 h-6 rounded bg-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center text-xs">-</button>
+                            <span class="text-xs font-medium w-4 text-center">${item.qty}</span>
+                            <button onclick="changeQty(${index}, 1)" class="w-6 h-6 rounded bg-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center text-xs">+</button>
+                        </div>
+                    `;
+                    itemsContainer.appendChild(itemRow);
+                });
+            }
+
+            document.getElementById('cartTotal').innerText = `$${subtotal.toFixed(2)}`;
+            lucide.createIcons();
+        }
+
+        function changeQty(index, delta) {
+            if (!cart[index]) return;
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function toggleCart(open) {
+            const drawer = document.getElementById('cartDrawer');
+            if (open) {
+                drawer.classList.remove('hidden');
+                drawer.classList.add('flex');
+            } else {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('flex');
+            }
+        }
+
+        document.getElementById('cartBtn').addEventListener('click', () => toggleCart(true));
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('opacity-0');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+            }, 2500);
+        }
+
+        function checkoutToTelegram() {
+            if (cart.length === 0) {
+                showToast("សូមជ្រើសរើសទំនិញ ឬសេវ៉ាកម្មមុននឹងកម្ម៉ង់!");
+                return;
+            }
+
+            let orderText = "📱 *ការបញ្ជាទិញទំនិញ / សេវ៉ាកម្មជួសជុល / ស៊ីមកាត*%0A%0A";
+            let total = 0;
+
+            cart.forEach((item, i) => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                let typeLabel = 'ជម្រើស';
+                if (item.category === 'SIM') typeLabel = 'ស៊ីមលេខ';
+                if (item.category === 'SERVICES') typeLabel = 'ប្រភេទសេវា';
+                orderText += `${i + 1}. *${item.name}* (${typeLabel}: ${item.spec}) x ${item.qty} = $${itemTotal.toFixed(2)}%0A`;
+            });
+
+            orderText += `%0A💰 *សរុបទាំងអស់ (Total):* $${total.toFixed(2)}%0A🚚 *ទីតាំងទទួល / លេខទូរស័ព្ទទំនាក់ទំនង:* `;
+
+            const telegramUrl = `https://t.me/share/url?url=${orderText}`;
+            window.open(telegramUrl, '_blank');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            lucide.createIcons();
+            if (window.cloudInitialized && typeof window.initCloudSync === 'function') {
+                window.initCloudSync();
+            }
+        });
+    </script>
 </body>
 </html>
