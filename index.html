@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <!-- Admin Banner Notification (បង្ហាញតែពេលបើក Admin Mode) -->
+        <!-- Admin Banner Notification -->
         <div id="adminBanner" class="hidden bg-gradient-to-r from-amber-500/20 to-cyan-500/20 border-y border-amber-500/30 px-4 py-2">
             <div class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl flex items-center justify-between text-xs">
                 <div class="flex items-center gap-2 text-amber-300 font-semibold">
@@ -308,9 +308,9 @@
                 <i data-lucide="lock" class="w-6 h-6"></i>
             </div>
             <h3 class="font-bold text-white text-base mb-1">ចូលផ្ទាំងគ្រប់គ្រង (Admin)</h3>
-            <p class="text-xs text-zinc-400 mb-4">បញ្ចូលលេខកូដសម្ងាត់ដើម្បីកែប្រែទំនិញ (កូដលំនាំដើម: <strong class="text-cyan-400 font-mono">8888</strong>)</p>
+            <p class="text-xs text-zinc-400 mb-4">បញ្ចូលលេខកូដសម្ងាត់ដើម្បីកែប្រែទំនិញ</p>
             
-            <input type="password" id="adminPinInput" placeholder="បញ្ចូលលេខកូដ PIN" maxlength="6"
+            <input type="password" id="adminPinInput" placeholder="បញ្ចូលលេខកូដ PIN" maxlength="10"
                    class="w-full bg-zinc-950 border border-zinc-700 text-center text-lg tracking-widest text-white py-2 rounded-xl mb-3 focus:outline-none focus:border-cyan-400 font-mono">
             
             <div class="grid grid-cols-2 gap-2">
@@ -444,7 +444,7 @@
     <script>
         const initialProductsData = [
             {
-                id: 1,
+                id: "1",
                 name: "iPhone 16 Pro Max",
                 category: "PHONES",
                 price: 1199.00,
@@ -455,13 +455,12 @@
                 specs: ["256GB", "512GB", "1TB"],
                 description: "បន្ទះឈីប A18 Pro ថ្មី ស៊ុមទីតានីញ៉ូមស្រាលរឹងមាំ និងកាមេរ៉ា 48MP Fusion ដ៏អស្ចារ្យ។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='110' y='40' width='180' height='320' rx='36' fill='%232b2a2e' stroke='%23444' stroke-width='3'/><rect x='118' y='48' width='164' height='304' rx='30' fill='%230f0f11'/><rect x='165' y='58' width='70' height='16' rx='8' fill='%23000'/><rect x='125' y='55' width='65' height='75' rx='18' fill='%23222' stroke='%23333'/><circle cx='142' cy='72' r='10' fill='%23111' stroke='%23555' stroke-width='2'/><circle cx='142' cy='112' r='10' fill='%23111' stroke='%23555' stroke-width='2'/><circle cx='172' cy='92' r='10' fill='%23111' stroke='%23555' stroke-width='2'/></svg>",
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23121214'/><rect x='115' y='45' width='170' height='310' rx='32' fill='%231b1b1e' stroke='%23333' stroke-width='2'/><circle cx='200' cy='200' r='48' fill='none' stroke='%2300d2ff' stroke-width='3'/><text x='200' y='206' font-size='14' font-family='sans-serif' fill='%2300d2ff' text-anchor='middle'>A18 PRO</text></svg>"
+                    "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='110' y='40' width='180' height='320' rx='36' fill='%232b2a2e' stroke='%23444' stroke-width='3'/><rect x='118' y='48' width='164' height='304' rx='30' fill='%230f0f11'/><rect x='165' y='58' width='70' height='16' rx='8' fill='%23000'/><rect x='125' y='55' width='65' height='75' rx='18' fill='%23222' stroke='%23333'/><circle cx='142' cy='72' r='10' fill='%23111' stroke='%23555' stroke-width='2'/><circle cx='142' cy='112' r='10' fill='%23111' stroke='%23555' stroke-width='2'/><circle cx='172' cy='92' r='10' fill='%23111' stroke='%23555' stroke-width='2'/></svg>"
+                image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 201,
+                id: "201",
                 name: "សេវាប្តូរអេក្រង់សុទ្ធ (Screen Replacement)",
                 category: "SERVICES",
                 price: 45.00,
@@ -472,12 +471,12 @@
                 specs: ["iPhone 13-14 Series", "iPhone 15 Series", "iPhone 16 Series", "Samsung S Series"],
                 description: "ប្តូរអេក្រង់ហ្ស៊ីនគុណភាពខ្ពស់ ពណ៌ច្បាស់ 120Hz រលូន មានការធានាលើ Touchscreen និងបង្ហាញ TrueTone ត្រឹមត្រូវ។ ប្រើពេលត្រឹម ៣០ នាទី។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%231a0e28'/><rect x='110' y='50' width='180' height='300' rx='28' fill='%2326163b' stroke='%23a855f7' stroke-width='3'/><rect x='125' y='65' width='150' height='270' rx='18' fill='%230e0617'/><circle cx='200' cy='180' r='38' fill='none' stroke='%23a855f7' stroke-width='3'/><path d='M185 180 L195 190 L215 170' stroke='%23a855f7' stroke-width='3' fill='none' stroke-linecap='round'/><text x='200' y='250' font-size='15' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>SCREEN FIX</text></svg>"
+                    "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%231a0e28'/><rect x='110' y='50' width='180' height='300' rx='28' fill='%2326163b' stroke='%23a855f7' stroke-width='3'/><rect x='125' y='65' width='150' height='270' rx='18' fill='%230e0617'/><circle cx='200' cy='180' r='38' fill='none' stroke='%23a855f7' stroke-width='3'/><path d='M185 180 L195 190 L215 170' stroke='%23a855f7' stroke-width='3' fill='none' stroke-linecap='round'/><text x='200' y='250' font-size='15' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>SCREEN FIX</text></svg>"
+                image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 202,
+                id: "202",
                 name: "សេវាប្តូរថ្មទូរស័ព្ទសុខភាព 100% (Battery)",
                 category: "SERVICES",
                 price: 25.00,
@@ -488,12 +487,12 @@
                 specs: ["iPhone 11 - 12", "iPhone 13 - 14", "iPhone 15 Series", "Android Battery"],
                 description: "ប្តូរគ្រាប់ថ្មថ្មីកម្រិតសុខភាព 100% កាន់ថ្មបានយូរ មិនឡើងកម្តៅ មានការធានាជូន ៦ ខែ ពេញចិត្តសេវាកម្ម។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230d2012'/><rect x='130' y='90' width='140' height='220' rx='18' fill='%2316381e' stroke='%2322c55e' stroke-width='3'/><rect x='170' y='72' width='60' height='18' rx='6' fill='%2322c55e'/><path d='M205 130 L180 195 L202 195 L192 260 L225 185 L202 185 Z' fill='%2322c55e'/><text x='200' y='290' font-size='14' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>100% HEALTH</text></svg>"
+                    "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230d2012'/><rect x='130' y='90' width='140' height='220' rx='18' fill='%2316381e' stroke='%2322c55e' stroke-width='3'/><rect x='170' y='72' width='60' height='18' rx='6' fill='%2322c55e'/><path d='M205 130 L180 195 L202 195 L192 260 L225 185 L202 185 Z' fill='%2322c55e'/><text x='200' y='290' font-size='14' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>100% HEALTH</text></svg>"
+                image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 203,
+                id: "203",
                 name: "សេវាដោះកូដ ដោះសោរ & កម្មវិធី (Software / Unlock)",
                 category: "SERVICES",
                 price: 15.00,
@@ -504,12 +503,12 @@
                 specs: ["Passcode Unlock", "Bypass iCloud", "Flash ROM / Update", "FRP Lock"],
                 description: "ជួសជុលបញ្ហាជាប់កូដអេក្រង់ ដោះសោរប្រព័ន្ធ ជួសជុលម៉ាស៊ីន Restart ឬជាប់ Logo Apple/Android ដោយសុវត្ថិភាព។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230a1628'/><circle cx='200' cy='180' r='60' fill='%23132644' stroke='%233b82f6' stroke-width='3'/><rect x='175' y='180' width='50' height='45' rx='8' fill='%233b82f6'/><path d='M183 180 V155 A17 17 0 0 1 217 155 V180' fill='none' stroke='%233b82f6' stroke-width='6' stroke-linecap='round'/><circle cx='200' cy='200' r='4' fill='%230a1628'/><text x='200' y='275' font-size='15' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>UNLOCK & FIX</text></svg>"
+                    "https://images.unsplash.com/photo-1563770660941-20978e870e26?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230a1628'/><circle cx='200' cy='180' r='60' fill='%23132644' stroke='%233b82f6' stroke-width='3'/><rect x='175' y='180' width='50' height='45' rx='8' fill='%233b82f6'/><path d='M183 180 V155 A17 17 0 0 1 217 155 V180' fill='none' stroke='%233b82f6' stroke-width='6' stroke-linecap='round'/><circle cx='200' cy='200' r='4' fill='%230a1628'/><text x='200' y='275' font-size='15' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>UNLOCK & FIX</text></svg>"
+                image: "https://images.unsplash.com/photo-1563770660941-20978e870e26?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 101,
+                id: "101",
                 name: "ស៊ីម Smart លេខពិសេស (VIP Number)",
                 category: "SIM",
                 price: 25.00,
@@ -520,12 +519,12 @@
                 specs: ["098 888 776", "096 555 123", "010 777 990"],
                 description: "ស៊ីម Smart 4G/5G លេខស្អាត ងាយស្រួលចាំ ភ្ជាប់ជាមួយគម្រោង Smart ThomMorng រួចជាស្រេច។ ផ្ទេរឈ្មោះស្របច្បាប់ជូនភ្លាមៗ។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230a1f11'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%2300a651' stroke='%2300d668' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='250' y='178' font-size='26' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>Smart</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>098 • 888 • 776</text></svg>"
+                    "https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%230a1f11'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%2300a651' stroke='%2300d668' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='250' y='178' font-size='26' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>Smart</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>098 • 888 • 776</text></svg>"
+                image: "https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 102,
+                id: "102",
                 name: "ស៊ីម Cellcard លេខហុងស៊ុយ (Gold & VIP)",
                 category: "SIM",
                 price: 35.00,
@@ -536,12 +535,12 @@
                 specs: ["012 999 554", "077 666 883", "089 778 899"],
                 description: "ស៊ីម Cellcard លេខហុងស៊ុយ រកស៊ីមានបាន គាំទ្រសេវា 5G ល្បឿនលឿនទូទាំងប្រទេស។ អាចចុះឈ្មោះអត្តសញ្ញាណប័ណ្ណផ្លូវការជូនបាន។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%232b1304'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%23f37021' stroke='%23ff924d' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='245' y='178' font-size='24' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>cellcard</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>012 • 999 • 554</text></svg>"
+                    "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%232b1304'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%23f37021' stroke='%23ff924d' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='245' y='178' font-size='24' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>cellcard</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>012 • 999 • 554</text></svg>"
+                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 103,
+                id: "103",
                 name: "ស៊ីម Metfone អ៊ីនធឺណិតមិនកំណត់ (Unlimited Data)",
                 category: "SIM",
                 price: 15.00,
@@ -552,12 +551,12 @@
                 specs: ["097 555 889", "088 333 771", "071 999 120"],
                 description: "ស៊ីម Metfone សេវាគ្របដណ្តប់ខ្លាំងគ្រប់ស្រុកភូមិ គាំទ្រគម្រោង Data មិនកំណត់សម្រាប់លេង Facebook, YouTube, TikTok។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23240608'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%23d8232a' stroke='%23ff545b' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='245' y='178' font-size='24' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>metfone</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>097 • 555 • 889</text></svg>"
+                    "https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23240608'/><rect x='70' y='110' width='260' height='170' rx='18' fill='%23d8232a' stroke='%23ff545b' stroke-width='3'/><rect x='100' y='150' width='45' height='36' rx='6' fill='%23f1c40f'/><line x1='100' y1='168' x2='145' y2='168' stroke='%23b7950b' stroke-width='2'/><text x='245' y='178' font-size='24' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>metfone</text><text x='200' y='250' font-size='16' font-family='sans-serif' fill='%23ffffff' text-anchor='middle' font-weight='bold'>097 • 555 • 889</text></svg>"
+                image: "https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 2,
+                id: "2",
                 name: "Galaxy S24 Ultra",
                 category: "PHONES",
                 price: 1049.00,
@@ -568,12 +567,12 @@
                 specs: ["256GB", "512GB", "1TB"],
                 description: "បច្ចេកវិទ្យា Galaxy AI ឆ្លាតវៃ អេក្រង់រាបស្មើរកម្រិត 120Hz និងប៊ិច S-Pen ភ្ជាប់ក្នុងម៉ាស៊ីន។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='112' y='42' width='176' height='316' rx='12' fill='%2337373c' stroke='%234d4d55' stroke-width='3'/><rect x='118' y='48' width='164' height='304' rx='8' fill='%230f0f12'/><circle cx='200' cy='62' r='4' fill='%23000'/><circle cx='138' cy='82' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='138' cy='116' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='138' cy='150' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='164' cy='99' r='7' fill='%23222' stroke='%23666' stroke-width='2'/></svg>"
+                    "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='112' y='42' width='176' height='316' rx='12' fill='%2337373c' stroke='%234d4d55' stroke-width='3'/><rect x='118' y='48' width='164' height='304' rx='8' fill='%230f0f12'/><circle cx='200' cy='62' r='4' fill='%23000'/><circle cx='138' cy='82' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='138' cy='116' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='138' cy='150' r='11' fill='%23222' stroke='%23666' stroke-width='2'/><circle cx='164' cy='99' r='7' fill='%23222' stroke='%23666' stroke-width='2'/></svg>"
+                image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 3,
+                id: "3",
                 name: "AirPods Pro 2 (USB-C)",
                 category: "AUDIO",
                 price: 219.00,
@@ -584,12 +583,12 @@
                 specs: ["USB-C", "MagSafe"],
                 description: "កាត់បន្ថយសំឡេងរំខានសកម្ម (ANC) ខ្លាំងទ្វេដង និងសំឡេង Spatial Audio 3D។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='130' y='120' width='140' height='160' rx='42' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='2'/><line x1='130' y1='170' x2='270' y2='170' stroke='%23ccc' stroke-width='2'/><circle cx='200' cy='205' r='3.5' fill='%2322c55e'/><rect x='182' y='275' width='36' height='5' rx='2.5' fill='%23ccc'/></svg>"
+                    "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='130' y='120' width='140' height='160' rx='42' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='2'/><line x1='130' y1='170' x2='270' y2='170' stroke='%23ccc' stroke-width='2'/><circle cx='200' cy='205' r='3.5' fill='%2322c55e'/><rect x='182' y='275' width='36' height='5' rx='2.5' fill='%23ccc'/></svg>"
+                image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 4,
+                id: "4",
                 name: "MagSafe Silicone Case",
                 category: "CASES",
                 price: 25.00,
@@ -600,12 +599,12 @@
                 specs: ["16 Pro", "16 Pro Max", "15 Pro Max"],
                 description: "ស្រោមទូរស័ព្ទស៊ីលីកូនទន់ស្រួលកាន់ ការពារជ្រាបទឹក និងគាំទ្រការសាកឥតខ្សែ MagSafe។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='115' y='50' width='170' height='300' rx='32' fill='%232e3842' stroke='%23485766' stroke-width='3'/><rect x='125' y='65' width='55' height='65' rx='14' fill='%231e242a'/><circle cx='200' cy='200' r='42' fill='none' stroke='%23485766' stroke-dasharray='4,4' stroke-width='4'/></svg>"
+                    "https://images.unsplash.com/photo-1601593346740-925612772716?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='115' y='50' width='170' height='300' rx='32' fill='%232e3842' stroke='%23485766' stroke-width='3'/><rect x='125' y='65' width='55' height='65' rx='14' fill='%231e242a'/><circle cx='200' cy='200' r='42' fill='none' stroke='%23485766' stroke-dasharray='4,4' stroke-width='4'/></svg>"
+                image: "https://images.unsplash.com/photo-1601593346740-925612772716?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 5,
+                id: "5",
                 name: "65W GaN Fast Charger",
                 category: "CHARGERS",
                 price: 29.00,
@@ -616,12 +615,12 @@
                 specs: ["3-Port", "2-Port"],
                 description: "បច្ចេកវិទ្យា GaN សាកថ្មលឿនខ្លាំង ទំហំតូចងាយស្រួលដាក់តាមខ្លួន សាកបានទាំងទូរស័ព្ទ និង Laptop។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='130' y='110' width='140' height='180' rx='16' fill='%2327272a' stroke='%233f3f46' stroke-width='2'/><rect x='165' y='145' width='70' height='12' rx='4' fill='%2300d2ff'/><rect x='165' y='175' width='70' height='12' rx='4' fill='%2300d2ff'/><rect x='165' y='210' width='70' height='22' rx='4' fill='%2352525b'/><text x='200' y='265' font-size='16' font-family='sans-serif' fill='%23a1a1aa' text-anchor='middle' font-weight='bold'>65W GaN</text></svg>"
+                    "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='130' y='110' width='140' height='180' rx='16' fill='%2327272a' stroke='%233f3f46' stroke-width='2'/><rect x='165' y='145' width='70' height='12' rx='4' fill='%2300d2ff'/><rect x='165' y='175' width='70' height='12' rx='4' fill='%2300d2ff'/><rect x='165' y='210' width='70' height='22' rx='4' fill='%2352525b'/><text x='200' y='265' font-size='16' font-family='sans-serif' fill='%23a1a1aa' text-anchor='middle' font-weight='bold'>65W GaN</text></svg>"
+                image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"
             },
             {
-                id: 6,
+                id: "6",
                 name: "Apple Watch Ultra 2",
                 category: "WATCH",
                 price: 789.00,
@@ -632,9 +631,9 @@
                 specs: ["49mm GPS + Cell"],
                 description: "តួខ្លួន Titanium ដ៏រឹងមាំ អេក្រង់ភ្លឺរហូតដល់ 3000 nits និងថ្មប្រើបានយូរដល់ 72 ម៉ោង។",
                 images: [
-                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='170' y='30' width='60' height='340' rx='10' fill='%23e07a5f'/><rect x='125' y='100' width='150' height='180' rx='34' fill='%23c2beb6' stroke='%23dedad2' stroke-width='4'/><rect x='135' y='110' width='130' height='160' rx='26' fill='%23000'/><rect x='275' y='140' width='10' height='45' rx='4' fill='%23ff5722'/><text x='200' y='198' font-size='32' font-family='sans-serif' fill='%2300d2ff' text-anchor='middle' font-weight='bold'>09:41</text></svg>"
+                    "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop&q=80"
                 ],
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='170' y='30' width='60' height='340' rx='10' fill='%23e07a5f'/><rect x='125' y='100' width='150' height='180' rx='34' fill='%23c2beb6' stroke='%23dedad2' stroke-width='4'/><rect x='135' y='110' width='130' height='160' rx='26' fill='%23000'/><rect x='275' y='140' width='10' height='45' rx='4' fill='%23ff5722'/><text x='200' y='198' font-size='32' font-family='sans-serif' fill='%2300d2ff' text-anchor='middle' font-weight='bold'>09:41</text></svg>"
+                image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop&q=80"
             }
         ];
 
@@ -763,12 +762,11 @@
                         const finalImages = data.images && data.images.length > 0 ? data.images : (data.image ? [data.image] : []);
                         cloudList.push({
                             ...data,
-                            id: data.id || docSnap.id,
+                            id: String(data.id || docSnap.id),
                             images: finalImages,
                             image: finalImages[0] || data.image
                         });
                     });
-                    cloudList.sort((a, b) => Number(b.id) - Number(a.id));
                     productsData = cloudList;
                     renderProducts();
                 } else {
@@ -818,8 +816,8 @@
 
             const filtered = productsData.filter(item => {
                 const matchesCat = currentCategory === 'ALL' || item.category === currentCategory;
-                const matchesQuery = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                     item.category.toLowerCase().includes(searchQuery.toLowerCase());
+                const matchesQuery = (item.name || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                     (item.category || '').toLowerCase().includes(searchQuery.toLowerCase());
                 return matchesCat && matchesQuery;
             });
 
@@ -831,19 +829,20 @@
 
             filtered.forEach(product => {
                 const card = document.createElement('div');
-                card.className = "group relative flex flex-col cursor-pointer transition-transform duration-200";
+                card.className = "group relative flex flex-col cursor-pointer transition-transform duration-200 select-none";
 
                 const mainImage = (product.images && product.images.length > 0) ? product.images[0] : (product.image || '');
                 const imagesCount = product.images ? product.images.length : 1;
+                const safeId = String(product.id);
 
                 let adminActionButtons = '';
                 if (isAdminLoggedIn) {
                     adminActionButtons = `
                         <div class="absolute top-1.5 right-1.5 z-20 flex gap-1 bg-black/85 backdrop-blur-md p-0.5 rounded border border-zinc-700 shadow-xl" onclick="event.stopPropagation()">
-                            <button onclick="openProductEditModal(${product.id})" class="p-1 bg-zinc-800 hover:bg-cyan-500 hover:text-black rounded text-zinc-300 transition" title="កែប្រែ">
+                            <button onclick="openProductEditModal('${safeId}')" class="p-1 bg-zinc-800 hover:bg-cyan-500 hover:text-black rounded text-zinc-300 transition" title="កែប្រែ">
                                 <i data-lucide="edit-2" class="w-3 h-3"></i>
                             </button>
-                            <button onclick="promptDeleteProduct(${product.id})" class="p-1 bg-zinc-800 hover:bg-red-500 hover:text-white rounded text-zinc-300 transition" title="លុប">
+                            <button onclick="promptDeleteProduct('${safeId}')" class="p-1 bg-zinc-800 hover:bg-red-500 hover:text-white rounded text-zinc-300 transition" title="លុប">
                                 <i data-lucide="trash" class="w-3 h-3"></i>
                             </button>
                         </div>
@@ -877,16 +876,16 @@
                 }
 
                 card.innerHTML = `
-                    <div class="relative w-full aspect-square bg-[#151518] border border-zinc-800/80 rounded-none overflow-hidden flex items-center justify-center" onclick="openProductModal(${product.id})">
+                    <div class="relative w-full aspect-square bg-[#151518] border border-zinc-800/80 rounded-lg overflow-hidden flex items-center justify-center" onclick="openProductModal('${safeId}')">
                         <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/18181b/ffffff?text=Product'">
                         ${typeBadge}
                         ${multiImgBadge}
                         <div class="absolute bottom-1.5 left-1.5 ${product.tagColor || 'bg-[#00d2ff]'} ${product.tagTextColor || 'text-black'} font-extrabold text-[10px] sm:text-xs px-1.5 py-0.5 tracking-tight rounded-sm shadow-md">
-                            $${parseFloat(product.price).toFixed(2)}
+                            $${parseFloat(product.price || 0).toFixed(2)}
                         </div>
                         ${adminActionButtons}
                     </div>
-                    <div class="pt-1.5 px-0.5" onclick="openProductModal(${product.id})">
+                    <div class="pt-1.5 px-0.5" onclick="openProductModal('${safeId}')">
                         <h3 class="text-white text-[11px] sm:text-xs font-semibold tracking-tight truncate leading-tight">${product.name}</h3>
                         <p class="text-zinc-500 text-[9px] sm:text-[10px] uppercase font-medium tracking-wider mt-0.5 truncate">${subText}</p>
                     </div>
@@ -914,7 +913,8 @@
 
         function verifyAdminPin() {
             const pin = document.getElementById('adminPinInput').value.trim();
-            if (pin === '8888') {
+            // លេខកូដសម្ងាត់ Admin $99$
+            if (pin === '$99$') {
                 isAdminLoggedIn = true;
                 closeAdminAuth();
                 document.getElementById('adminBanner').classList.remove('hidden');
@@ -922,7 +922,7 @@
                 showToast("ចូល Admin Mode ជោគជ័យ! លោកអ្នកអាចកែ ឬបន្ថែមទំនិញបាន។");
                 renderProducts();
             } else {
-                showToast("លេខកូដមិនត្រឹមត្រូវទេ! (Default: 8888)");
+                showToast("លេខកូដសម្ងាត់មិនត្រឹមត្រូវទេ!");
             }
         }
 
@@ -941,7 +941,7 @@
             const modalTitle = document.getElementById('adminModalTitle');
 
             if (productId) {
-                const prod = productsData.find(p => p.id === productId);
+                const prod = productsData.find(p => String(p.id) === String(productId));
                 if (!prod) return;
 
                 modalTitle.innerHTML = `<i data-lucide="edit-3" class="w-4 h-4 text-cyan-400"></i> កែប្រែទំនិញ/សេវា #${prod.id}`;
@@ -995,13 +995,7 @@
 
             let imagesToSave = [...currentAdminImagesList];
             if (imagesToSave.length === 0) {
-                if (category === 'SIM') {
-                    imagesToSave = [`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='80' y='110' width='240' height='170' rx='18' fill='%2300d2ff' stroke='%23333' stroke-width='2'/><rect x='110' y='150' width='40' height='32' rx='6' fill='%23f1c40f'/><text x='240' y='180' font-size='22' font-family='sans-serif' fill='%23000' font-weight='bold' text-anchor='middle'>SIM CARD</text><text x='200' y='250' font-size='14' font-family='sans-serif' fill='%23000' text-anchor='middle' font-weight='bold'>${encodeURIComponent(name.slice(0, 16))}</text></svg>`];
-                } else if (category === 'SERVICES') {
-                    imagesToSave = [`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23160b24'/><circle cx='200' cy='180' r='65' fill='%2328133f' stroke='%23a855f7' stroke-width='3'/><path d='M180 200 L220 160 M220 200 L180 160' stroke='%23a855f7' stroke-width='4' stroke-linecap='round'/><text x='200' y='280' font-size='16' font-family='sans-serif' fill='%23ffffff' font-weight='bold' text-anchor='middle'>${encodeURIComponent(name.slice(0, 15))}</text></svg>`];
-                } else {
-                    imagesToSave = [`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2319191c'/><rect x='110' y='50' width='180' height='300' rx='28' fill='%2328282b' stroke='%233f3f46' stroke-width='3'/><rect x='120' y='60' width='160' height='280' rx='20' fill='%23101014'/><circle cx='200' cy='80' r='6' fill='%2300d2ff'/><text x='200' y='210' font-size='18' font-family='sans-serif' fill='%23fff' text-anchor='middle' font-weight='bold'>${encodeURIComponent(name.slice(0, 14))}</text></svg>`];
-                }
+                imagesToSave = ["https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80"];
             }
 
             let tagColor = "bg-[#00d2ff]";
@@ -1029,7 +1023,7 @@
                 if (index !== -1) {
                     savedProduct = {
                         ...productsData[index],
-                        id: parseInt(editId),
+                        id: String(editId),
                         name,
                         category,
                         price,
@@ -1046,7 +1040,7 @@
                     showToast(`បានកែប្រែ "${name}" ជោគជ័យ!`);
                 }
             } else {
-                const newId = productsData.length > 0 ? Math.max(...productsData.map(p => Number(p.id) || 0)) + 1 : 1;
+                const newId = `prod-${Date.now()}`;
                 savedProduct = {
                     id: newId,
                     name,
@@ -1074,7 +1068,7 @@
         }
 
         function promptDeleteProduct(productId) {
-            const product = productsData.find(p => p.id === productId);
+            const product = productsData.find(p => String(p.id) === String(productId));
             if (!product) return;
             productToDeleteId = productId;
             document.getElementById('deleteTargetName').innerText = `តើអ្នកចង់លុប "${product.name}" ($${product.price}) មែនទេ?`;
@@ -1088,12 +1082,12 @@
 
         async function executeDeleteProduct() {
             if (!productToDeleteId) return;
-            const targetProd = productsData.find(p => p.id === productToDeleteId);
+            const targetProd = productsData.find(p => String(p.id) === String(productToDeleteId));
             const targetName = targetProd ? targetProd.name : "ទំនិញ";
             
             await removeProductFromCloud(productToDeleteId);
 
-            productsData = productsData.filter(p => p.id !== productToDeleteId);
+            productsData = productsData.filter(p => String(p.id) !== String(productToDeleteId));
             closeDeleteModal();
             renderProducts();
             showToast(`បានលុប "${targetName}" ចេញពី Cloud និងបញ្ជីហាង!`);
@@ -1137,13 +1131,14 @@
             renderProducts();
         });
 
+        // មុខងារបើកមើលព័ត៌មានលម្អិតនៃផលិតផល
         function openProductModal(productId) {
-            const product = productsData.find(p => p.id === productId);
+            const product = productsData.find(p => String(p.id) === String(productId));
             if (!product) return;
 
             selectedProductForModal = product;
-            selectedColor = product.colors ? product.colors[0] : '#ffffff';
-            selectedSpec = product.specs ? product.specs[0] : 'Standard';
+            selectedColor = (product.colors && product.colors.length > 0) ? product.colors[0] : '#ffffff';
+            selectedSpec = (product.specs && product.specs.length > 0) ? product.specs[0] : 'Standard';
             currentModalImageIndex = 0;
 
             let catTitle = product.category;
@@ -1152,10 +1147,10 @@
             document.getElementById('modalCategory').innerText = catTitle;
 
             document.getElementById('modalTitle').innerText = product.name;
-            document.getElementById('modalDescription').innerText = product.description;
+            document.getElementById('modalDescription').innerText = product.description || '';
             
             const badge = document.getElementById('modalBadge');
-            badge.innerText = `$${parseFloat(product.price).toFixed(2)}`;
+            badge.innerText = `$${parseFloat(product.price || 0).toFixed(2)}`;
             badge.className = `absolute bottom-3 left-3 ${product.tagColor || 'bg-[#00d2ff]'} ${product.tagTextColor || 'text-black'} font-extrabold px-3 py-1 text-sm tracking-tight rounded-sm`;
 
             const variantLabel = document.getElementById('variantLabel');
@@ -1176,7 +1171,7 @@
                 addBtnText.innerText = "បញ្ចូលទៅកន្ត្រក (Add to Cart)";
             }
 
-            const allImages = (product.images && product.images.length > 0) ? product.images : [product.image];
+            const allImages = (product.images && product.images.length > 0) ? product.images : [product.image || 'https://placehold.co/400x400/18181b/ffffff?text=Product'];
             setupModalGallery(allImages);
 
             const colorsContainer = document.getElementById('modalColors');
@@ -1227,7 +1222,7 @@
             const nextBtn = document.getElementById('modalNextImgBtn');
             const thumbnailsBar = document.getElementById('modalThumbnailsBar');
 
-            modalImg.src = images[0];
+            modalImg.src = images[0] || '';
 
             if (images.length > 1) {
                 prevBtn.classList.remove('hidden');
@@ -1284,7 +1279,7 @@
             if (!selectedProductForModal) return;
 
             const existingItem = cart.find(item => 
-                item.id === selectedProductForModal.id && 
+                String(item.id) === String(selectedProductForModal.id) && 
                 item.spec === selectedSpec && 
                 item.color === selectedColor
             );
