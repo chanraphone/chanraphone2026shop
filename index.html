@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tech & Phone Storefront</title>
+    <title>CHANRA TECH • Modern Store</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter & Kantumruy Pro for Khmer -->
@@ -39,7 +39,6 @@
             window.dbCollection = collection;
             window.dbOnSnapshot = onSnapshot;
             window.cloudInitialized = true;
-
             console.log("Chanra Phone Cloud Database connected successfully!");
         } catch (err) {
             console.warn("Cloud connection notice:", err.message);
@@ -59,16 +58,16 @@
                     },
                     colors: {
                         dark: {
-                            900: '#0a0a0a',
-                            800: '#121212',
-                            700: '#1c1c1e',
-                            600: '#2c2c2e',
+                            950: '#060608',
+                            900: '#0c0c0e',
+                            800: '#141417',
+                            700: '#1e1e24',
+                            600: '#2c2c34',
                         },
-                        tag: {
-                            cyan: '#00d2ff',
-                            lime: '#22c55e',
-                            amber: '#f59e0b',
-                            purple: '#a855f7',
+                        brand: {
+                            cyan: '#00f2fe',
+                            blue: '#4facfe',
+                            neon: '#00f0ff'
                         }
                     }
                 }
@@ -76,157 +75,149 @@
         }
     </script>
     <style>
-        ::-webkit-scrollbar {
-            height: 4px;
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0f0f11;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #27272a;
-            border-radius: 9999px;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .touch-action-manipulation {
-            touch-action: manipulation;
+        ::-webkit-scrollbar { height: 4px; width: 4px; }
+        ::-webkit-scrollbar-track { background: #060608; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .touch-action-manipulation { touch-action: manipulation; }
+        .glass-nav {
+            background: rgba(12, 12, 14, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
     </style>
 </head>
-<body class="bg-black text-white font-sans antialiased selection:bg-cyan-500 selection:text-black min-h-screen flex flex-col justify-between">
+<body class="bg-[#060608] text-zinc-100 font-sans antialiased selection:bg-cyan-400 selection:text-black min-h-screen flex flex-col justify-between">
 
     <!-- Top Navigation Bar -->
-    <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-zinc-800">
+    <header class="sticky top-0 z-40 glass-nav border-b border-zinc-800/80">
         <div class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <button class="w-9 h-9 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white transition">
-                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                </button>
-                <div class="flex items-center gap-2">
-                    <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></div>
-                    <span class="text-sm font-semibold uppercase tracking-widest text-zinc-200">CHANRA • TECH</span>
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-400 via-sky-500 to-blue-600 flex items-center justify-center font-black text-black text-sm shadow-[0_0_15px_rgba(0,242,254,0.35)]">
+                    C
+                </div>
+                <div>
+                    <h1 class="text-sm font-bold tracking-tight text-white leading-tight">CHANRA STORE</h1>
+                    <p class="text-[10px] text-zinc-400 font-medium">Smartphones • SIM • Services</p>
                 </div>
             </div>
 
-            <!-- Search, Cart & Admin -->
+            <!-- Search, Cart & Admin Key -->
             <div class="flex items-center gap-2">
-                <button id="searchBtn" class="p-2 text-zinc-400 hover:text-white rounded-full hover:bg-zinc-900 transition" title="ស្វែងរក">
-                    <i data-lucide="search" class="w-5 h-5"></i>
+                <button id="searchBtn" class="p-2 text-zinc-400 hover:text-white rounded-full hover:bg-zinc-800/80 transition" title="ស្វែងរក">
+                    <i data-lucide="search" class="w-4 h-4"></i>
                 </button>
-                <button id="cartBtn" class="relative p-2 text-zinc-300 hover:text-white rounded-full hover:bg-zinc-900 transition" title="កន្ត្រកទំនិញ">
-                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                    <span id="cartCount" class="absolute -top-1 -right-1 bg-cyan-400 text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                <button id="cartBtn" class="relative p-2 text-zinc-300 hover:text-white rounded-full hover:bg-zinc-800/80 transition" title="កន្ត្រកទំនិញ">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    <span id="cartCount" class="absolute -top-0.5 -right-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 text-black text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow">0</span>
                 </button>
-                <!-- Admin Mode Toggle Button -->
-                <button id="adminToggleBtn" onclick="openAdminAuth()" class="p-2 text-zinc-400 hover:text-cyan-400 rounded-full hover:bg-zinc-900 transition border border-zinc-800" title="ផ្ទាំងគ្រប់គ្រង Admin">
-                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                <!-- Admin Mode Shield Button -->
+                <button id="adminToggleBtn" onclick="openAdminAuth()" class="p-2 text-zinc-400 hover:text-cyan-400 rounded-full hover:bg-zinc-800/80 transition border border-zinc-800/80" title="ផ្ទាំងគ្រប់គ្រង Admin">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Admin Banner Notification -->
-        <div id="adminBanner" class="hidden bg-gradient-to-r from-amber-500/20 to-cyan-500/20 border-y border-amber-500/30 px-4 py-2">
+        <!-- Admin Active Notification Banner -->
+        <div id="adminBanner" class="hidden bg-gradient-to-r from-amber-500/15 via-cyan-500/15 to-blue-500/15 border-y border-cyan-500/30 px-4 py-2">
             <div class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl flex items-center justify-between text-xs">
-                <div class="flex items-center gap-2 text-amber-300 font-semibold">
-                    <i data-lucide="shield-alert" class="w-4 h-4"></i>
-                    <span>ADMIN MODE កំពុងបើក — រាល់ការកែប្រែរក្សាទុកលើ Firestore ស្វ័យប្រវត្តិ!</span>
+                <div class="flex items-center gap-2 text-cyan-300 font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span>Admin Mode សកម្ម — រាល់ការកែប្រែនឹង Sync ទៅកាន់ Cloud ភ្លាមៗ!</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openProductEditModal(null)" class="bg-cyan-400 hover:bg-cyan-300 text-black font-bold px-3 py-1 rounded text-[11px] flex items-center gap-1 shadow">
-                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> បន្ថែមទំនិញ/សេវាថ្មី
+                    <button onclick="openProductEditModal(null)" class="bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 shadow-[0_0_12px_rgba(0,242,254,0.3)] transition active:scale-95">
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> បន្ថែមទំនិញ
                     </button>
-                    <button onclick="exitAdminMode()" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-2 py-1 rounded text-[11px]">
+                    <button onclick="exitAdminMode()" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-2.5 py-1.5 rounded-lg text-xs transition">
                         ចាកចេញ
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Category Tabs -->
-        <div class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl px-3 pb-3 overflow-x-auto hide-scrollbar">
-            <nav class="flex items-center gap-1.5 border border-zinc-800 p-1 bg-zinc-950 rounded-lg w-max sm:w-full">
-                <button onclick="setCategory('ALL')" class="category-btn active px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all bg-white text-black shadow">
+        <!-- Modern Category Scrollable Bar -->
+        <div class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl px-3 pb-2.5 overflow-x-auto hide-scrollbar">
+            <nav class="flex items-center gap-1.5 w-max sm:w-full">
+                <button onclick="setCategory('ALL')" class="category-btn active px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all bg-white text-black shadow-md">
                     ALL
                 </button>
-                <button onclick="setCategory('PHONES')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900">
+                <button onclick="setCategory('PHONES')" class="category-btn px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800/80">
                     PHONES
                 </button>
-                <button onclick="setCategory('SIM')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900 flex items-center gap-1.5">
+                <button onclick="setCategory('SIM')" class="category-btn px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800/80 flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> SIM CARDS
                 </button>
-                <button onclick="setCategory('SERVICES')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900 flex items-center gap-1.5">
+                <button onclick="setCategory('SERVICES')" class="category-btn px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800/80 flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span> សេវ៉ាកម្ម
                 </button>
-                <button onclick="setCategory('CASES')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900">
+                <button onclick="setCategory('CASES')" class="category-btn px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800/80">
                     CASES
                 </button>
-                <button onclick="setCategory('CHARGERS')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900">
+                <button onclick="setCategory('CHARGERS')" class="category-btn px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800/80">
                     POWER
                 </button>
-                <button onclick="setCategory('AUDIO')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900">
+                <button onclick="setCategory('AUDIO')" class="category-btn px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800/80">
                     AUDIO
                 </button>
-                <button onclick="setCategory('WATCH')" class="category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900">
+                <button onclick="setCategory('WATCH')" class="category-btn px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800/80">
                     WATCH
                 </button>
             </nav>
         </div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl px-3 py-4 flex-grow w-full">
-        <!-- Search bar popup when active -->
+    <!-- Main Content Grid -->
+    <main class="max-w-md mx-auto sm:max-w-3xl md:max-w-5xl px-2.5 sm:px-4 py-4 flex-grow w-full">
+        <!-- Search Bar Overlay -->
         <div id="searchContainer" class="hidden mb-4">
             <div class="relative">
                 <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500"></i>
                 <input type="text" id="searchInput" placeholder="ស្វែងរកទូរស័ព្ទ ស៊ីមកាត ឬសេវ៉ាកម្ម..." 
-                       class="w-full bg-zinc-900 border border-zinc-700 pl-10 pr-4 py-2.5 rounded-lg text-sm focus:outline-none focus:border-cyan-400 text-white placeholder-zinc-500 transition">
+                       class="w-full bg-zinc-900/90 border border-zinc-700/80 pl-10 pr-4 py-2.5 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-cyan-400 text-white placeholder-zinc-500 shadow-inner">
             </div>
         </div>
 
         <!-- Products Grid (3 Columns on Mobile, 4 on Tablet, 5 on Desktop) -->
         <div id="productsGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-3.5">
-            <!-- Render ដោយ JavaScript -->
+            <!-- Product Cards Injected Here -->
         </div>
 
-        <!-- Empty state placeholder -->
-        <div id="emptyState" class="hidden py-20 text-center">
-            <i data-lucide="smartphone" class="w-12 h-12 text-zinc-600 mx-auto mb-3"></i>
-            <p class="text-zinc-400 text-sm">មិនមានទំនិញ ឬសេវ៉ាកម្មដែលត្រូវគ្នានឹងការស្វែងរកទេ</p>
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden py-24 text-center">
+            <div class="w-14 h-14 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto mb-3 text-zinc-600">
+                <i data-lucide="smartphone" class="w-7 h-7"></i>
+            </div>
+            <p class="text-zinc-400 text-xs">មិនមានទំនិញ ឬសេវ៉ាកម្មដែលត្រូវគ្នានឹងការស្វែងរកទេ</p>
         </div>
     </main>
 
     <!-- Product Detail Modal -->
-    <div id="productModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition-opacity">
-        <div class="bg-zinc-900 border-t sm:border border-zinc-800 w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl max-h-[90vh] overflow-y-auto flex flex-col transform transition-transform">
-            <!-- Modal Header -->
-            <div class="p-4 border-b border-zinc-800 flex items-center justify-between sticky top-0 bg-zinc-900/95 backdrop-blur z-10">
-                <span class="text-xs font-mono tracking-wider text-cyan-400 uppercase" id="modalCategory">PHONES</span>
-                <button onclick="closeProductModal()" class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white">
+    <div id="productModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+        <div class="bg-[#101014] border-t sm:border border-zinc-800/90 w-full sm:max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto flex flex-col shadow-2xl">
+            <!-- Header -->
+            <div class="p-4 border-b border-zinc-800/80 flex items-center justify-between sticky top-0 bg-[#101014]/95 backdrop-blur z-10">
+                <span class="text-[11px] font-mono tracking-wider text-cyan-400 uppercase font-bold" id="modalCategory">PHONES</span>
+                <button onclick="closeProductModal()" class="w-8 h-8 rounded-full bg-zinc-800/80 flex items-center justify-center text-zinc-400 hover:text-white transition">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
 
-            <!-- Modal Content -->
+            <!-- Content -->
             <div class="p-5 space-y-4">
-                <div class="relative bg-zinc-800/80 rounded-xl overflow-hidden aspect-square flex items-center justify-center">
-                    <img id="modalImage" src="" alt="Product" class="w-full h-full object-contain p-6 transition-all duration-300">
+                <div class="relative bg-zinc-950 rounded-2xl overflow-hidden aspect-square flex items-center justify-center border border-zinc-800/60">
+                    <img id="modalImage" src="" alt="Product" class="w-full h-full object-contain p-4 transition-all duration-300">
                     
-                    <!-- Image Navigation Arrows for Multi-images -->
-                    <button id="modalPrevImgBtn" onclick="navigateModalImage(-1)" class="hidden absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-sm transition">
+                    <!-- Multi-image Arrows -->
+                    <button id="modalPrevImgBtn" onclick="navigateModalImage(-1)" class="hidden absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-sm transition">
                         <i data-lucide="chevron-left" class="w-4 h-4"></i>
                     </button>
-                    <button id="modalNextImgBtn" onclick="navigateModalImage(1)" class="hidden absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-sm transition">
+                    <button id="modalNextImgBtn" onclick="navigateModalImage(1)" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-sm transition">
                         <i data-lucide="chevron-right" class="w-4 h-4"></i>
                     </button>
                     
-                    <div id="modalBadge" class="absolute bottom-3 left-3 bg-[#00d2ff] text-black font-extrabold px-3 py-1 text-sm tracking-tight rounded-sm">
+                    <div id="modalBadge" class="absolute bottom-3 left-3 bg-cyan-400 text-black font-black px-2.5 py-1 text-sm tracking-tight rounded-md shadow-lg">
                         $00.00
                     </div>
                 </div>
@@ -235,26 +226,24 @@
                 <div id="modalThumbnailsBar" class="hidden flex gap-2 overflow-x-auto pb-1 hide-scrollbar"></div>
 
                 <div>
-                    <h2 id="modalTitle" class="text-xl font-bold tracking-tight text-white mb-1">Product Title</h2>
-                    <p id="modalDescription" class="text-xs text-zinc-400 leading-relaxed">
-                        ទំនិញសុទ្ធ 100% ថ្មីក្នុងប្រអប់ មានការធានាផ្លូវការ ផ្ដល់នូវបទពិសោធន៍ប្រើប្រាស់ដ៏ល្អឥតខ្ចោះ។
-                    </p>
+                    <h2 id="modalTitle" class="text-lg sm:text-xl font-bold tracking-tight text-white mb-1">Product Title</h2>
+                    <p id="modalDescription" class="text-xs text-zinc-400 leading-relaxed"></p>
                 </div>
 
-                <!-- Color selector -->
+                <!-- Color selector (Modern Round Dots) -->
                 <div id="modalColorSection">
-                    <label class="block text-xs font-medium text-zinc-400 uppercase tracking-wider mb-2">ជម្រើសពណ៌ (Colors)</label>
-                    <div id="modalColors" class="flex gap-2.5"></div>
+                    <label class="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">ជម្រើសពណ៌ (Colors)</label>
+                    <div id="modalColors" class="flex flex-wrap gap-2.5 items-center"></div>
                 </div>
 
                 <!-- Storage / Specs / Service Type Options -->
                 <div>
-                    <label id="variantLabel" class="block text-xs font-medium text-zinc-400 uppercase tracking-wider mb-2">ទំហំផ្ទុក / ម៉ូដែល</label>
-                    <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="specOptions"></div>
+                    <label id="variantLabel" class="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">ទំហំផ្ទុក / ម៉ូដែល</label>
+                    <div class="flex flex-wrap gap-2" id="specOptions"></div>
                 </div>
 
                 <!-- Add to Bag CTA -->
-                <button id="modalAddToCartBtn" class="w-full mt-4 py-3.5 bg-white hover:bg-zinc-200 text-black font-bold uppercase tracking-wider text-xs rounded-xl flex items-center justify-center gap-2 transition active:scale-95">
+                <button id="modalAddToCartBtn" class="w-full mt-3 py-3.5 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-black font-extrabold text-xs uppercase tracking-wider rounded-2xl flex items-center justify-center gap-2 transition active:scale-95 shadow-[0_4px_20px_rgba(0,242,254,0.3)]">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                     <span id="modalAddBtnText">បញ្ចូលទៅកន្ត្រក (Add to Cart)</span>
                 </button>
@@ -263,31 +252,31 @@
     </div>
 
     <!-- Cart Slide-over Drawer -->
-    <div id="cartDrawer" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden justify-end transition-opacity">
-        <div class="w-full sm:max-w-md bg-zinc-900 border-l border-zinc-800 h-full flex flex-col p-4 shadow-2xl">
+    <div id="cartDrawer" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden justify-end transition-opacity">
+        <div class="w-full sm:max-w-md bg-[#101014] border-l border-zinc-800/90 h-full flex flex-col p-4 shadow-2xl">
             <!-- Header -->
             <div class="flex items-center justify-between pb-4 border-b border-zinc-800">
                 <div class="flex items-center gap-2">
-                    <i data-lucide="shopping-bag" class="w-5 h-5 text-cyan-400"></i>
-                    <h3 class="font-bold tracking-tight text-white">កន្ត្រកទំនិញ (Your Cart)</h3>
+                    <div class="w-7 h-7 rounded-lg bg-cyan-400/10 text-cyan-400 flex items-center justify-center">
+                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-white">កន្ត្រកទំនិញ (Your Cart)</h3>
                 </div>
-                <button onclick="toggleCart(false)" class="p-1 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-800">
+                <button onclick="toggleCart(false)" class="p-1 rounded-md text-zinc-400 hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <!-- Cart Items List -->
-            <div id="cartItemsList" class="flex-grow overflow-y-auto py-4 space-y-3"></div>
+            <!-- Items -->
+            <div id="cartItemsList" class="flex-grow overflow-y-auto py-4 space-y-2.5 hide-scrollbar"></div>
 
-            <!-- Footer & Checkout -->
-            <div class="border-t border-zinc-800 pt-4 space-y-3">
-                <div class="flex justify-between text-sm">
+            <!-- Footer -->
+            <div class="border-t border-zinc-800/80 pt-4 space-y-3">
+                <div class="flex justify-between items-center text-sm">
                     <span class="text-zinc-400">សរុប (Subtotal):</span>
-                    <span id="cartTotal" class="font-bold text-white text-base">$0.00</span>
+                    <span id="cartTotal" class="font-black text-cyan-400 text-lg">$0.00</span>
                 </div>
-                <p class="text-[11px] text-zinc-500">គាំទ្រការទូទាត់តាម ABA KHQR ឬកម្ម៉ង់តាម Telegram ដឹកជញ្ជូនរហ័ស 25 ខេត្ត/ក្រុង។</p>
-                
-                <button onclick="checkoutToTelegram()" class="w-full py-3.5 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-black font-bold text-xs uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/10 active:scale-95 transition">
+                <button onclick="checkoutToTelegram()" class="w-full py-3.5 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-black font-extrabold text-xs uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 shadow-[0_4px_18px_rgba(0,242,254,0.3)] active:scale-95 transition">
                     <i data-lucide="send" class="w-4 h-4"></i>
                     <span>កម្ម៉ង់តាម TELEGRAM (ORDER NOW)</span>
                 </button>
@@ -296,19 +285,19 @@
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-zinc-800 border border-zinc-700 text-white px-4 py-2.5 rounded-full text-xs font-semibold shadow-2xl flex items-center gap-2 pointer-events-none opacity-0 transition-opacity duration-300">
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-zinc-900 border border-cyan-500/40 text-cyan-200 px-4 py-2.5 rounded-full text-xs font-semibold shadow-2xl flex items-center gap-2 pointer-events-none opacity-0 transition-opacity duration-300">
         <i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400"></i>
-        <span id="toastMsg">បានបន្ថែមទៅក្នុងកន្ត្រកដោយជោគជ័យ</span>
+        <span id="toastMsg">បានជោគជ័យ</span>
     </div>
 
-    <!-- Admin Authentication Modal -->
-    <div id="adminAuthModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-zinc-900 border border-zinc-800 w-full max-w-xs rounded-2xl p-5 text-center shadow-2xl">
-            <div class="w-12 h-12 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 flex items-center justify-center mx-auto mb-3">
-                <i data-lucide="lock" class="w-6 h-6"></i>
+    <!-- Admin Authentication Modal (PIN: $99$) -->
+    <div id="adminAuthModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-[#121216] border border-zinc-800 w-full max-w-xs rounded-2xl p-5 text-center shadow-2xl">
+            <div class="w-11 h-11 rounded-2xl bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 flex items-center justify-center mx-auto mb-3">
+                <i data-lucide="shield" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-bold text-white text-base mb-1">ចូលផ្ទាំងគ្រប់គ្រង (Admin)</h3>
-            <p class="text-xs text-zinc-400 mb-4">បញ្ចូលលេខកូដសម្ងាត់ដើម្បីកែប្រែទំនិញ</p>
+            <h3 class="font-bold text-white text-sm mb-1">ចូលផ្ទាំងគ្រប់គ្រង (Admin)</h3>
+            <p class="text-xs text-zinc-400 mb-4">សូមបញ្ចូលលេខកូដសម្ងាត់</p>
             
             <input type="password" id="adminPinInput" placeholder="បញ្ចូលលេខកូដ PIN" maxlength="10"
                    class="w-full bg-zinc-950 border border-zinc-700 text-center text-lg tracking-widest text-white py-2 rounded-xl mb-3 focus:outline-none focus:border-cyan-400 font-mono">
@@ -317,41 +306,47 @@
                 <button onclick="closeAdminAuth()" class="py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold rounded-xl">
                     បោះបង់
                 </button>
-                <button onclick="verifyAdminPin()" class="py-2.5 bg-cyan-400 hover:bg-cyan-300 text-black text-xs font-bold rounded-xl shadow-lg shadow-cyan-400/20">
+                <button onclick="verifyAdminPin()" class="py-2.5 bg-cyan-400 hover:bg-cyan-300 text-black text-xs font-extrabold rounded-xl shadow-lg shadow-cyan-400/20">
                     ផ្ទៀងផ្ទាត់
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Admin Add/Edit Product Modal -->
-    <div id="adminProductModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-        <div class="bg-zinc-900 border border-zinc-800 w-full max-w-lg rounded-2xl p-5 my-auto max-h-[95vh] overflow-y-auto shadow-2xl text-left">
-            <div class="flex items-center justify-between pb-3 border-b border-zinc-800 mb-4">
-                <h3 class="font-bold text-white text-sm sm:text-base flex items-center gap-2" id="adminModalTitle">
-                    <i data-lucide="edit-3" class="w-4 h-4 text-cyan-400"></i> បន្ថែមទំនិញ/សេវ៉ាកម្មថ្មី
-                </h3>
+    <!-- ==================== MODERN ADMIN ADD/EDIT MODAL ==================== -->
+    <div id="adminProductModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-[#101014] border border-zinc-800 w-full max-w-lg rounded-3xl p-5 my-auto max-h-[95vh] overflow-y-auto shadow-2xl text-left hide-scrollbar">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-3.5 border-b border-zinc-800/80 mb-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-cyan-400/10 text-cyan-400 flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-sm" id="adminModalTitle">បន្ថែមទំនិញ/សេវ៉ាកម្មថ្មី</h3>
+                </div>
                 <button onclick="closeProductEditModal()" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 hover:text-white flex items-center justify-center">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
 
-            <form id="adminProductForm" onsubmit="saveProduct(event)" class="space-y-3.5">
+            <form id="adminProductForm" onsubmit="saveProduct(event)" class="space-y-4 text-xs">
                 <input type="hidden" id="editProductId">
 
+                <!-- 1. Product Name -->
                 <div>
-                    <label class="block text-xs font-medium text-zinc-300 mb-1">ឈ្មោះទំនិញ ឬសេវ៉ាកម្ម (Name) *</label>
-                    <input type="text" id="formProdName" required placeholder="ឧ. សេវាប្តូរអេក្រង់ iPhone / ដោះកូដ iCloud" 
-                           class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+                    <label class="block text-zinc-400 mb-1 font-semibold">ឈ្មោះទំនិញ ឬសេវ៉ាកម្ម *</label>
+                    <input type="text" id="formProdName" required placeholder="ឧ. iPhone 16 Pro Max / សេវាប្តូរអេក្រង់" 
+                           class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-cyan-400 text-xs">
                 </div>
 
+                <!-- 2. Category & Price -->
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-medium text-zinc-300 mb-1">ប្រភេទ (Category) *</label>
-                        <select id="formProdCategory" required class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+                        <label class="block text-zinc-400 mb-1 font-semibold">ប្រភេទ (Category) *</label>
+                        <select id="formProdCategory" required class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-cyan-400 text-xs">
                             <option value="PHONES">PHONES (ទូរស័ព្ទ)</option>
-                            <option value="SERVICES">SERVICES (សេវ៉ាកម្មជួសជុល/ដោះកូដ)</option>
-                            <option value="SIM">SIM CARDS (Smart / Cellcard / Metfone)</option>
+                            <option value="SERVICES">SERVICES (សេវ៉ាកម្ម)</option>
+                            <option value="SIM">SIM CARDS (ស៊ីមកាត)</option>
                             <option value="CASES">CASES (ស្រោម)</option>
                             <option value="CHARGERS">POWER (ឆ្នាំងសាក/ខ្សែ)</option>
                             <option value="AUDIO">AUDIO (កាស)</option>
@@ -359,61 +354,97 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-zinc-300 mb-1">តម្លៃគិតជាដុល្លារ ($) *</label>
-                        <input type="number" step="0.01" min="0" id="formProdPrice" required placeholder="25.00" 
-                               class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+                        <label class="block text-zinc-400 mb-1 font-semibold">តម្លៃ ($ USD) *</label>
+                        <input type="number" step="0.01" min="0" id="formProdPrice" required placeholder="0.00" 
+                               class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-cyan-400 text-xs">
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-medium text-zinc-300 mb-1">ជម្រើសទំហំ/ម៉ូដែល/ប្រភេទសេវា (ចែកដោយក្បៀស `,`) *</label>
-                    <input type="text" id="formProdSpecs" required placeholder="ឧ. iPhone 13, 14 Pro, 15 Pro Max ឬ Original / Grade A" 
-                           class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-medium text-zinc-300 mb-1">កូដពណ៌ជា HEX (ចែកដោយសញ្ញាក្បៀស `,` - ទុកទទេបាន)</label>
-                    <input type="text" id="formProdColors" placeholder="#000000, #ffffff" 
-                           class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
-                </div>
-
-                <div class="border border-zinc-800 rounded-xl p-3 bg-zinc-950/60">
-                    <label class="block text-xs font-semibold text-cyan-400 mb-1 flex items-center justify-between">
-                        <span class="flex items-center gap-1.5">
-                            <i data-lucide="images" class="w-4 h-4"></i> រូបភាព (អាចជ្រើសរើសបានច្រើនសន្លឹក)
+                <!-- 3. Photo Upload with Multi-select -->
+                <div class="p-3.5 bg-zinc-950/80 rounded-2xl border border-zinc-800 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-zinc-300 font-semibold flex items-center gap-1.5">
+                            <i data-lucide="image" class="w-3.5 h-3.5 text-cyan-400"></i> រូបភាពទំនិញ
                         </span>
-                        <span id="uploadedImagesCount" class="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-300">0 រូប</span>
-                    </label>
-                    <p class="text-[11px] text-zinc-400 mb-2.5 leading-relaxed">
-                        អ្នកអាចជ្រើសរើសរូបច្រើនសន្លឹកពី <strong class="text-zinc-200">Gallery ទូរស័ព្ទ</strong> ក្នុងពេលតែមួយ (ប្រព័ន្ធបង្រួមកម្រិតច្បាស់ស្វ័យប្រវត្តិ)៖
-                    </p>
-
-                    <div class="flex items-center gap-2">
-                        <label class="flex items-center justify-center gap-1.5 px-3 py-2 bg-cyan-500/10 hover:bg-cyan-500/20 active:bg-cyan-500/30 border border-cyan-500/40 rounded-xl cursor-pointer text-xs font-semibold text-cyan-300 transition flex-shrink-0">
-                            <i data-lucide="image-plus" class="w-4 h-4 text-cyan-400"></i>
-                            <span>រើសរូបភាពច្រើនសន្លឹក</span>
+                        <label class="cursor-pointer bg-cyan-400/10 hover:bg-cyan-400/20 active:bg-cyan-400/30 text-cyan-300 border border-cyan-400/30 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition">
+                            <i data-lucide="camera" class="w-3.5 h-3.5"></i> រើសរូបពីទូរស័ព្ទ
                             <input type="file" id="phoneImageInput" accept="image/*" multiple class="hidden" onchange="handleMultipleImageUpload(event)">
                         </label>
-                        <span class="text-xs text-zinc-500">ឬ Link:</span>
-                        <input type="text" id="formProdImage" placeholder="URL រូបភាព (ចែកដោយក្បៀស `,`)" 
-                               class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400" oninput="handleUrlImagesInput(this.value)">
                     </div>
 
-                    <!-- Multi-Image Preview Container -->
-                    <div id="multiImagesPreviewList" class="mt-3 grid grid-cols-4 sm:grid-cols-5 gap-2 hidden max-h-36 overflow-y-auto p-1 bg-zinc-900/80 rounded-xl border border-zinc-800"></div>
+                    <!-- Thumbnails Preview -->
+                    <div id="multiImagesPreviewList" class="flex flex-wrap gap-2 pt-1 min-h-[44px]">
+                        <span class="text-[10px] text-zinc-500 italic py-2">មិនទាន់មានរូបភាព...</span>
+                    </div>
+
+                    <div>
+                        <input type="text" id="formProdImage" placeholder="ឬបិទភ្ជាប់ Image Link (ខណ្ឌដោយក្បៀស `,` ប្រសិនបើមានច្រើន)" 
+                               class="w-full bg-[#121216] border border-zinc-800 rounded-lg px-2.5 py-1.5 text-zinc-300 text-[11px] focus:outline-none focus:border-cyan-400" oninput="handleUrlImagesInput(this.value)">
+                    </div>
                 </div>
 
+                <!-- 4. Storage / Specs / Quick Presets -->
+                <div class="p-3.5 bg-zinc-950/80 rounded-2xl border border-zinc-800 space-y-2">
+                    <label class="block text-zinc-300 font-semibold flex items-center justify-between">
+                        <span>ជម្រើសទំហំ / ម៉ូដែល / លេខស៊ីម (Specs)</span>
+                        <span class="text-[10px] text-zinc-500">ចុច Chip ដើម្បីជ្រើស</span>
+                    </label>
+                    
+                    <!-- Quick Preset Chips -->
+                    <div class="flex flex-wrap gap-1.5 pb-1">
+                        <button type="button" onclick="addSpecPreset('128GB')" class="px-2 py-0.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-[10px] text-zinc-300">+ 128GB</button>
+                        <button type="button" onclick="addSpecPreset('256GB')" class="px-2 py-0.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-[10px] text-zinc-300">+ 256GB</button>
+                        <button type="button" onclick="addSpecPreset('512GB')" class="px-2 py-0.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-[10px] text-zinc-300">+ 512GB</button>
+                        <button type="button" onclick="addSpecPreset('1TB')" class="px-2 py-0.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-[10px] text-zinc-300">+ 1TB</button>
+                        <button type="button" onclick="addSpecPreset('Original')" class="px-2 py-0.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-[10px] text-zinc-300">+ Original</button>
+                        <button type="button" onclick="addSpecPreset('Grade A')" class="px-2 py-0.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-[10px] text-zinc-300">+ Grade A</button>
+                    </div>
+
+                    <input type="text" id="formProdSpecs" required placeholder="ឧ. 256GB, 512GB, 1TB" 
+                           class="w-full bg-[#121216] border border-zinc-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-cyan-400 text-xs">
+                </div>
+
+                <!-- 5. Modern Visual Color Palette (លែងប្រើកូដ HEX!) -->
+                <div class="p-3.5 bg-zinc-950/80 rounded-2xl border border-zinc-800 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <label class="text-zinc-300 font-semibold flex items-center gap-1.5">
+                            <i data-lucide="palette" class="w-3.5 h-3.5 text-cyan-400"></i> ជ្រើសរើសពណ៌ (Color Palette)
+                        </label>
+                        <span id="selectedColorsCount" class="text-[10px] text-cyan-400 font-semibold">ជ្រើស 0 ពណ៌</span>
+                    </div>
+
+                    <p class="text-[10px] text-zinc-400 leading-normal">
+                        គ្រាន់តែចុចលើរង្វង់ពណ៌ដែលទំនិញមាន (ចុចម្តងទៀតដើម្បីដកចេញ)៖
+                    </p>
+
+                    <!-- Modern Predefined Color Circles -->
+                    <div class="grid grid-cols-6 sm:grid-cols-9 gap-2.5 pt-1" id="presetColorsGrid">
+                        <!-- Auto-generated preset circles -->
+                    </div>
+
+                    <!-- Custom Color Picker Tool -->
+                    <div class="flex items-center gap-2 pt-2 border-t border-zinc-800/80">
+                        <span class="text-[10px] text-zinc-400">ឬរើសពណ៌ផ្ទាល់ខ្លួន:</span>
+                        <div class="flex items-center gap-1.5 bg-zinc-900 border border-zinc-700 px-2 py-1 rounded-lg">
+                            <input type="color" id="customColorPicker" value="#00f2fe" class="w-5 h-5 rounded cursor-pointer bg-transparent border-0">
+                            <button type="button" onclick="addCustomColorFromPicker()" class="text-[10px] font-bold text-cyan-300 hover:text-white">+ ថែមពណ៌នេះ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Description -->
                 <div>
-                    <label class="block text-xs font-medium text-zinc-300 mb-1">ការពិពណ៌នា (Description)</label>
-                    <textarea id="formProdDesc" rows="2" placeholder="ព័ត៌មានលម្អិតអំពីសេវ៉ាកម្ម ការធានា រយៈពេលជួសជុល..." 
-                              class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400"></textarea>
+                    <label class="block text-zinc-400 mb-1 font-semibold">ការពិពណ៌នា (Description)</label>
+                    <textarea id="formProdDesc" rows="2" placeholder="ព័ត៌មានលម្អិតអំពីទំនិញ ការធានា..." 
+                              class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-cyan-400 text-xs"></textarea>
                 </div>
 
+                <!-- Actions -->
                 <div class="pt-2 flex items-center justify-end gap-2 border-t border-zinc-800">
-                    <button type="button" onclick="closeProductEditModal()" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold rounded-lg">
+                    <button type="button" onclick="closeProductEditModal()" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold rounded-xl">
                         បោះបង់
                     </button>
-                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-black text-xs font-bold rounded-lg shadow-md">
+                    <button type="submit" class="px-5 py-2.5 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-black text-xs font-extrabold rounded-xl shadow-lg active:scale-95 transition">
                         រក្សាទុកទិន្នន័យ
                     </button>
                 </div>
@@ -423,12 +454,12 @@
 
     <!-- Confirm Delete Modal -->
     <div id="confirmDeleteModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-zinc-900 border border-zinc-800 w-full max-w-xs rounded-2xl p-5 text-center shadow-2xl">
-            <div class="w-12 h-12 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center mx-auto mb-3">
-                <i data-lucide="trash-2" class="w-6 h-6"></i>
+        <div class="bg-[#121216] border border-zinc-800 w-full max-w-xs rounded-2xl p-5 text-center shadow-2xl">
+            <div class="w-11 h-11 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center mx-auto mb-3">
+                <i data-lucide="trash-2" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-bold text-white text-base mb-1">តើអ្នកពិតជាចង់លុបទំនិញ/សេវ៉ាកម្មនេះ?</h3>
-            <p class="text-xs text-zinc-400 mb-4" id="deleteTargetName">ទិន្នន័យនឹងត្រូវដកចេញពីបញ្ជីភ្លាមៗ។</p>
+            <h3 class="font-bold text-white text-sm mb-1">តើអ្នកពិតជាចង់លុបទំនិញនេះ?</h3>
+            <p class="text-xs text-zinc-400 mb-4" id="deleteTargetName">ទិន្នន័យនឹងត្រូវដកចេញពី Cloud ភ្លាមៗ។</p>
             
             <div class="grid grid-cols-2 gap-2">
                 <button onclick="closeDeleteModal()" class="py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold rounded-xl">
@@ -442,202 +473,98 @@
     </div>
 
     <script>
+        // Preset Modern Colors for Visual Selector
+        const POPULAR_PHONE_COLORS = [
+            { name: "Black / Dark", hex: "#1c1c1e" },
+            { name: "Natural Titanium", hex: "#8e8982" },
+            { name: "White / Silver", hex: "#f5f5f7" },
+            { name: "Desert Titanium / Gold", hex: "#c9b097" },
+            { name: "Deep Blue", hex: "#1e3a8a" },
+            { name: "Sky Cyan", hex: "#00d2ff" },
+            { name: "Midnight Green", hex: "#15803d" },
+            { name: "Soft Pink", hex: "#f472b6" },
+            { name: "Purple Fix", hex: "#a855f7" }
+        ];
+
+        let selectedAdminColors = [];
+
+        // Initial Demo Products
         const initialProductsData = [
             {
                 id: "1",
                 name: "iPhone 16 Pro Max",
                 category: "PHONES",
                 price: 1199.00,
-                colorsCount: 4,
-                colors: ["#8E8982", "#2B2A2D", "#F0EFEB", "#6E685F"],
+                colors: ["#1c1c1e", "#8e8982", "#c9b097", "#f5f5f7"],
                 tagColor: "bg-[#00d2ff]",
                 tagTextColor: "text-black",
                 specs: ["256GB", "512GB", "1TB"],
                 description: "បន្ទះឈីប A18 Pro ថ្មី ស៊ុមទីតានីញ៉ូមស្រាលរឹងមាំ និងកាមេរ៉ា 48MP Fusion ដ៏អស្ចារ្យ។",
-                images: [
-                    "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80"
+                images: ["https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80"]
             },
             {
                 id: "201",
                 name: "សេវាប្តូរអេក្រង់សុទ្ធ (Screen Replacement)",
                 category: "SERVICES",
                 price: 45.00,
-                colorsCount: 1,
                 colors: ["#a855f7"],
                 tagColor: "bg-[#a855f7]",
                 tagTextColor: "text-white",
-                specs: ["iPhone 13-14 Series", "iPhone 15 Series", "iPhone 16 Series", "Samsung S Series"],
-                description: "ប្តូរអេក្រង់ហ្ស៊ីនគុណភាពខ្ពស់ ពណ៌ច្បាស់ 120Hz រលូន មានការធានាលើ Touchscreen និងបង្ហាញ TrueTone ត្រឹមត្រូវ។ ប្រើពេលត្រឹម ៣០ នាទី។",
-                images: [
-                    "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80"
-            },
-            {
-                id: "202",
-                name: "សេវាប្តូរថ្មទូរស័ព្ទសុខភាព 100% (Battery)",
-                category: "SERVICES",
-                price: 25.00,
-                colorsCount: 1,
-                colors: ["#22c55e"],
-                tagColor: "bg-[#22c55e]",
-                tagTextColor: "text-black",
-                specs: ["iPhone 11 - 12", "iPhone 13 - 14", "iPhone 15 Series", "Android Battery"],
-                description: "ប្តូរគ្រាប់ថ្មថ្មីកម្រិតសុខភាព 100% កាន់ថ្មបានយូរ មិនឡើងកម្តៅ មានការធានាជូន ៦ ខែ ពេញចិត្តសេវាកម្ម។",
-                images: [
-                    "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"
-            },
-            {
-                id: "203",
-                name: "សេវាដោះកូដ ដោះសោរ & កម្មវិធី (Software / Unlock)",
-                category: "SERVICES",
-                price: 15.00,
-                colorsCount: 1,
-                colors: ["#3b82f6"],
-                tagColor: "bg-[#3b82f6]",
-                tagTextColor: "text-white",
-                specs: ["Passcode Unlock", "Bypass iCloud", "Flash ROM / Update", "FRP Lock"],
-                description: "ជួសជុលបញ្ហាជាប់កូដអេក្រង់ ដោះសោរប្រព័ន្ធ ជួសជុលម៉ាស៊ីន Restart ឬជាប់ Logo Apple/Android ដោយសុវត្ថិភាព។",
-                images: [
-                    "https://images.unsplash.com/photo-1563770660941-20978e870e26?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1563770660941-20978e870e26?w=600&auto=format&fit=crop&q=80"
+                specs: ["iPhone 13-14", "iPhone 15 Series", "iPhone 16 Series", "Samsung S"],
+                description: "ប្តូរអេក្រង់ហ្ស៊ីនគុណភាពខ្ពស់ ពណ៌ច្បាស់ 120Hz រលូន មានការធានាលើ Touchscreen និងបង្ហាញ TrueTone ត្រឹមត្រូវ។",
+                images: ["https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80"]
             },
             {
                 id: "101",
-                name: "ស៊ីម Smart លេខពិសេស (VIP Number)",
+                name: "ស៊ីម Smart លេខពិសេស (VIP)",
                 category: "SIM",
                 price: 25.00,
-                colorsCount: 1,
-                colors: ["#00a651"],
+                colors: ["#15803d"],
                 tagColor: "bg-[#00a651]",
                 tagTextColor: "text-white",
                 specs: ["098 888 776", "096 555 123", "010 777 990"],
-                description: "ស៊ីម Smart 4G/5G លេខស្អាត ងាយស្រួលចាំ ភ្ជាប់ជាមួយគម្រោង Smart ThomMorng រួចជាស្រេច។ ផ្ទេរឈ្មោះស្របច្បាប់ជូនភ្លាមៗ។",
-                images: [
-                    "https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&auto=format&fit=crop&q=80"
-            },
-            {
-                id: "102",
-                name: "ស៊ីម Cellcard លេខហុងស៊ុយ (Gold & VIP)",
-                category: "SIM",
-                price: 35.00,
-                colorsCount: 1,
-                colors: ["#f37021"],
-                tagColor: "bg-[#f37021]",
-                tagTextColor: "text-white",
-                specs: ["012 999 554", "077 666 883", "089 778 899"],
-                description: "ស៊ីម Cellcard លេខហុងស៊ុយ រកស៊ីមានបាន គាំទ្រសេវា 5G ល្បឿនលឿនទូទាំងប្រទេស។ អាចចុះឈ្មោះអត្តសញ្ញាណប័ណ្ណផ្លូវការជូនបាន។",
-                images: [
-                    "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80"
-            },
-            {
-                id: "103",
-                name: "ស៊ីម Metfone អ៊ីនធឺណិតមិនកំណត់ (Unlimited Data)",
-                category: "SIM",
-                price: 15.00,
-                colorsCount: 1,
-                colors: ["#d8232a"],
-                tagColor: "bg-[#d8232a]",
-                tagTextColor: "text-white",
-                specs: ["097 555 889", "088 333 771", "071 999 120"],
-                description: "ស៊ីម Metfone សេវាគ្របដណ្តប់ខ្លាំងគ្រប់ស្រុកភូមិ គាំទ្រគម្រោង Data មិនកំណត់សម្រាប់លេង Facebook, YouTube, TikTok។",
-                images: [
-                    "https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&auto=format&fit=crop&q=80"
+                description: "ស៊ីម Smart 4G/5G លេខស្អាត ងាយស្រួលចាំ ភ្ជាប់ជាមួយគម្រោង Smart ThomMorng រួចជាស្រេច។",
+                images: ["https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&auto=format&fit=crop&q=80"]
             },
             {
                 id: "2",
                 name: "Galaxy S24 Ultra",
                 category: "PHONES",
                 price: 1049.00,
-                colorsCount: 4,
-                colors: ["#3F4045", "#EBE7DF", "#4C463F", "#5F5D77"],
+                colors: ["#1c1c1e", "#8e8982", "#1e3a8a"],
                 tagColor: "bg-[#00d2ff]",
                 tagTextColor: "text-black",
                 specs: ["256GB", "512GB", "1TB"],
                 description: "បច្ចេកវិទ្យា Galaxy AI ឆ្លាតវៃ អេក្រង់រាបស្មើរកម្រិត 120Hz និងប៊ិច S-Pen ភ្ជាប់ក្នុងម៉ាស៊ីន។",
-                images: [
-                    "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600&auto=format&fit=crop&q=80"
+                images: ["https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600&auto=format&fit=crop&q=80"]
             },
             {
                 id: "3",
                 name: "AirPods Pro 2 (USB-C)",
                 category: "AUDIO",
                 price: 219.00,
-                colorsCount: 1,
-                colors: ["#FFFFFF"],
+                colors: ["#f5f5f7"],
                 tagColor: "bg-[#22c55e]",
                 tagTextColor: "text-black",
                 specs: ["USB-C", "MagSafe"],
                 description: "កាត់បន្ថយសំឡេងរំខានសកម្ម (ANC) ខ្លាំងទ្វេដង និងសំឡេង Spatial Audio 3D។",
-                images: [
-                    "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&auto=format&fit=crop&q=80"
+                images: ["https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&auto=format&fit=crop&q=80"]
             },
             {
                 id: "4",
                 name: "MagSafe Silicone Case",
                 category: "CASES",
                 price: 25.00,
-                colorsCount: 5,
-                colors: ["#232b2b", "#3d5a80", "#ee6c4d", "#2a9d8f", "#e9d8a6"],
+                colors: ["#1c1c1e", "#1e3a8a", "#f472b6"],
                 tagColor: "bg-[#00d2ff]",
                 tagTextColor: "text-black",
                 specs: ["16 Pro", "16 Pro Max", "15 Pro Max"],
                 description: "ស្រោមទូរស័ព្ទស៊ីលីកូនទន់ស្រួលកាន់ ការពារជ្រាបទឹក និងគាំទ្រការសាកឥតខ្សែ MagSafe។",
-                images: [
-                    "https://images.unsplash.com/photo-1601593346740-925612772716?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1601593346740-925612772716?w=600&auto=format&fit=crop&q=80"
-            },
-            {
-                id: "5",
-                name: "65W GaN Fast Charger",
-                category: "CHARGERS",
-                price: 29.00,
-                colorsCount: 2,
-                colors: ["#1c1c1e", "#f5f5f7"],
-                tagColor: "bg-[#22c55e]",
-                tagTextColor: "text-black",
-                specs: ["3-Port", "2-Port"],
-                description: "បច្ចេកវិទ្យា GaN សាកថ្មលឿនខ្លាំង ទំហំតូចងាយស្រួលដាក់តាមខ្លួន សាកបានទាំងទូរស័ព្ទ និង Laptop។",
-                images: [
-                    "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"
-            },
-            {
-                id: "6",
-                name: "Apple Watch Ultra 2",
-                category: "WATCH",
-                price: 789.00,
-                colorsCount: 2,
-                colors: ["#D4D1CC", "#2C2B29"],
-                tagColor: "bg-[#f59e0b]",
-                tagTextColor: "text-black",
-                specs: ["49mm GPS + Cell"],
-                description: "តួខ្លួន Titanium ដ៏រឹងមាំ អេក្រង់ភ្លឺរហូតដល់ 3000 nits និងថ្មប្រើបានយូរដល់ 72 ម៉ោង។",
-                images: [
-                    "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop&q=80"
-                ],
-                image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop&q=80"
+                images: ["https://images.unsplash.com/photo-1601593346740-925612772716?w=600&auto=format&fit=crop&q=80"]
             }
         ];
 
-        // Active state
+        // Active State
         let productsData = [...initialProductsData];
         let currentCategory = 'ALL';
         let searchQuery = '';
@@ -646,12 +573,82 @@
         let selectedColor = null;
         let selectedSpec = '';
         let currentModalImageIndex = 0;
-        
-        // Admin state
         let isAdminLoggedIn = false;
         let productToDeleteId = null;
         let currentAdminImagesList = [];
 
+        // Build Preset Visual Color Grid in Admin Form
+        function initAdminColorPalette() {
+            const grid = document.getElementById('presetColorsGrid');
+            grid.innerHTML = '';
+
+            POPULAR_PHONE_COLORS.forEach(c => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `w-7 h-7 rounded-full border-2 transition-all flex items-center justify-center relative shadow-sm ${selectedAdminColors.includes(c.hex.toLowerCase()) ? 'border-cyan-400 scale-110 shadow-[0_0_10px_rgba(0,242,254,0.5)]' : 'border-zinc-700 hover:scale-105'}`;
+                btn.style.backgroundColor = c.hex;
+                btn.title = c.name;
+                btn.onclick = () => toggleColorSelection(c.hex);
+
+                if (selectedAdminColors.includes(c.hex.toLowerCase())) {
+                    btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 ${c.hex === '#f5f5f7' ? 'text-black' : 'text-white'} stroke-[3]"></i>`;
+                }
+
+                grid.appendChild(btn);
+            });
+
+            // Extra colors added by picker
+            selectedAdminColors.forEach(customHex => {
+                const exists = POPULAR_PHONE_COLORS.some(c => c.hex.toLowerCase() === customHex.toLowerCase());
+                if (!exists) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'w-7 h-7 rounded-full border-2 border-cyan-400 scale-110 transition-all flex items-center justify-center shadow-[0_0_10px_rgba(0,242,254,0.5)]';
+                    btn.style.backgroundColor = customHex;
+                    btn.onclick = () => toggleColorSelection(customHex);
+                    btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-white stroke-[3]"></i>`;
+                    grid.appendChild(btn);
+                }
+            });
+
+            document.getElementById('selectedColorsCount').innerText = `ជ្រើស ${selectedAdminColors.length} ពណ៌`;
+            lucide.createIcons();
+        }
+
+        function toggleColorSelection(hex) {
+            const normalized = hex.toLowerCase();
+            const index = selectedAdminColors.indexOf(normalized);
+            if (index > -1) {
+                selectedAdminColors.splice(index, 1);
+            } else {
+                selectedAdminColors.push(normalized);
+            }
+            initAdminColorPalette();
+        }
+
+        function addCustomColorFromPicker() {
+            const picker = document.getElementById('customColorPicker');
+            const color = picker.value.toLowerCase();
+            if (!selectedAdminColors.includes(color)) {
+                selectedAdminColors.push(color);
+            }
+            initAdminColorPalette();
+        }
+
+        function addSpecPreset(presetText) {
+            const input = document.getElementById('formProdSpecs');
+            let current = input.value.trim();
+            if (current) {
+                const list = current.split(',').map(s => s.trim());
+                if (!list.includes(presetText)) {
+                    input.value = current + ', ' + presetText;
+                }
+            } else {
+                input.value = presetText;
+            }
+        }
+
+        // Multi-image upload handlers
         function handleMultipleImageUpload(event) {
             const files = Array.from(event.target.files);
             if (!files || files.length === 0) return;
@@ -663,20 +660,12 @@
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
                         const MAX_WIDTH = 600;
-                        const MAX_HEIGHT = 600;
                         let width = img.width;
                         let height = img.height;
 
-                        if (width > height) {
-                            if (width > MAX_WIDTH) {
-                                height *= MAX_WIDTH / width;
-                                width = MAX_WIDTH;
-                            }
-                        } else {
-                            if (height > MAX_HEIGHT) {
-                                width *= MAX_HEIGHT / height;
-                                height = MAX_HEIGHT;
-                            }
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
                         }
 
                         canvas.width = width;
@@ -714,39 +703,34 @@
 
         function renderAdminImagesPreview() {
             const container = document.getElementById('multiImagesPreviewList');
-            const countLabel = document.getElementById('uploadedImagesCount');
-            countLabel.innerText = `${currentAdminImagesList.length} រូប`;
-
             if (currentAdminImagesList.length === 0) {
-                container.classList.add('hidden');
-                container.innerHTML = '';
+                container.innerHTML = '<span class="text-[10px] text-zinc-500 italic py-2">មិនទាន់មានរូបភាព...</span>';
                 return;
             }
 
-            container.classList.remove('hidden');
             container.innerHTML = '';
-
             currentAdminImagesList.forEach((imgSrc, idx) => {
                 const item = document.createElement('div');
-                item.className = "relative group rounded-lg overflow-hidden border border-zinc-700 bg-zinc-950 aspect-square flex items-center justify-center";
+                item.className = "relative group rounded-xl overflow-hidden border border-zinc-700 bg-zinc-950 w-12 h-12 flex items-center justify-center";
                 item.innerHTML = `
                     <img src="${imgSrc}" class="w-full h-full object-cover">
-                    <button type="button" onclick="removeAdminImage(${idx})" class="absolute top-1 right-1 bg-red-600/90 text-white p-1 rounded-full text-[10px] opacity-90 hover:opacity-100 transition shadow">
-                        <i data-lucide="x" class="w-3 h-3"></i>
+                    <button type="button" onclick="removeAdminImage(${idx})" class="absolute top-0.5 right-0.5 bg-black/80 hover:bg-red-600 text-white p-1 rounded-full text-[9px] transition">
+                        <i data-lucide="x" class="w-2.5 h-2.5"></i>
                     </button>
-                    ${idx === 0 ? '<span class="absolute bottom-0 inset-x-0 bg-cyan-500/90 text-black text-[8px] font-bold text-center py-0.5">រូបគោល</span>' : ''}
+                    ${idx === 0 ? '<span class="absolute bottom-0 inset-x-0 bg-cyan-400 text-black text-[7px] font-black text-center py-0.5">រូបគោល</span>' : ''}
                 `;
                 container.appendChild(item);
             });
-
             lucide.createIcons();
         }
 
         function clearSelectedImages() {
             currentAdminImagesList = [];
+            selectedAdminColors = [];
             document.getElementById('phoneImageInput').value = '';
             document.getElementById('formProdImage').value = '';
             renderAdminImagesPreview();
+            initAdminColorPalette();
         }
 
         // Firestore Realtime Synchronization
@@ -809,6 +793,7 @@
             }
         }
 
+        // Render Grid (3 Columns on Mobile)
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             const emptyState = document.getElementById('emptyState');
@@ -838,8 +823,8 @@
                 let adminActionButtons = '';
                 if (isAdminLoggedIn) {
                     adminActionButtons = `
-                        <div class="absolute top-1.5 right-1.5 z-20 flex gap-1 bg-black/85 backdrop-blur-md p-0.5 rounded border border-zinc-700 shadow-xl" onclick="event.stopPropagation()">
-                            <button onclick="openProductEditModal('${safeId}')" class="p-1 bg-zinc-800 hover:bg-cyan-500 hover:text-black rounded text-zinc-300 transition" title="កែប្រែ">
+                        <div class="absolute top-1.5 right-1.5 z-20 flex gap-1 bg-black/85 backdrop-blur-md p-1 rounded-lg border border-zinc-700 shadow-xl" onclick="event.stopPropagation()">
+                            <button onclick="openProductEditModal('${safeId}')" class="p-1 bg-zinc-800 hover:bg-cyan-400 hover:text-black rounded text-zinc-300 transition" title="កែប្រែ">
                                 <i data-lucide="edit-2" class="w-3 h-3"></i>
                             </button>
                             <button onclick="promptDeleteProduct('${safeId}')" class="p-1 bg-zinc-800 hover:bg-red-500 hover:text-white rounded text-zinc-300 transition" title="លុប">
@@ -860,7 +845,7 @@
                 if (imagesCount > 1) {
                     const leftOffset = (product.category === 'SIM' || product.category === 'SERVICES') ? 'left-11' : 'left-1.5';
                     multiImgBadge = `
-                        <div class="absolute top-1.5 ${leftOffset} bg-black/70 backdrop-blur-md text-zinc-300 text-[9px] px-1 py-0.5 rounded flex items-center gap-0.5 border border-zinc-700/60">
+                        <div class="absolute top-1.5 ${leftOffset} bg-black/75 backdrop-blur-md text-zinc-300 text-[9px] px-1 py-0.5 rounded-md flex items-center gap-0.5 border border-zinc-700/60">
                             <i data-lucide="images" class="w-2.5 h-2.5 text-cyan-400"></i> ${imagesCount}
                         </div>
                     `;
@@ -868,7 +853,7 @@
 
                 let subText = '';
                 if (product.category === 'SIM') {
-                    subText = 'SIM • SPECIAL';
+                    subText = 'SIM • VIP';
                 } else if (product.category === 'SERVICES') {
                     subText = 'SERVICE • សេវា';
                 } else {
@@ -876,11 +861,11 @@
                 }
 
                 card.innerHTML = `
-                    <div class="relative w-full aspect-square bg-[#151518] border border-zinc-800/80 rounded-lg overflow-hidden flex items-center justify-center" onclick="openProductModal('${safeId}')">
-                        <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/18181b/ffffff?text=Product'">
+                    <div class="relative w-full aspect-square bg-[#121215] border border-zinc-800/90 rounded-2xl overflow-hidden flex items-center justify-center shadow-md transition-all group-hover:border-zinc-700" onclick="openProductModal('${safeId}')">
+                        <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-contain p-2.5 group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/18181b/ffffff?text=Product'">
                         ${typeBadge}
                         ${multiImgBadge}
-                        <div class="absolute bottom-1.5 left-1.5 ${product.tagColor || 'bg-[#00d2ff]'} ${product.tagTextColor || 'text-black'} font-extrabold text-[10px] sm:text-xs px-1.5 py-0.5 tracking-tight rounded-sm shadow-md">
+                        <div class="absolute bottom-1.5 left-1.5 ${product.tagColor || 'bg-[#00d2ff]'} ${product.tagTextColor || 'text-black'} font-extrabold text-[10px] sm:text-xs px-1.5 py-0.5 tracking-tight rounded-md shadow-md">
                             $${parseFloat(product.price || 0).toFixed(2)}
                         </div>
                         ${adminActionButtons}
@@ -896,7 +881,7 @@
             lucide.createIcons();
         }
 
-        /* --- ADMIN FUNCTIONALITIES --- */
+        // Admin Auth (PIN: $99$)
         function openAdminAuth() {
             if (isAdminLoggedIn) {
                 showToast("លោកអ្នកកំពុងស្ថិតក្នុង Admin Mode រួចហើយ!");
@@ -913,13 +898,12 @@
 
         function verifyAdminPin() {
             const pin = document.getElementById('adminPinInput').value.trim();
-            // លេខកូដសម្ងាត់ Admin $99$
             if (pin === '$99$') {
                 isAdminLoggedIn = true;
                 closeAdminAuth();
                 document.getElementById('adminBanner').classList.remove('hidden');
                 document.getElementById('adminToggleBtn').classList.add('text-cyan-400', 'border-cyan-400');
-                showToast("ចូល Admin Mode ជោគជ័យ! លោកអ្នកអាចកែ ឬបន្ថែមទំនិញបាន។");
+                showToast("ចូល Admin Mode ជោគជ័យ!");
                 renderProducts();
             } else {
                 showToast("លេខកូដសម្ងាត់មិនត្រឹមត្រូវទេ!");
@@ -934,6 +918,7 @@
             renderProducts();
         }
 
+        // Open Product Edit Modal
         function openProductEditModal(productId = null) {
             const form = document.getElementById('adminProductForm');
             form.reset();
@@ -944,14 +929,19 @@
                 const prod = productsData.find(p => String(p.id) === String(productId));
                 if (!prod) return;
 
-                modalTitle.innerHTML = `<i data-lucide="edit-3" class="w-4 h-4 text-cyan-400"></i> កែប្រែទំនិញ/សេវា #${prod.id}`;
+                modalTitle.innerHTML = `កែប្រែទំនិញ/សេវា #${prod.id}`;
                 document.getElementById('editProductId').value = prod.id;
                 document.getElementById('formProdName').value = prod.name;
                 document.getElementById('formProdCategory').value = prod.category;
                 document.getElementById('formProdPrice').value = prod.price;
                 document.getElementById('formProdSpecs').value = prod.specs ? prod.specs.join(', ') : 'Standard';
-                document.getElementById('formProdColors').value = prod.colors ? prod.colors.join(', ') : '#000000';
                 
+                if (prod.colors && Array.isArray(prod.colors)) {
+                    selectedAdminColors = prod.colors.map(c => c.toLowerCase());
+                } else {
+                    selectedAdminColors = ["#1c1c1e"];
+                }
+
                 if (prod.images && prod.images.length > 0) {
                     currentAdminImagesList = [...prod.images];
                 } else if (prod.image) {
@@ -961,14 +951,15 @@
 
                 document.getElementById('formProdDesc').value = prod.description || '';
             } else {
-                modalTitle.innerHTML = `<i data-lucide="plus-circle" class="w-4 h-4 text-cyan-400"></i> បន្ថែមទំនិញ/សេវ៉ាកម្មថ្មី`;
+                modalTitle.innerHTML = `បន្ថែមទំនិញ/សេវ៉ាកម្មថ្មី`;
                 document.getElementById('editProductId').value = '';
-                document.getElementById('formProdCategory').value = currentCategory === 'ALL' ? 'SERVICES' : currentCategory;
-                document.getElementById('formProdSpecs').value = 'iPhone 13, 14, 15 Pro, Samsung S Series';
-                document.getElementById('formProdColors').value = '#a855f7, #00d2ff';
-                document.getElementById('formProdDesc').value = 'សេវាកម្មរហ័សទាន់ចិត្ត ជួសជុលដោយជាងជំនាញ និងមានការធានាត្រឹមត្រូវ។';
+                document.getElementById('formProdCategory').value = currentCategory === 'ALL' ? 'PHONES' : currentCategory;
+                document.getElementById('formProdSpecs').value = '256GB, 512GB';
+                selectedAdminColors = ["#1c1c1e", "#8e8982"];
+                document.getElementById('formProdDesc').value = 'ទំនិញថ្មី 100% មានការធានាផ្លូវការ។';
             }
 
+            initAdminColorPalette();
             document.getElementById('adminProductModal').classList.remove('hidden');
             lucide.createIcons();
         }
@@ -990,8 +981,7 @@
             const rawSpecs = document.getElementById('formProdSpecs').value.trim();
             const specs = rawSpecs ? rawSpecs.split(',').map(s => s.trim()).filter(Boolean) : ['Standard'];
 
-            const rawColors = document.getElementById('formProdColors').value.trim();
-            const colors = rawColors ? rawColors.split(',').map(c => c.trim()).filter(Boolean) : ['#222222'];
+            const colors = selectedAdminColors.length > 0 ? selectedAdminColors : ['#1c1c1e'];
 
             let imagesToSave = [...currentAdminImagesList];
             if (imagesToSave.length === 0) {
@@ -1086,11 +1076,10 @@
             const targetName = targetProd ? targetProd.name : "ទំនិញ";
             
             await removeProductFromCloud(productToDeleteId);
-
             productsData = productsData.filter(p => String(p.id) !== String(productToDeleteId));
             closeDeleteModal();
             renderProducts();
-            showToast(`បានលុប "${targetName}" ចេញពី Cloud និងបញ្ជីហាង!`);
+            showToast(`បានលុប "${targetName}" ចេញពី Cloud!`);
         }
 
         function setCategory(category) {
@@ -1103,14 +1092,15 @@
                                  (category === 'SERVICES' && label.includes('សេវ៉ាកម្ម')) || 
                                  label === category;
                 if (isActive) {
-                    btn.className = "category-btn active px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all bg-white text-black shadow";
+                    btn.className = "category-btn active px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all bg-white text-black shadow-md";
                 } else {
-                    btn.className = "category-btn px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all text-zinc-400 hover:text-white hover:bg-zinc-900";
+                    btn.className = "category-btn px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800/80";
                 }
             });
             renderProducts();
         }
 
+        // Search Handlers
         const searchBtn = document.getElementById('searchBtn');
         const searchContainer = document.getElementById('searchContainer');
         const searchInput = document.getElementById('searchInput');
@@ -1131,13 +1121,13 @@
             renderProducts();
         });
 
-        // មុខងារបើកមើលព័ត៌មានលម្អិតនៃផលិតផល
+        // Open Product Detail Modal
         function openProductModal(productId) {
             const product = productsData.find(p => String(p.id) === String(productId));
             if (!product) return;
 
             selectedProductForModal = product;
-            selectedColor = (product.colors && product.colors.length > 0) ? product.colors[0] : '#ffffff';
+            selectedColor = (product.colors && product.colors.length > 0) ? product.colors[0] : '#1c1c1e';
             selectedSpec = (product.specs && product.specs.length > 0) ? product.specs[0] : 'Standard';
             currentModalImageIndex = 0;
 
@@ -1151,7 +1141,7 @@
             
             const badge = document.getElementById('modalBadge');
             badge.innerText = `$${parseFloat(product.price || 0).toFixed(2)}`;
-            badge.className = `absolute bottom-3 left-3 ${product.tagColor || 'bg-[#00d2ff]'} ${product.tagTextColor || 'text-black'} font-extrabold px-3 py-1 text-sm tracking-tight rounded-sm`;
+            badge.className = `absolute bottom-3 left-3 ${product.tagColor || 'bg-[#00d2ff]'} ${product.tagTextColor || 'text-black'} font-black px-3 py-1 text-sm tracking-tight rounded-md shadow-lg`;
 
             const variantLabel = document.getElementById('variantLabel');
             const colorSection = document.getElementById('modalColorSection');
@@ -1174,24 +1164,24 @@
             const allImages = (product.images && product.images.length > 0) ? product.images : [product.image || 'https://placehold.co/400x400/18181b/ffffff?text=Product'];
             setupModalGallery(allImages);
 
+            // Render Color Selection in Modal
             const colorsContainer = document.getElementById('modalColors');
             colorsContainer.innerHTML = '';
-            (product.colors || ['#ffffff']).forEach((color, idx) => {
+            (product.colors || ['#1c1c1e']).forEach((color, idx) => {
                 const colorBtn = document.createElement('button');
-                colorBtn.className = `w-7 h-7 rounded-full border-2 transition-transform ${idx === 0 ? 'border-cyan-400 scale-110' : 'border-zinc-700'}`;
+                colorBtn.className = `w-7 h-7 rounded-full border-2 transition-all ${idx === 0 ? 'border-cyan-400 scale-110 shadow-[0_0_10px_rgba(0,242,254,0.5)]' : 'border-zinc-700 hover:scale-105'}`;
                 colorBtn.style.backgroundColor = color;
                 colorBtn.onclick = () => {
                     document.querySelectorAll('#modalColors button').forEach(b => {
-                        b.classList.remove('border-cyan-400', 'scale-110');
-                        b.classList.add('border-zinc-700');
+                        b.className = 'w-7 h-7 rounded-full border-2 border-zinc-700 hover:scale-105 transition-all';
                     });
-                    colorBtn.classList.remove('border-zinc-700');
-                    colorBtn.classList.add('border-cyan-400', 'scale-110');
+                    colorBtn.className = 'w-7 h-7 rounded-full border-2 border-cyan-400 scale-110 shadow-[0_0_10px_rgba(0,242,254,0.5)] transition-all';
                     selectedColor = color;
                 };
                 colorsContainer.appendChild(colorBtn);
             });
 
+            // Render Specs Options in Modal
             const specOptionsContainer = document.getElementById('specOptions');
             specOptionsContainer.innerHTML = '';
             if (product.specs && product.specs.length > 0) {
@@ -1199,13 +1189,13 @@
                     const btn = document.createElement('button');
                     btn.innerText = spec;
                     btn.className = idx === 0 
-                        ? "spec-btn py-2 text-xs font-semibold rounded border border-cyan-400 bg-cyan-400/10 text-cyan-400 truncate px-2"
-                        : "spec-btn py-2 text-xs font-semibold rounded border border-zinc-700 bg-zinc-800/60 hover:border-white text-zinc-200 truncate px-2";
+                        ? "spec-btn px-3 py-1.5 text-xs font-bold rounded-xl border border-cyan-400 bg-cyan-400/10 text-cyan-300 shadow-sm transition"
+                        : "spec-btn px-3 py-1.5 text-xs font-semibold rounded-xl border border-zinc-700/80 bg-zinc-800/60 hover:border-zinc-500 text-zinc-300 transition";
                     btn.onclick = () => {
                         document.querySelectorAll('.spec-btn').forEach(b => {
-                            b.className = "spec-btn py-2 text-xs font-semibold rounded border border-zinc-700 bg-zinc-800/60 hover:border-white text-zinc-200 truncate px-2";
+                            b.className = "spec-btn px-3 py-1.5 text-xs font-semibold rounded-xl border border-zinc-700/80 bg-zinc-800/60 hover:border-zinc-500 text-zinc-300 transition";
                         });
-                        btn.className = "spec-btn py-2 text-xs font-semibold rounded border border-cyan-400 bg-cyan-400/10 text-cyan-400 truncate px-2";
+                        btn.className = "spec-btn px-3 py-1.5 text-xs font-bold rounded-xl border border-cyan-400 bg-cyan-400/10 text-cyan-300 shadow-sm transition";
                         selectedSpec = spec;
                     };
                     specOptionsContainer.appendChild(btn);
@@ -1232,7 +1222,7 @@
 
                 images.forEach((imgUrl, i) => {
                     const thumb = document.createElement('button');
-                    thumb.className = `w-12 h-12 rounded-lg border-2 overflow-hidden flex-shrink-0 transition-transform ${i === 0 ? 'border-cyan-400 scale-105' : 'border-zinc-800 opacity-60 hover:opacity-100'}`;
+                    thumb.className = `w-12 h-12 rounded-xl border-2 overflow-hidden flex-shrink-0 transition-transform ${i === 0 ? 'border-cyan-400 scale-105' : 'border-zinc-800 opacity-60 hover:opacity-100'}`;
                     thumb.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-cover">`;
                     thumb.onclick = () => {
                         currentModalImageIndex = i;
@@ -1264,9 +1254,9 @@
             const thumbs = document.querySelectorAll('#modalThumbnailsBar button');
             thumbs.forEach((t, i) => {
                 if (i === currentModalImageIndex) {
-                    t.className = "w-12 h-12 rounded-lg border-2 border-cyan-400 scale-105 overflow-hidden flex-shrink-0 transition-transform";
+                    t.className = "w-12 h-12 rounded-xl border-2 border-cyan-400 scale-105 overflow-hidden flex-shrink-0 transition-transform";
                 } else {
-                    t.className = "w-12 h-12 rounded-lg border-2 border-zinc-800 opacity-60 hover:opacity-100 overflow-hidden flex-shrink-0 transition-transform";
+                    t.className = "w-12 h-12 rounded-xl border-2 border-zinc-800 opacity-60 hover:opacity-100 overflow-hidden flex-shrink-0 transition-transform";
                 }
             });
         }
@@ -1275,6 +1265,7 @@
             document.getElementById('productModal').classList.add('hidden');
         }
 
+        // Cart & Checkout
         document.getElementById('modalAddToCartBtn').addEventListener('click', () => {
             if (!selectedProductForModal) return;
 
@@ -1331,7 +1322,7 @@
                 cart.forEach((item, index) => {
                     subtotal += item.price * item.qty;
                     const itemRow = document.createElement('div');
-                    itemRow.className = "flex items-center gap-3 bg-zinc-950 p-2.5 rounded-xl border border-zinc-800";
+                    itemRow.className = "flex items-center gap-3 bg-zinc-950/80 p-2.5 rounded-2xl border border-zinc-800/80";
                     
                     let typeTitle = 'ជម្រើស:';
                     if (item.category === 'SIM') typeTitle = 'លេខ:';
@@ -1340,19 +1331,19 @@
                     const showColorDot = (item.category !== 'SIM' && item.category !== 'SERVICES');
 
                     itemRow.innerHTML = `
-                        <img src="${item.image}" class="w-14 h-14 object-contain rounded-lg bg-zinc-800/80 p-1 flex-shrink-0" alt="${item.name}">
+                        <img src="${item.image}" class="w-12 h-12 object-contain rounded-xl bg-zinc-900/90 p-1 flex-shrink-0" alt="${item.name}">
                         <div class="flex-grow min-w-0">
                             <h4 class="text-xs font-semibold text-white truncate">${item.name}</h4>
                             <div class="flex items-center gap-2 mt-0.5">
                                 <span class="text-[10px] text-zinc-400">${typeTitle} <strong class="text-zinc-200">${item.spec}</strong></span>
                                 ${showColorDot ? `<span class="w-2.5 h-2.5 rounded-full inline-block border border-zinc-700" style="background-color: ${item.color};"></span>` : ''}
                             </div>
-                            <span class="text-xs font-bold text-cyan-400 mt-1 block">$${(item.price * item.qty).toFixed(2)}</span>
+                            <span class="text-xs font-bold text-cyan-400 mt-0.5 block">$${(item.price * item.qty).toFixed(2)}</span>
                         </div>
                         <div class="flex items-center gap-1.5">
-                            <button onclick="changeQty(${index}, -1)" class="w-6 h-6 rounded bg-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center text-xs">-</button>
+                            <button onclick="changeQty(${index}, -1)" class="w-6 h-6 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center text-xs">-</button>
                             <span class="text-xs font-medium w-4 text-center">${item.qty}</span>
-                            <button onclick="changeQty(${index}, 1)" class="w-6 h-6 rounded bg-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center text-xs">+</button>
+                            <button onclick="changeQty(${index}, 1)" class="w-6 h-6 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center text-xs">+</button>
                         </div>
                     `;
                     itemsContainer.appendChild(itemRow);
